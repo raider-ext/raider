@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+ <title>Inline Translation Options</title>
+ <link rel="stylesheet" type="text/css" href="../../css/options.css">
+ <link rel="stylesheet" type="text/css" href="../../css/util.css">
+</head>
+<body id=SL_body_options>
+	    <div id="SL_frozen">
+		<table width="670" cellpadding="0" cellspacing="0" style="margin-top:5px">
+			<tr>
+				<td width="35"></td>
+				<td width="270" align=left valign=middle><div id="SL_ttl">Inline Translator</div></td>
+				<td width="25"></td>
+				<td width="80">
+					<div id="SL_theme_ttl"></div>
+					<select name="SL_THEME" id="SL_THEME" tabindex="8">
+					    <option value="0" id="SL_theme_1"></option>
+					    <option value="1" id="SL_theme_2"></option>
+					</select>
+				</td>
+				<td width="25"></td>
+				<td width="190" align=left>
+					<div id="SL_il"></div>
+					<select name="SL_LOC" id="SL_LOC" tabindex="8">
+			            <option class="SL_opt" value="en">English</option>
+			            <option class="SL_opt" value="bg">Bulgarian - Български</option>
+			            <option class="SL_opt" value="zh">Chinese - 中文</option>
+			            <option class="SL_opt" value="zt">Chinese Trad - 中文繁體</option>
+			            <option class="SL_opt" value="cs">Czech - Čeština</option>
+			            <option class="SL_opt" value="nl">Dutch - Nederlands</option>
+			            <option class="SL_opt" value="tl">Filipino - Filipino</option>
+			            <option class="SL_opt" value="fr">French - Français</option>
+			            <option class="SL_opt" value="de">German - Deutsch</option>
+			            <option class="SL_opt" value="el">Greek - Ελληνικά</option>
+			            <option class="SL_opt" value="hi">Hindi - हिंदी</option>
+			            <option class="SL_opt" value="it">Italian - Italiano</option>
+			            <option class="SL_opt" value="ja">Japanese - 日本語</option>
+			            <option class="SL_opt" value="ko">Korean - 한국어</option>
+			            <option class="SL_opt" value="pl">Polish - Polski</option>
+			            <option class="SL_opt" value="pt">Portuguese - Português</option>
+			            <option class="SL_opt" value="ro">Romanian - Română</option>
+			            <option class="SL_opt" value="ru">Russian - Русский</option>
+			            <option class="SL_opt" value="sr">Serbian - Српски</option>
+			            <option class="SL_opt" value="sk">Slovak - Slovenčina</option>
+			            <option class="SL_opt" value="es">Spanish - Español</option>
+			            <option class="SL_opt" value="sv">Swedish - Svenska</option>
+			            <option class="SL_opt" value="tr">Turkish - Türkçe</option>
+			            <option class="SL_opt" value="uk">Ukrainian - Українська</option>
+			            <option class="SL_opt" value="vi">Vietnamese - Tiếng Việt</option>
+					</select>
+				</td>
+				<td width="0" align="right"><div id="SL_info" alt="Help" title="Help" style="position:absolute;margin-left:6px;"></div></td>
+			</tr>
+		</table>
+	    </div>
+ <div id="SL_AUTOKEYS"></div>
+ <div align=left id="SL_content">
+	<div id="SL_translate_container">
+	    <br><br><br>
+	    <div id="SL_HKdiv2"></div>
+	    <div id="SL_canvas">
+		<table width=220><tr><td width=120><div class="SL_BG_op" id="SL_L_BOX" style='margin-top:8px'></div></td><td width=100 align=left><div id=SL_down></div><button id="SL_LNG_STATUS" tabindex="0"></button><div id='SL_down_box'></div></td></tr></table>
+		<br>
+		<div class="SL_BG_op">Inline Translator: <span id="SL_BG_op"></span></div>
+		<table width="95%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td colspan=2>
+					<table width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td width="5%">
+								<input type="checkbox" id="SL_global_lng_it" name="SL_global_lng_it" value="0" tabindex="4">
+							</td>
+							<td width="95%"><span id="SL_setLS4allTr"></span></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+                	<tr>
+				<td colspan=2>
+				   <div style="margin-left:28px;">
+					<table width="99%" cellpadding="1" cellspacing="1">
+						<tr>
+							<td width="*" align=leftt nowrap><span id="SLSeSo"></span></td>
+							<td width="42%" align=left nowrap><select style="margin-left:10px;" name="langSrc_it" id="SL_langSrc_it" tabindex="1"></select></td>
+						</tr>
+						<tr>
+							<td width="*" align=left nowrap><span id="SLSeTa"></span></td>
+							<td width="42%" align=left nowrap><select style="margin-left:10px;" name="langDst_it" id="SL_langDst_it" tabindex="2"></select></td>
+						</tr>
+					</table>
+				    </div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2>
+				   <div style="margin-left:30px;">
+					<table width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td width="5%">
+								<input type="checkbox" id="SL_no_detect_it" name="SL_no_detect_it" value="0" tabindex="3">
+							</td>
+							<td width="95%"><span id="SL_DetSoLaAu"></span></td>
+						</tr>
+					</table>
+				    </div>
+				</td>
+			</tr>
+		</table>	
+		<br><br>
+		<div class="SL_BG_op">Inline Translator: <span id="SL_LIST_TR_PR"></span></div>
+		<div style="margin-left:15px;">
+			<div id="SHOWHIDEPROVIDERS">
+				<div id=SL_TR_PROVIDERS_BUILDER></div>
+			</div>
+		</div>
+		<br><br>
+		<div class="SL_BG_op">Inline Translator: <span id="SL_TR_op"></span></div>
+		<table width="100%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="5%"><input type="checkbox" name="SL_dictionary" id="SL_dictionary"></td>
+				<td width="95%"><span id="SL_enable_dict"></span></td>
+			</tr>
+			<tr>
+				<td width="5%"><input type="checkbox" name="INLINEflip" id="INLINEflip"></td>
+				<td width="95%"><span id="SL_INLINEflip"></span></td>
+			</tr>
+		</table>
+		<br><br>
+		<!-- inliner -->
+		<div class="SL_BG_op" id="SL_HotKeys"></div>
+		<table width="95%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="5%"><input type="checkbox" id="SL_FK_box1" name="SL_FK_box1" value="1" checked tabindex="6"></td>
+				<td width="56%" align=left nowrap><span id="SL_TOMS"></span></td>
+				<td  width="49%" align=left>
+					<div id="SL_HIDE3" class="SLHK1"></div>
+					<input type="text" class="SRV" id="SRV3" readonly placeholder="Not set" autocomplete="off">
+					<div class='SL_del' id="SL_del3" title="Auto Translate selected text"></div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2></td>
+				<td height="18" valign=top><div id="reset_all3" class="reset_icn"></div><div id="MSG3" class="SLMSG"></div></td>
+			</tr> 
+
+			<tr>
+				<td><input type="checkbox" id="SL_FK_box11" name="SL_FK_box11" value="1" checked tabindex="6"></td>
+				<td align=left nowrap><span id="SL_tr_with_target"></span></td>
+				<td align=left>
+					<div id="SL_HIDE11" class="SLHK1"></div>
+					<input type="text" class="SRV" id="SRV11" readonly placeholder="Not set" autocomplete="off">
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2></td>
+				<td height="18" valign=top><div id="reset_all11" class="reset_icn"></div><div id="MSG11" class="SLMSG"></div></td>
+			</tr>
+
+			<tr>
+				<td><input type="checkbox" id="SL_FK_box2" name="SL_FK_box2" value="1" checked tabindex="7"></td>
+				<td align=left nowrap><span id="SL_ClearTr"></span></td>
+				<td align=left>
+					<div id="SL_HIDE4" class="SLHK1"></div>
+					<input type="text" class="SRV" id="SRV4" readonly placeholder="Not set" autocomplete="off">
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2></td>
+				<td height="18" valign=top><div id="reset_all4" class="reset_icn"></div><div id="MSG4" class="SLMSG"></div></td>
+			</tr>
+
+
+		</table>
+		<br><br>
+		<div class="SL_BG_op" id="SL_Appearance"></div>
+		<table width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="10%px" nowrap>
+					&nbsp;<span id="SL_Color"></span>:
+				</td>
+				<td width="90%">
+					<input type="text" name="style" id="SL_style" class="color" value="32A5EB"> <!--value="color: #292;"-->
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="SL_line_break" id="SL_line_break">
+				</td>
+				<td>
+					<span id="SL_LB"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="SL_inject_brackets" id="SL_inject_brackets" checked="checked">
+				</td>
+				<td>
+					<span id="SL_EIB"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="SL_whole_word" id="SL_whole_word">
+				</td>
+				<td>
+					<span id="SL_ABW"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="SL_inject_before" id="SL_inject_before">
+				</td>
+				<td>
+					<span id="SL_IBO"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="SL_hide_translation" id="SL_hide_translation">
+				</td>
+				<td>
+					<span id="SL_HO"></span>
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<!--------------------------------- end inliner ------------------------------------------>
+		<div class="SL_BG_op">Inline Translator: <span id="SL_TrHi"></span></div>
+		<table width="100%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="5%"><input type="checkbox" id="SL_TH_4" name="SL_TH_4" value="0" tabindex="4"></td>
+				<td width="95%"><span id="SL_InTH"></span></td>
+			</tr>
+		</table>
+		<br><br>
+	        <div class="SL_footer2">
+		   &copy;2023 <a id="SL_copyright-link" href="https://about.imtranslator.net/about/company/" target="_blank" class="SL_about">Smart Link Corporation</a> &nbsp; <a href="https://about.imtranslator.net/terms-of-service/" class="SL_about" target="_blank">Terms of service</a> &nbsp; <a href="https://about.imtranslator.net/privacy-policy/" class="SL_about" target="_blank">Privacy policy</a>
+	        </div>
+	        <br>
+	</div>
+     </div>
+ </div>
+<script type="text/javascript" src="../../js/common/FExtension.js"></script>
+<script type="text/javascript" src="../../browser/js/FBrowserPopup.js"></script>
+<script type="text/javascript" src="../../browser/chrome/FBrowserPopupChrome.js"></script>
+<script type="text/javascript" src="../../js/options/ch/util.js?v=1"></script>
+<script type="text/javascript" src="../../js/options/ch/providers-it.js?v=1"></script>
+<script type="text/javascript" src="../../js/options/ch/options-it.js?v=1"></script>
+<script type="text/javascript" src="../../js/options/ch/hkdata.js?v=1"></script>
+<script type="text/javascript" src="../../js/common/ga.js?v=1"></script>
+<script type="text/javascript" src="../../js/common/jscolor.js"></script>
+</body>
+</html>

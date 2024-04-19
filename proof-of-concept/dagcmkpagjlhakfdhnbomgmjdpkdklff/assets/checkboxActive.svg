@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>icon tristate</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="9.83883476 2 10.9702056 3.13137085 4.39411255 9.70746391 1 6.31335137 2.13137085 5.18198052 4.39411255 7.44472222"></polygon>
+    </defs>
+    <g id="icon-tristate" stroke="white" stroke-width="0.25" fill="none" fill-rule="evenodd">
+        <g id="icon/12px/tick">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="tick12" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+            <g id="colour/neutral/white" mask="url(#mask-2)" fill="#FFFFFF" fill-rule="evenodd">
+                <rect id="Rectangle-10" x="0" y="0" width="12" height="12"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

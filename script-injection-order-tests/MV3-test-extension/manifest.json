@@ -1,0 +1,44 @@
+{
+    "name": "Script Inclusion Test - MV3",
+    "version": "1.0",
+    "description": "Script inclusion from extensiosn to obtain clean reference to global JavaScript APIs.",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>",
+                "file:///*/*"
+            ],
+            "js": [
+                "contentScript.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true,
+            "world": "ISOLATED"
+        }
+    ],
+    "background": {
+        "service_worker": "sw.js"
+    },
+    "permissions": [
+        "scripting",
+        "tabs"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "inject.js"
+            ],
+            "matches": ["<all_urls>"],
+            "use_dynamic_url": false
+        }
+    ],
+    "host_permissions": [
+        "*://*/*",
+        "file:///*/*"
+    ],
+    "manifest_version": 3,
+    "content_security_policy": {
+        "extension_pages": "default-src 'self'"
+    }
+}

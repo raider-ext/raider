@@ -1,0 +1,62 @@
+{
+  "action_reload": {
+    "message": "변경 사항을 적용하려면 탭을 새로 고침"
+  },
+  "desc": {
+    "message": "Ruffle을 사용하여 플래시 파일을 실행하는 플래시 플레이어 에뮬레이터입니다. 웹 전체에서 좋아하는 플래시 콘텐츠를 간단하게 실행할 수 있는 방법입니다!"
+  },
+  "name": {
+    "message": "크롬을위한 플래시 플레이어"
+  },
+  "open_settings_page": {
+    "message": "설정 페이지 열기"
+  },
+  "save_settings": {
+    "message": "설정 저장"
+  },
+  "settings_ignore_optout": {
+    "message": "웹 사이트 호환성 경고 무시"
+  },
+  "settings_page": {
+    "message": "설정 페이지"
+  },
+  "settings_page_ignore_optout": {
+    "message": "Ruffle을 사용하지 않는 사이트에서도 플래시 콘텐츠 재생"
+  },
+  "settings_ruffle_enable": {
+    "message": "플래시 플레이어 2023"
+  },
+  "settings_saved": {
+    "message": "설정 저장됨"
+  },
+  "status_init": {
+    "message": "현재 탭 읽기..."
+  },
+  "status_message_init": {
+    "message": "현재 탭에서 Ruffle 상태 확인..."
+  },
+  "status_no_tabs": {
+    "message": "활성 탭이 없습니다."
+  },
+  "status_result_disabled": {
+    "message": "사용자가 비활성화했기 때문에 Ruffle이 로드되지 않습니다."
+  },
+  "status_result_error": {
+    "message": "현재 탭의 Ruffle 인스턴스를 쿼리하는 중 오류가 발생했습니다."
+  },
+  "status_result_optout": {
+    "message": "현재 페이지가 호환되지 않음으로 표시되어 Ruffle이 로드되지 않습니다."
+  },
+  "status_result_protected": {
+    "message": "Ruffle은 보호된 브라우저 페이지에서 로드할 수 없습니다."
+  },
+  "status_result_running": {
+    "message": "Ruffle이 로드되어 현재 탭에서 플래시 콘텐츠를 실행 중입니다."
+  },
+  "status_tabs_error": {
+    "message": "현재 탭을 찾는 중 오류가 발생했습니다."
+  },
+  "title": {
+    "message": "웹용 플래시 플레이어 (업데이트 2023)"
+  }
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<title>Blocked by Trace</title>
+
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<link rel="stylesheet" media="all" type="text/css" href="../css/blocked.css" />
+		<link rel="stylesheet" media="all" type="text/css" href="../css/themedata.css" />
+
+	</head>
+	<body>
+
+		<!-- Copyright AbsoluteDouble Trace 2018 - 2021 -->
+		<script src="../js/common/theme.js"></script>
+
+		<div id="page">
+			<div id="block_info">
+				<h1 id="title">Trace Blocked this URL</h1>
+				<h2 id="reason">loading reason</h2><br />
+				<a href="#" id="url_link"><h2 id="url">loading url</h2></a>
+			</div>
+			<div id="whitelist_opts" class="page_action">
+				<div id="opts_title">Add this site to the whitelist:</div>
+			</div>
+			<div id="help_info" class="page_action">
+				<div id="help_title">Help Section:</div>
+				<ul>
+					<li>
+						<span class="blocked_q">Why am I seeing this page?</span>
+						<span class="blocked_a">Your browser was navigated to a URL that matched Trace's blocked list, the exact reason will be highlighted above.</span>
+					</li>
+					<li>
+						<span class="blocked_q">What will adding this site to the whitelist do?</span>
+						<span class="blocked_a">Your browser was navigated to a URL that matched Trace's blocked list, the exact reason will be highlighted above.</span>
+					</li>
+					<li>
+						<span class="blocked_q">What is the difference between the whitelist options on the left?</span>
+						<span class="blocked_a">They unblock different parts of the site - if you want to unblock the entire site then unblock the root domain.</span>
+					</li>
+				</ul>
+			</div>
+			<div id="footer">
+				<button id="open_settings">Trace Settings</button>
+				<button id="pause_trace">Pause Trace</button>
+				<button id="go_back">Go back to previous page</button>
+			</div>
+		</div>
+
+		<script src="../js/libraries/jquery.js"></script>
+		<script src="../js/common/shared.js"></script>
+		<script src="../js/common/ux.js"></script>
+		<script src="../js/pages/blocked.js"></script>
+
+	</body>
+</html>

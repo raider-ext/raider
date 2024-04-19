@@ -1,0 +1,141 @@
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "icons": {
+        "16": "icon16.plasmo.6c567d50.png",
+        "32": "icon32.plasmo.76b92899.png",
+        "48": "icon48.plasmo.aced7582.png",
+        "64": "icon64.plasmo.8bb5e6e0.png",
+        "128": "icon128.plasmo.3c1ed2d2.png"
+    },
+    "manifest_version": 3,
+    "action": {
+        "default_icon": {
+            "16": "icon16.plasmo.6c567d50.png",
+            "32": "icon32.plasmo.76b92899.png",
+            "48": "icon48.plasmo.aced7582.png",
+            "64": "icon64.plasmo.8bb5e6e0.png",
+            "128": "icon128.plasmo.3c1ed2d2.png"
+        },
+        "default_popup": "popup.html"
+    },
+    "version": "7.21.1",
+    "name": "Jasper Everywhere Extension",
+    "description": "The Jasper browser extension provides access to Jasper everywhere you write.",
+    "background": {
+        "service_worker": "static/background/index.js"
+    },
+    "permissions": [
+        "activeTab",
+        "alarms",
+        "storage",
+        "identity",
+        "scripting"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://docs.google.com/document/*",
+                "https://docs.google.com/document/*",
+                "http://docs.google.com/document/*"
+            ],
+            "js": [
+                "googleDocsCanvasAnnotation.fe68f735.js"
+            ],
+            "run_at": "document_start",
+            "css": []
+        },
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "http://*/*"
+            ],
+            "js": [
+                "contents.04ff201a.js"
+            ],
+            "all_frames": true,
+            "css": []
+        }
+    ],
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsXsRwF2m3FFIpaqpwoiHpFMZHxVIROVjcTxv5zJGF6X9rkiKASf7aCzaUwgN96eSTGbIzaFUXirRSZXbDN2PB1KOVWKVts4+T71ZOyBSl35XaKMeS+8Y3scXbfE7nHViLrxsTViuQD9WGsC+BueHWZoQ/0Z/0DtUm6qnAiNAobAZgi9dEc72BJ55HoS4zr/0E1njhjy2NFZO/x0j/7EaTduzqkkxB9WhofosXUDJCER0Fzkt88xdbbtp0gqGMS35NzhwjTkQ43w4GxAS0TtaAh55dJXmFEd57GRERo59jwsAymYrRQ2zf4u0KtG9l+1yhRlwl9+hqJ6NDGa/JYFtDQIDAQAB",
+    "externally_connectable": {
+        "matches": [
+            "https://*.jasper.ai/*"
+        ],
+        "accept_tls_channel_id": true
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/jasper-icon-green-dot.png",
+                "assets/jasper-icon-grey-dot.png",
+                "assets/jasper-icon-alert.png"
+            ],
+            "matches": []
+        },
+        {
+            "matches": [
+                "http://docs.google.com/*",
+                "https://docs.google.com/*",
+                "http://docs.google.com/*"
+            ],
+            "resources": [
+                "triggerGoogleDocsCanvasAnnotation.10c26899.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "http://*/*"
+            ],
+            "resources": [
+                "jasper-icon.449e5366.svg",
+                "jasper-title.bc1a3f7d.svg",
+                "login-screen-splash.bcfff91f.png",
+                "aida.92c4e8d2.svg",
+                "amazon.3dbd228f.svg",
+                "expand.34a53b03.svg",
+                "facebook.48db0734.svg",
+                "google.89c3caae.svg",
+                "instagram.fd1289ff.svg",
+                "pas.a01d7b3a.svg",
+                "smile.404b4097.svg",
+                "youtube.7dc0489c.svg",
+                "BossModeLogo.c351cb4a.svg",
+                "active-bubble.c4d67eeb.svg",
+                "inactive-bubble.da09faa7.svg",
+                "Jasper-Toolbar-Command-Output.efa37225.svg",
+                "Jasper-Toolbar-Default.1a684224.svg",
+                "Jasper-Toolbar-Template.350e95b9.svg",
+                "Toolbar-QuickSettings.cdde03cb.svg",
+                "contents.9f44d5a9.css"
+            ]
+        }
+    ],
+    "commands": {
+        "command-replace": {
+            "description": "Run Jasper command and replace it."
+        },
+        "command-keep": {
+            "description": "Run Jasper command and keep it."
+        },
+        "write-next-sentence": {
+            "suggested_key": {
+                "default": "Ctrl+J"
+            },
+            "description": "Continue writing."
+        },
+        "_execute_action": {
+            "description": "Open the Jasper extension",
+            "suggested_key": {
+                "default": "Alt+Shift+J",
+                "mac": "MacCtrl+Shift+J"
+            }
+        }
+    },
+    "host_permissions": [
+        "<all_urls>",
+        "*://*/*"
+    ]
+}

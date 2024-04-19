@@ -1,0 +1,58 @@
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "manifest_version": 2,
+    "name": "myViewBoard extension",
+    "description": "myViewBoard.com in a Google Chrome extension",
+    "version": "2.27.2",
+    "background": {
+        "scripts": [
+            "background-script.js"
+        ],
+        "persistent": true
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "content-script.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "16x16.png",
+        "48": "48x48.png",
+        "96": "96x96.png"
+    },
+    "permissions": [
+        "identity",
+        "tabs",
+        "<all_urls>"
+    ],
+    "externally_connectable": {
+        "matches": [
+            "*://*.myviewboard.com/*",
+            "*://myviewboard.com/*",
+            "http://localhost:4200/*"
+        ]
+    },
+    "web_accessible_resources": [
+        "icon.png",
+        "favicon.ico",
+        "assets/extension/react-web-marker/index.html"
+    ],
+    "oauth2": {
+        "client_id": "11040883588-duufkdrc4d0i2d8rumkoi7ul8rm03k57.apps.googleusercontent.com",
+        "scopes": [
+            "openid",
+            "email",
+            "https://www.googleapis.com/auth/drive",
+            "https://www.googleapis.com/auth/admin.directory.domain.readonly"
+        ]
+    }
+}

@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ImTranslator Options</title>
+    <link rel="stylesheet" type="text/css" href="../../css/options.css">
+</head>
+<body id=SL_body_options>
+	    <div id="SL_frozen">
+		<table width="670" cellpadding="0" cellspacing="0" style="margin-top:5px">
+			<tr>
+				<td width="35"></td>
+				<td width="270" align=left valign=middle><div id="SL_ttl">Webpage Translation</div></td>
+				<td width="25"></td>
+				<td width="80">
+					<div id="SL_theme_ttl"></div>
+					<select name="SL_THEME" id="SL_THEME" tabindex="8">
+					    <option value="0" id="SL_theme_1"></option>
+					    <option value="1" id="SL_theme_2"></option>
+					</select>
+				</td>
+				<td width="25"></td>
+				<td width="190" align=left>
+					<div id="SL_il"></div>
+					<select name="SL_LOC" id="SL_LOC" tabindex="8">
+			            <option class="SL_opt" value="en">English</option>
+			            <option class="SL_opt" value="bg">Bulgarian - Български</option>
+			            <option class="SL_opt" value="zh">Chinese - 中文</option>
+			            <option class="SL_opt" value="zt">Chinese Trad - 中文繁體</option>
+			            <option class="SL_opt" value="cs">Czech - Čeština</option>
+			            <option class="SL_opt" value="nl">Dutch - Nederlands</option>
+			            <option class="SL_opt" value="tl">Filipino - Filipino</option>
+			            <option class="SL_opt" value="fr">French - Français</option>
+			            <option class="SL_opt" value="de">German - Deutsch</option>
+			            <option class="SL_opt" value="el">Greek - Ελληνικά</option>
+			            <option class="SL_opt" value="hi">Hindi - हिंदी</option>
+			            <option class="SL_opt" value="it">Italian - Italiano</option>
+			            <option class="SL_opt" value="ja">Japanese - 日本語</option>
+			            <option class="SL_opt" value="ko">Korean - 한국어</option>
+			            <option class="SL_opt" value="pl">Polish - Polski</option>
+			            <option class="SL_opt" value="pt">Portuguese - Português</option>
+			            <option class="SL_opt" value="ro">Romanian - Română</option>
+			            <option class="SL_opt" value="ru">Russian - Русский</option>
+			            <option class="SL_opt" value="sr">Serbian - Српски</option>
+			            <option class="SL_opt" value="sk">Slovak - Slovenčina</option>
+			            <option class="SL_opt" value="es">Spanish - Español</option>
+			            <option class="SL_opt" value="sv">Swedish - Svenska</option>
+			            <option class="SL_opt" value="tr">Turkish - Türkçe</option>
+			            <option class="SL_opt" value="uk">Ukrainian - Українська</option>
+			            <option class="SL_opt" value="vi">Vietnamese - Tiếng Việt</option>
+					</select>
+				</td>
+				<td width="0" align="right"><div id="SL_info" alt="Help" title="Help" style="position:absolute;margin-left:6px;"></div></td>
+			</tr>
+		</table>
+	    </div>
+ <div id="SL_AUTOKEYS"></div>
+ <div align=left id="SL_content">
+	<div id="SL_translate_container">
+	    <br><br><br>
+	    <div id="SL_HKdiv2"></div>
+	    <div id="SL_canvas">
+	    <table width=220><tr><td width=120><div class="SL_BG_op" id="SL_L_BOX" style='margin-top:8px'></div></td><td width=100 align=left><div id=SL_down></div><button id="SL_LNG_STATUS" tabindex="0"></button><div id='SL_down_box'></div></td></tr></table>
+	    <br>
+	    <div class="SL_BG_op">Webpage Translation: <span id="SL_BG_op"></span></div>
+	    <table width="95%" cellpadding="1" cellspacing="1">
+		<tr>
+			<td colspan=2>
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="5%">
+							<input type="checkbox" id="SL_global_lng_wpt" name="SL_global_lng_wpt" value="0" tabindex="4">
+						</td>
+						<td width="95%"><span id="SL_setLS4allTr"></span></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2>
+			   <div style="margin-left:28px;">
+				<table width="99%" cellpadding="1" cellspacing="1">
+					<tr>
+						<td width="*" align=leftt nowrap><span id="SLSeSo"></span></td>
+						<td width="42%" align=left nowrap><select style="margin-left:10px;" name="langSrc_wpt" id="SL_langSrc_wpt" tabindex="1"></select></td>
+					</tr>
+					<tr>
+						<td width="*" align=left nowrap><span id="SLSeTa"></span></td>
+						<td width="42%" align=left nowrap><select style="margin-left:10px;" name="langDst_wpt" id="SL_langDst_wpt" tabindex="2"></select></td>
+					</tr>
+				</table>
+			    </div>
+			</td>
+		</tr>
+	    </table>
+	    <br><br>
+	    <div class="SL_BG_op">Webpage Translation: <span id="SL_wptttl"></div></div>
+		<table width="350" cellpadding="1" cellspacing="1">
+			<tr style="display:none;">
+				<td width="27"><input type="checkbox" name="SL_Always" id="SL_Always"></td>
+				<td width="*"><span id="SL_wptDAlways"></span></td>
+			</tr>
+			<tr>
+				<td width="27"><input type="checkbox" name="SL_Toolbar" id="SL_Toolbar"></td>
+				<td width="*"><span id="SL_wptDTb"></span></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="SL_SOOOM" id="SL_SOOOM"></td>
+				<td><span id="SL_wptDOrTip"></span></td>
+			</tr>
+		</table>
+		<table width="350" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="*"><span id="SL_wptDReset" style="margin-left:5px"></span></td>
+				<td width="100"><div class="SL_wptReset" id="SL_wptReset1" style="width:100px;"></div></td>
+				<td width="10"><span class="SL_reset" id="SL_reset1"></span></td>
+			</tr>
+			<tr>
+				<td><span id="SL_wptLReset" style="margin-left:5px"></span></td>
+				<td><div class="SL_wptReset" id="SL_wptReset2" style="width:100px;"></div></td>
+				<td><span class="SL_reset" id="SL_reset2"></span></td>
+			</tr>
+		</table>
+
+		<br><br>
+		<div class="SL_BG_op">Webpage Translation: <span id="SL_TR_op"></span></div>
+		<table width="100%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="5%"><input type="checkbox" name="WPTflip" id="WPTflip"></td>
+				<td width="95%"><span id="SL_WPTflip"></span></td>
+			</tr>
+		</table>
+
+	    <br><br>
+	    <div class="SL_BG_op" id="SL_sc"></div>	    
+	    <table width="95%" cellpadding="1" cellspacing="1">
+		 <tr>
+			<td width="5%"><input type="checkbox" id="SL_HK6" name="SL_HK6" value="1" checked tabindex="5"></td>
+			<td width="56%" align=left nowrap>Webpage Translation</td>
+			<td width="49%" align=left>
+				<div id="SL_HIDE6" class="SLHK1"></div>
+				<input type="text" class="SRV" id="SRV6" readonly placeholder="Not set" autocomplete="off">
+			</td>
+		 </tr>
+		 <tr>
+			<td colspan=2></td>
+			<td height="18" valign=top><div id="reset_all6" class="reset_icn"></div><div id="MSG6" class="SLMSG"></div></td>
+		 </tr>
+
+		 <tr>
+			<td><input type="checkbox" id="SL_HK12" name="SL_HK12" value="1" checked tabindex="6"></td>
+			<td align=left nowrap><span id="SL_SH_OR"></span></td>
+			<td align=left>
+				<div id="SL_HIDE12" class="SLHK1"></div>
+				<input type="text" class="SRV" id="SRV12" readonly placeholder="Not set" autocomplete="off">
+			</td>
+		 </tr>
+		 <tr>
+			<td colspan=2></td>
+			<td height="18" valign=top><div id="reset_all12" class="reset_icn"></div><div id="MSG12" class="SLMSG"></div></td>
+		 </tr>
+
+		 <tr>
+			<td><input type="checkbox" id="SL_HK13" name="SL_HK13" value="1" checked tabindex="7"></td>
+			<td align=left nowrap><span id="SL_CL_TR"></span></td>
+			<td align=left>
+				<div id="SL_HIDE13" class="SLHK1"></div>
+				<input type="text" class="SRV" id="SRV13" readonly placeholder="Not set" autocomplete="off">
+			</td>
+		 </tr>
+		 <tr>
+			<td colspan=2></td>
+			<td height="18" valign=top><div id="reset_all13" class="reset_icn"></div><div id="MSG13" class="SLMSG"></div></td>
+		 </tr>
+
+		 <tr>
+			<td><input type="checkbox" id="SL_HK7" name="SL_HK7" value="1" checked tabindex="8"></td>
+			<td align=left nowrap>Mouseover Translation</td>
+			<td align=left>
+				<div id="SL_HIDE7" class="SLHK1"></div>
+				<input type="text" class="SRV" id="SRV7" readonly placeholder="Not set" autocomplete="off">
+			</td>
+		 </tr>
+		 <tr>
+			<td colspan=2></td>
+			<td height="18" valign=top><div id="reset_all7" class="reset_icn"></div><div id="MSG7" class="SLMSG"></div></td>
+		 </tr>
+
+	    </table>
+       	    <br><br>
+	    <div class="SL_BG_op">Webpage Translation: <span id="SL_TrHi"></span></div>
+	    <table width="100%" cellpadding="1" cellspacing="1">
+		<tr>
+			<td width="5%"><input type="checkbox" id="SL_TH_3" name="SL_TH_3" value="0" tabindex="4"></td>
+			<td width="95%"><span id="SL_WpTH"></span></td>
+		</tr>
+	    </table>
+       	    <br><br>
+	    <div class="SL_footer2">
+		   &copy;2023 <a id="SL_copyright-link" href="https://about.imtranslator.net/about/company/" target="_blank" class="SL_about">Smart Link Corporation</a> &nbsp; <a href="https://about.imtranslator.net/terms-of-service/" class="SL_about" target="_blank">Terms of service</a> &nbsp; <a href="https://about.imtranslator.net/privacy-policy/" class="SL_about" target="_blank">Privacy policy</a>
+	    </div>
+	    <br>
+      </div>
+    </div>
+  </div>
+<script type="text/javascript" src="../../js/common/FExtension.js"></script>
+<script type="text/javascript" src="../../browser/js/FBrowserPopup.js"></script>
+<script type="text/javascript" src="../../browser/chrome/FBrowserPopupChrome.js"></script>
+<script type="text/javascript" src="../../js/options/ch/util.js?v=1"></script>
+<script type="text/javascript" src="../../js/options/ch/options-wpt.js?v=1"></script>
+<script type="text/javascript" src="../../js/options/ch/hkdata.js?v=1"></script>
+<script type="text/javascript" src="../../js/common/ga.js?v=1"></script>
+</body>
+</html>

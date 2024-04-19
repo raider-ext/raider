@@ -1,0 +1,32 @@
+{
+    "name": "Script Inclusion Test - MV2",
+    "version": "1.0",
+    "description": "Script inclusion from extensiosn to obtain clean reference to global JavaScript APIs.",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>",
+                "file:///*/*"
+            ],
+            "js": [
+                "contentScript.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true
+        }
+    ],
+    "background": {
+        "scripts": ["bg.js"]
+    },
+    "permissions": [
+        "tabs",
+        "*://*/*",
+        "file:///*/*"
+    ],
+    "web_accessible_resources": [
+        "inject.js"
+    ],
+    "manifest_version": 2,
+    "content_security_policy": "default-src 'self'"
+}

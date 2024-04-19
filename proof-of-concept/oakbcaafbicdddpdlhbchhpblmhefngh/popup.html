@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<title>Ruffle Settings</title>
+<script type="text/javascript" src="popup.js"></script>
+<style>
+    @font-face {
+        font-family: 'Didact Gothic';
+        src: url('./fonts/DidactGothic-Regular.eot');
+        src: local('Didact Gothic Regular'), local('DidactGothic-Regular'),
+            url('./fonts/DidactGothic-Regular.eot?#iefix') format('embedded-opentype'),
+            url('./fonts/DidactGothic-Regular.woff') format('woff'),
+            url('./fonts/DidactGothic-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    *, *:before, *:after {
+        box-sizing: border-box;
+    }
+    body {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        width: 382px;
+        font-family: 'Didact Gothic';
+    }
+    .RufflePopup {
+        margin: 0 auto;
+        padding: 15px;
+        background: #2e2e2e;
+    }
+    .RufflePopup-status_band {
+        text-align: center;
+        background: white;
+        padding: 15px;
+        margin: 0;
+    }
+    .RufflePopup-user_settings {
+        text-align: left;
+        font-size: 14px;
+    }
+    .RufflePopup-user_setting {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .RufflePopup-checkbox_with_slider {
+        display: none;
+    }
+    .RufflePopup-user_setting_text {
+        flex-grow: 1;
+        vertical-align: middle;
+    }
+    label {
+        margin-bottom: 15px;
+        cursor: pointer;
+        color: #ffffff;
+    }
+    label input {
+        width: 20px;
+        height: 20px;
+    }
+    label .outer {
+        height: 24px;
+        width: 24px;
+        background: #404041;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    label .outer .inner {
+        transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        width: 16px;
+        height: 16px;
+        transform: scale(0);
+        background: #2e95ff;
+        border-radius: 2px;
+    }
+    input[type=checkbox]:checked + .outer {
+        transition: fill 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    input[type=checkbox]:checked + .outer .inner {
+        transform: scale(1);
+    }
+    label {
+        cursor: pointer;
+    }
+    .RufflePopup-reload_button {
+        display: block;
+        overflow: hidden;
+        cursor: pointer;
+        background-color: #2E95FF;
+        color: #fff;
+        width: 100%;
+        border-width: 0px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 14px;
+        line-height: 14px;
+        border: none;
+        outline: none;
+        height: 60px;
+    }
+
+    .RufflePopup-reload_button:disabled {
+        max-height: 0px;
+        padding: 0px 10px;
+        line-height: 0px;
+        cursor: pointer;
+    }
+
+    .RufflePopup-reload_button:enabled {
+        height: 60px;
+        padding: 10px 10px;
+        line-height: 15px;
+    }
+    #description {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0;
+        padding: 10px 12px;
+        background: #3B3B3B;
+        font-size: 12px;
+        line-height: 20px;
+        color: #8C8C8C;
+        border-radius: 5px;
+        text-align: left;
+    }
+    .info-icon {
+        width: 26px;
+        height: 26px;
+        margin-right: 10px;
+        fill: #ffffff;
+    }
+    .hide {
+        display: none !important;
+    }
+
+    .no-tr *{
+        transition: none !important;
+    }
+</style>
+
+<div id="root" class="RufflePopup no-tr">
+    <p id="status_wrap" class="RufflePopup-status_band hide"><span id="ruffle_status">Loading...</span></p>
+    <form class="RufflePopup-user_settings">
+        <label class="RufflePopup-user_setting" for="ruffle_enable">
+            <input class="RufflePopup-checkbox_with_slider" type="checkbox" name="ruffle_enable" id="ruffle_enable">
+            Flash Player 2023
+            <div class="outer">
+                <div class="inner"></div>
+            </div>
+        </label>
+    </form>
+    <p id="description"><img class="info-icon" src="./images/info.svg" alt=""> Flash Player 2023 is an Adobe Flash
+        Player emulator that <br /> runs your favorite flashes using Ruffle.</p>
+    <button type="button" id="reload" class="RufflePopup-reload_button hide" disabled>Reload tab to apply changes</button>
+</div>

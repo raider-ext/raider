@@ -1,0 +1,61 @@
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "manifest_version": 3,
+    "name": "Mendeley Web Importer",
+    "description": "__MSG_appDesc__",
+    "default_locale": "en",
+    "icons": {
+        "16": "assets/logo16.png",
+        "48": "assets/logo48.png",
+        "128": "assets/logo128.png"
+    },
+    "action": {
+        "default_icon": "assets/logo48.png",
+        "default_title": "Mendeley Web Importer"
+    },
+    "permissions": [
+        "notifications",
+        "scripting",
+        "storage",
+        "webRequest"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "commands": {
+        "_execute_action": {
+            "suggested_key": "Ctrl+Shift+L"
+        }
+    },
+    "incognito": "split",
+    "version": "3.2.88",
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "index.html",
+                "enhanced-reader.html",
+                "reader.js",
+                "reader-style.js",
+                "fonts/NexusSansWebPro-Bold.*",
+                "fonts/NexusSansWebPro-Regular.*",
+                "assets/logoTransparent.png"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

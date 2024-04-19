@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extension Injection Test</title>
+  <script>
+    console.log("Inline script within <head> executed.");
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #343a40;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    section {
+      padding: 50px 0;
+      text-align: center;
+    }
+
+    .bg-light {
+      background-color: #f8f9fa;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="bg-dark text-white py-4">
+    <div class="container text-center">
+      <h1 class="display-4">Testing the script injection capabilities of extensions...</h1>
+    </div>
+  </header>
+  <section id="main" class="py-5">
+    <script>
+      function __hook(object, property, tag) {
+        try {
+          function _hooked() {
+            return object[property].apply(this, arguments);
+          }
+          object[property] = _hooked;
+        } catch (e) { }
+      }
+      __hook(Array.prototype, "forEach", "Array.forEach");
+
+      console.log("Inline script within <body> executed.");
+    </script>
+    <div class="container text-center">
+      <div id="ext-type"></div>
+      <div id="inline">
+        <p id='inline-test'></p>
+      </div>
+      <div id="source">
+        <p id='source-test'></p>
+      </div>
+      <div id="bg">
+        <p id='bg-test'></p>
+      </div>
+      <div id="console">
+        <p id='console-msg'></p>
+      </div>
+    </div>
+  </section>
+  <script>
+    function checkExtension() {
+      if (window.mv3) {
+        document.getElementById('ext-type').innerHTML = "<b>MV3 Extension</b></br>";
+        document.getElementById('console-msg').innerHTML = "</br></br>Please check the console logs for the order of execution of scripts.";
+      }
+      else if (window.mv2) {
+        document.getElementById('ext-type').innerHTML = "<b>MV2 Extension</b></br>";
+        document.getElementById('console-msg').innerHTML = "</br></br>Please check the console logs for the order of execution of scripts.";
+      }
+      else {
+        document.getElementById('ext-type').innerHTML = "<b>The test extensions could not be detected! Please make sure they are installed and running.</b></br>";
+        return;
+      }
+      if (window.inlineInjection && window.inlineAPIView) {
+        document.getElementById('inline-test').innerHTML = '<p><b>Inline injection:</b> Inline script injection works!</br>Clean reference to JS API obtained.</p></br>';
+      } else {
+        if (window.inlineInjection) document.getElementById('inline-test').innerHTML = '<p><b>Inline injection:</b> Inline script injection works!</br>Clean reference to JS API <b>NOT</b> obtained.</p></br>';
+        else document.getElementById('inline-test').innerHTML = '<p><b>Inline injection:</b> Inline script injection does <b>NOT</b> work!</p></br>';
+      }
+      if (window.sourceInjection && window.sourceAPIView) {
+        document.getElementById('source-test').innerHTML = '<p><b>Script Src injection:</b> Script injection through script source property works!</br>Clean reference to JS API obtained.</p></br>';
+      } else {
+        if (window.sourceInjection) document.getElementById('source-test').innerHTML = '<p><b>Script Src injection:</b> Script injection through script source property works!</br>Clean reference to JS API <b>NOT</b> obtained.</p></br>';
+        else document.getElementById('source-test').innerHTML = '<p><b>Script Src injection:</b> Script injection through script source property does <b>NOT</b> work!</p></br>';
+      }
+      if (window.mv3) {
+        if (window.bgInjection && window.bgInjectAPIView) {
+          document.getElementById('bg-test').innerHTML = '<p><b>Script injection from extension background:</b> Script injection by extension background/service-worker works!</br>Clean reference to JS API obtained.</p></br>';
+        } else {
+          if (window.bgInjection) document.getElementById('bg-test').innerHTML = '<p><b>Script injection from extension background:</b> Script injection by extension background/service-worker works!</br>Clean reference to JS API <b>NOT</b> obtained.</p>';
+          else document.getElementById('bg-test').innerHTML = '<p><b>Script injection from extension background:</b> Script injection by extension background/service-worker does <b>NOT</b> work!</p>';
+        }
+      }
+    }
+    setTimeout(checkExtension, 100);
+  </script>
+
+  <footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+      <p>&copy; Raider</p>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+#SHOWHIDEPROVIDERS{display:block;margin-left:15px;}
+ul li, ul li:before, ul li:after {
+ //  box-sizing: border-box;
+   transition: 
+      background-color 400ms ease-out, 
+      border-color 400ms ease-out, 
+      color 400ms ease-out;
+      position:relative;
+}
+
+
+ul.sortable {
+
+   display: block; 
+   list-style: none; 
+   border:1px dashed #ccc;
+   border-radius: 1px;
+//   margin: 20px 0;
+   margin-left:5px;
+   padding: 5px;
+   
+   & > li {
+      display: block;
+      margin: 1px; 
+      padding: 10px;
+      border-radius: 4px;
+      cursor: move;
+      background: #fff;
+      &:hover {
+         background: #ffffe0;
+      }
+      &.active {
+         background: #ccc;
+      }
+      &.dragging {
+         opacity: 0.5;
+      }
+   }
+}
+
+
+
+ul.sortable li {
+  width: 162px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  text-align: center;
+  cursor: move;
+  height: 16px;
+  color: black;
+  background-color: #eee;
+  opacity:0.9;
+  padding: 5px;
+  margin:5px;
+  border-top: 1px dotted #ccc;
+  border-left: 1px dotted #ccc;
+  border-bottom: 1px dotted #ccc;
+  border-right: 15px solid #9C0304;
+  border-radius: 0px;
+  font-size:14px;
+}
+

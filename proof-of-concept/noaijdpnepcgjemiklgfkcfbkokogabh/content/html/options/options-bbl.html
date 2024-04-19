@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Pop-up Bubble Options</title>
+    <link rel="stylesheet" type="text/css" href="../../css/options.css">
+    <link rel="stylesheet" type="text/css" href="../../css/util.css">
+</head>
+<body id=SL_body_options>
+	    <div id="SL_frozen">
+		<table width="670" cellpadding="0" cellspacing="0" style="margin-top:5px">
+			<tr>
+				<td width="35"></td>
+				<td width="270" align=left valign=middle><div id="SL_ttl">Pop-up Bubble</div></td>
+				<td width="25"></td>
+				<td width="80">
+					<div id="SL_theme_ttl"></div>
+					<select name="SL_THEME" id="SL_THEME" tabindex="8">
+					    <option value="0" id="SL_theme_1"></option>
+					    <option value="1" id="SL_theme_2"></option>
+					</select>
+				</td>
+				<td width="25"></td>
+				<td width="190" align=left>
+					<div id="SL_il"></div>
+					<select name="SL_LOC" id="SL_LOC" tabindex="8">
+			            <option class="SL_opt" value="en">English</option>
+			            <option class="SL_opt" value="bg">Bulgarian - Български</option>
+			            <option class="SL_opt" value="zh">Chinese - 中文</option>
+			            <option class="SL_opt" value="zt">Chinese Trad - 中文繁體</option>
+			            <option class="SL_opt" value="cs">Czech - Čeština</option>
+			            <option class="SL_opt" value="nl">Dutch - Nederlands</option>
+			            <option class="SL_opt" value="tl">Filipino - Filipino</option>
+			            <option class="SL_opt" value="fr">French - Français</option>
+			            <option class="SL_opt" value="de">German - Deutsch</option>
+			            <option class="SL_opt" value="el">Greek - Ελληνικά</option>
+			            <option class="SL_opt" value="hi">Hindi - हिंदी</option>
+			            <option class="SL_opt" value="it">Italian - Italiano</option>
+			            <option class="SL_opt" value="ja">Japanese - 日本語</option>
+			            <option class="SL_opt" value="ko">Korean - 한국어</option>
+			            <option class="SL_opt" value="pl">Polish - Polski</option>
+			            <option class="SL_opt" value="pt">Portuguese - Português</option>
+			            <option class="SL_opt" value="ro">Romanian - Română</option>
+			            <option class="SL_opt" value="ru">Russian - Русский</option>
+			            <option class="SL_opt" value="sr">Serbian - Српски</option>
+			            <option class="SL_opt" value="sk">Slovak - Slovenčina</option>
+			            <option class="SL_opt" value="es">Spanish - Español</option>
+			            <option class="SL_opt" value="sv">Swedish - Svenska</option>
+			            <option class="SL_opt" value="tr">Turkish - Türkçe</option>
+			            <option class="SL_opt" value="uk">Ukrainian - Українська</option>
+			            <option class="SL_opt" value="vi">Vietnamese - Tiếng Việt</option>
+					</select>
+				</td>
+				<td width="0" align="right"><div id="SL_info" alt="Help" title="Help" style="position:absolute;margin-left:6px;"></div></td>
+			</tr>
+		</table>
+	    </div>
+ <div id="SL_AUTOKEYS"></div>
+ <div align=left id="SL_content">
+	<div id="SL_translate_container">
+	    <br><br><br>
+	    <div id="SL_HKdiv2"></div>
+	    <div id="SL_canvas">
+	    <table width=220><tr><td width=120><div class="SL_BG_op" id="SL_L_BOX" style='margin-top:8px'></div></td><td width=100 align=left><div id=SL_down></div><button id="SL_LNG_STATUS" tabindex="0"></button><div id='SL_down_box'></div></td></tr></table>
+	    <br>
+	    <div class="SL_BG_op">Pop-up Bubble: <span id="SL_BG_op"></span></div>
+		<table width="99%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td colspan=2>
+					<table width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td width="5%">
+								<input type="checkbox" id="SL_global_lng_bbl" name="SL_global_lng_bbl" value="0" tabindex="2">
+							</td>
+							<td width="95%"><span id="SL_setLS4allTr"></span></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2>
+				   <div style="margin-left:28px;">
+					<table width="99%" cellpadding="1" cellspacing="1">
+						<tr>
+							<td width="*" align=leftt nowrap><span id="SLSeSo"></span></td>
+							<td width="44%" align=left nowrap><select style="margin-left:10px;" name="langSrc_bbl" id="SL_langSrc_bbl" tabindex="1"></select></td>
+						</tr>
+						<tr>
+							<td width="*" align=left nowrap><span id="SLSeTa"></span></td>
+							<td width="44%" align=left nowrap><select style="margin-left:10px;" name="langDst_bbl" id="SL_langDst_bbl" tabindex="2"></select></td>
+						</tr>
+					</table>
+				    </div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2>
+				   <div style="margin-left:30px;">
+					<table width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td width="5%">
+								<input type="checkbox" id="SL_no_detect_bbl" name="SL_no_detect_bbl" value="0" tabindex="3">
+							</td>
+							<td width="95%"><span id="SL_DetSoLaAu"></span></td>
+						</tr>
+					</table>
+				    </div>
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<div class="SL_BG_op">Pop-up Bubble: <span id="SL_LIST_TR_PR"></span></div>
+		<table width="100%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="5%">
+					<input type="checkbox" id="SL_pr_bbl" name="SL_pr_bbl" value="0" tabindex="4">
+				</td>
+				<td width="95%"><span id="SL_SET_TR_PR"></span></td>
+			</tr>
+			<tr>
+				<td colspan=2>
+				   <div style="margin-left:30px;">
+					<table width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td width="5%">
+								<input type="checkbox" id="SL_OtherTr" name="SL_OtherTr" value="0" tabindex="4">
+							</td>
+							<td width="95%"><span id="SL_SHOWHIDE_TR_PR"></span></td>
+						</tr>
+					</table>
+					<div id="SHOWHIDEPROVIDERS">
+						<div id=SL_TR_PROVIDERS_BUILDER></div>
+					</div>
+				   </div>
+				</td>
+			</tr>
+		</table>	
+
+		<br><br>
+
+		<div class="SL_BG_op">Pop-up Bubble: <span id="SL_TR_op"></span></div>
+		<div style="margin-left:0px;">
+			<table width="100%" cellpadding="1" cellspacing="1">
+			    	<tr>
+				     	<td width="5%"><input type="checkbox" id="SL_ENABLE" name="SL_ENABLE" value="0" tabindex="4"></td>
+					<td colspan=2 id='SL_ENJECT' style="color:red"><span id="SL_enable"></span> Pop-up Bubble</td>
+				</tr>
+<!--
+				<tr>
+					<td colspan=3>		
+						<table width=200 cellspacing="0" cellpadding="0" border="0" style="margin-left:38px">
+							<tr>
+								<td>Offset:</td><td>X <input id=MoveBBLX maxlength=3 type=text value="0"> Y <input id=MoveBBLY maxlength=3 type=text value="0"></td>  
+							</tr>
+						</table>
+					</td>
+				</tr>
+-->
+				<tr>
+					<td width="1%"></td>
+					<td width="4%"><input type="checkbox" name="SL_dictionary" id="SL_dictionary" tabindex="5"></td>
+					<td nowrap width="96%"><span id="SL_enable_dict"></span></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="checkbox" id="SL_show_button_bbl" name="SL_show_button_bbl" value="0" tabindex="6"></td>
+					<td nowrap><span id="SL_STB"></span> <span id="SLDuring"></span><input id=timing maxlength=3 type=text value="3"><span id="SLSeconds"></span></td>
+				</tr>
+				<tr>
+					<td colspan=3>		
+						<table width=300 cellspacing="0" cellpadding="0" border="0" style="margin-left:59px">
+							<tr>
+								<td>Delay:</td><td><input id=DELAY maxlength=3 type=text value="0"></td>
+								<td>Offset:</td><td>X <input id=SLX maxlength=3 type=text value="0"> Y <input id=SLY maxlength=3 type=text value="0"></td>  
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="checkbox" id="SL_pin_bbl" name="SL_pin_bbl" value="0" tabindex="7"></td>
+					<td nowrap><span id="SL_Pin"></span></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="checkbox" id="SL_SaveText_box_bbl" name="SL_SaveText_box_bbl" value="0" tabindex="8"></td>
+					<td><span id="SL_SaveText_bbl"></span></td>
+				</tr>
+				<tr>
+					<td align=left colspan=3 nowrap>
+					   <div style="margin-left:38px">
+						<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						  <tr>
+						     <td nowrap width="35%"><span id="SL_ChFS"></span></td>
+						     <td nowrap width="3%"></td>
+						     <td colspan=2 align=left width="62%">
+							<select name="fontsize_bbl" id="SL_Fontsize_bbl" tabindex="8">
+							    <option value="14px" id="SL_FS_small"></option>
+							    <option value="16px" id="SL_FS_large"></option>
+							</select>
+						     </td>
+						  </tr>
+						</table>
+					    </div>	
+					</td>
+				</tr>
+			</table>
+		</div>
+ 		<br><br>
+		<div class="SL_BG_op" id="SL_HotKeys"><span id="SL_TR_op"></span></div>
+		<table width="95%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="5%"><input type="checkbox" id="SL_translation_mos_bbl" name="SL_translation_mos_bbl" value="1" checked tabindex="9"></td>
+				<td width="56%" align=left nowrap><span id="SL_TOMS"></span></td>
+				<td width="49%" align=left>
+					<div id="SL_HIDE5" class="SLHK1"></div>
+					<input type="text" class="SRV" id="SRV5" readonly placeholder="Not set" autocomplete="off">
+					<div class='SL_del' id="SL_del5" title="Auto Translate selected text"></div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2></td>
+				<td height="18" valign=top><div id="reset_all5" class="reset_icn"></div><div id="MSG5" class="SLMSG"></div></td>
+			</tr>
+
+			<tr>
+				<td><input type="checkbox" id="SL_translation_mos_bbl2" name="SL_translation_mos_bbl2" value="1" checked tabindex="10"></td>
+				<td align=left nowrap><span id="SL_CLOSE"></span></td>
+				<td align=left>
+					<div id="SL_HIDE6" class="SLHK1"></div>
+	 				<input type="text" class="SRV" id="SRV6" readonly placeholder="Not set" autocomplete="off"></td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2></td>
+				<td height="18" valign=top><div id="reset_all6" class="reset_icn"></div><div id="MSG6" class="SLMSG"></div></td>
+			</tr>
+
+		    	<tr>
+			     	<td><input type="checkbox" id="SL_DBL_bbl" name="SL_DBL_bbl" value="0" tabindex="12"></td>
+			     	<td nowrap colspan=4><span id="SL_DBL"></span></td>
+			</tr>
+		    	<tr>
+		     		<td><input type="checkbox" id="SL_FORSE_bbl" name="SL_FORSE_bbl" value="0" tabindex="13"></td>
+		     		<td nowrap colspan=4><span id="SL_FORSE"></span></td>
+		    	</tr>
+		</table>
+		<br><br>
+		<div class="SL_BG_op">Pop-up Bubble: <span id="SL_TrHi"></span></div>
+		<table width="100%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="5%"><input type="checkbox" id="SL_TH_2" name="SL_TH_2" value="0" tabindex="13"></td>
+				<td width="95%"><span id="SL_BblTH"></span></td>
+			</tr>
+		</table>
+	        <br><br>
+	        <div class="SL_footer2">
+		   &copy;2023 <a id="SL_copyright-link" href="https://about.imtranslator.net/about/company/" target="_blank" class="SL_about">Smart Link Corporation</a> &nbsp; <a href="https://about.imtranslator.net/terms-of-service/" class="SL_about" target="_blank">Terms of service</a> &nbsp; <a href="https://about.imtranslator.net/privacy-policy/" class="SL_about" target="_blank">Privacy policy</a>
+	        </div>
+	        <br>
+      </div>
+    </div>
+   </div>
+    <script type="text/javascript" src="../../js/common/FExtension.js"></script>
+    <script type="text/javascript" src="../../browser/js/FBrowserPopup.js"></script>
+    <script type="text/javascript" src="../../browser/chrome/FBrowserPopupChrome.js"></script>
+    <script type="text/javascript" src="../../js/options/ch/util.js?v=1"></script>
+    <script type="text/javascript" src="../../js/options/ch/providers.js?v=1"></script>
+    <script type="text/javascript" src="../../js/options/ch/options-bbl.js?v=1"></script>
+    <script type="text/javascript" src="../../js/options/ch/hkdata.js?v=1"></script>
+    <script type="text/javascript" src="../../js/common/ga.js?v=1"></script>
+  </body>
+</html>

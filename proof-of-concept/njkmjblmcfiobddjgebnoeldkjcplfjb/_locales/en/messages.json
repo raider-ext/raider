@@ -1,0 +1,583 @@
+{
+	"addon_lang":{
+		"message":"en",
+		"description":""
+	},
+	"addon_name":{
+		"message":"Trace - Online Tracking Protection",
+		"description":""
+	},
+	"addon_description":{
+		"message":"Browse online without leaving a Trace, because who wants to be tracked?",
+		"description":""
+	},
+
+
+	"miscMsgOffline":{
+		"message":"No internet connection available"
+	},
+	"miscMsgUiFail":{
+		"message":"Unable to load UI."
+	},
+	"miscMsgSettingError": {
+		"message": "An error occurred whilst changing the setting"
+	},
+	"miscMsgLoading":{
+		"message":"Loading..."
+	},
+	"miscMsgSaving":{
+		"message":"Saving..."
+	},
+	"miscMsgSending":{
+		"message":"Sending..."
+	},
+	"miscMsgPleaseWait":{
+		"message":"Please wait..."
+	},
+	"miscMsgUnblockOrigin":{
+		"message":"Unblock the Origin URL: "
+	},
+	"miscMsgUnblockPath":{
+		"message":"Unblock the URL path: "
+	},
+	"miscMsgUnblockHost":{
+		"message":"Unblock the Host URL: "
+	},
+	"miscMsgUnblockRoot":{
+		"message":"Unblock the Root Domain: "
+	},
+	"miscMsgWhitelistBlockSite": {
+		"message": "Block access to this site"
+	},
+	"miscMsgWhitelistAllowInitReq": {
+		"message": "Allow this site to make requests to blocked sites"
+	},
+	"miscCtrlEnabled":{
+		"message":"Enabled"
+	},
+	"miscCtrlDisabled":{
+		"message":"Disabled"
+	},
+	"miscCtrlModifyEntry":{
+		"message":"Modify"
+	},
+	"miscCtrlApplyEntry":{
+		"message":"Apply"
+	},
+	"miscCtrlCancel":{
+		"message":"Cancel"
+	},
+	"miscCtrlClose":{
+		"message":"Close"
+	},
+	"miscCtrlOkay":{
+		"message":"Okay"
+	},
+	"miscCtrlSave":{
+		"message":"Save"
+	},
+	"miscCtrlSaveClose":{
+		"message":"Save & Close"
+	},
+
+
+	"PrefNameAudioFingerprint": {
+		"message": "Audio Fingerprinting Protection"
+	},
+	"PrefNameBatteryApi": {
+		"message": "Battery API Protection"
+	},
+	"PrefNameCanvasFingerprint": {
+		"message": "Canvas Fingerprinting Protection"
+	},
+	"PrefNameClientRects": {
+		"message": "getClientRects Protection"
+	},
+	"PrefNameCommonTracking": {
+		"message": "Common Tracking Protection"
+	},
+	"PrefNameCookieEater": {
+		"message": "Cookie Eater"
+	},
+	"PrefNameETagTrack": {
+		"message": "E-Tag Tracking Protection"
+	},
+	"PrefNameGoogleHeader": {
+		"message": "Google Header Removal"
+	},
+	"PrefNameHardwareSpoof": {
+		"message": "Hardware Fingerprinting Protection"
+	},
+	"PrefNameIPSpoof": {
+		"message": "Proxy IP Header Spoofing"
+	},
+	"PrefNameNativeFunctions": {
+		"message": "JS functions"
+	},
+	"PrefNameNetworkInformation": {
+		"message": "Network Information API"
+	},
+	"PrefNamePingBlock": {
+		"message": "Ping Protection"
+	},
+	"PrefNamePluginHide": {
+		"message": "JS Plugin Hide"
+	},
+	"PrefNameReferHeader": {
+		"message": "Referer Controller"
+	},
+	"PrefNameScreenRes": {
+		"message": "Screen Resolution Tracking"
+	},
+	"PrefNameUserAgent": {
+		"message": "User-Agent Randomiser"
+	},
+	"PrefNameWebGLFingerprint": {
+		"message": "WebGL Fingerprinting Protection"
+	},
+	"PrefNameWebRTC": {
+		"message": "WebRTC Protection"
+	},
+
+	"advHomeMsgWelcomeLong":{
+		"message":"Welcome to the Trace Dashboard!"
+	},
+	"advHomeMsgWelcomeShort":{
+		"message":"Trace Dashboard"
+	},
+
+	"advHomePauseTitle": {
+		"message": "Pause Trace"
+	},
+	"advHomePauseDesc": {
+		"message": "When paused, all of Trace's protections will be disabled. When you restart your browser they will be turned back on."
+	},
+	"advHomePausePause": {
+		"message":"Pause"
+	},
+	"advHomePauseUnpause": {
+		"message":"Unpause"
+	},
+
+	"advHomeSessionTitle":{
+		"message": "Browsing Session"
+	},
+	"advHomeSessionDesc":{
+		"message": "Configure values that Trace will provide to websites for this browsing session."
+	},
+	"advHomeSessionConfig":{
+		"message": "Configure"
+	},
+
+	"advNavMenuToggle": {
+		"message": "Menu"
+	},
+
+	"advOverlayCtrlClose":{
+		"message":"Close",
+		"description":"button text for a trace overlay"
+	},
+
+	"advTraceCtrlWebsite":{
+		"message":"Website",
+		"description":"link to website"
+	},
+	"advPremiumCtrlBuy":{
+		"message":"Get Premium Code",
+		"description":"button text for premium purchase"
+	},
+	"advPremiumCtrlDisable":{
+		"message":"Disable Premium",
+		"description":"button text for premium removal"
+	},
+	"advPremiumMsgHelp":{
+		"message":"Trace Premium Help",
+		"description":"content text title for premium help messages"
+	},
+	"advPremiumMsgTitle":{
+		"message":"Trace Premium",
+		"description":"content text title for premium messages"
+	},
+	"advPremiumMsgThanks":{
+		"message":"Thank you for supporting Trace!",
+		"description":"content text for when user has premium active"
+	},
+	"advPremiumMsgRequired":{
+		"message":"This setting requires premium",
+		"description":"content text for when user does not have premium"
+	},
+
+	"advSessionTitle": {
+		"message": "Trace Browsing Session"
+	},
+
+	"advSettingsCtrlEnabled":{
+		"message":"Enabled",
+		"description":"setting enabled/disabled toggle"
+	},
+	"advSettingsCtrlDisabled":{
+		"message":"Disabled",
+		"description":"setting enabled/disabled toggle"
+	},
+	"advSettingsMsgDisabled":{
+		"message":"This setting isn't currently enabled"
+	},
+	"advSettingsMsgSwitch":{
+		"message":"When the switch is green, the protection is enabled."
+	},
+	"advSettingsMsgImmediate":{
+		"message":"Changes to these settings should take place immediately"
+	},
+	"advSettingsRunsAllPages":{
+		"message":"Runs by default"
+	},
+	"advSettingsRunsPerPage":{
+		"message":"Runs when enabled"
+	},
+
+	"advStatsGraphTodayTotal":{
+		"message":"Today's total statistics",
+		"description":"title of graph"
+	},
+	"advStatsGraphTodayType":{
+		"message":"Today's total statistics",
+		"description":"title of graph"
+	},
+
+	"advBackupMsgTitle":{
+		"message":"Backup/Restore Settings"
+	},
+	"advBackupCtrlCreate":{
+		"message":"Download Backup"
+	},
+	"advRestoreMsgTitle":{
+		"message":"Restore a backup"
+	},
+	"advRestoreMsgSubhead":{
+		"message":"You are about to restore a backup..."
+	},
+	"advRestoreMsgInvalid":{
+		"message":"This file isn't a valid Trace Backup."
+	},
+
+	"advBlocklistConfTitle": {
+		"message": "Trace Blocklist Customiser"
+	},
+	"advBlocklistConfSearchBox": {
+		"message": "Search lists"
+	},
+	"advBlocklistConfListDefault": {
+		"message": "Default List"
+	},
+	"advBlocklistConfListOptional": {
+		"message": "Optional List"
+	},
+	"advBlocklistConfListPremium": {
+		"message": "Premium List"
+	},
+
+	"advSettCanvasCustomSubhead":{
+		"message": "If you don't use custom RGBA values then random ones will be generated at each page load."
+	},
+	"advSettCanvasCustomRgba":{
+		"message": "Use custom RGBA values specified below"
+	},
+
+	"advSettHardwareBlockVr":{
+		"message": "Block VR API"
+	},
+	"advSettHardwareBlockGamepad":{
+		"message": "Block Gamepad API"
+	},
+	"advSettHardwareCountCpu":{
+		"message": "Spoof CPU Core Count"
+	},
+	"advSettHardwareCountRam":{
+		"message": "Spoof RAM amount"
+	},
+
+	"advSettScreenResAddSubhead":{
+		"message": "Use this to specify resolutions that will be provided, one will randomly be chosen at each page reload. Click a resolution to delete it."
+	},
+	"advSettScreenResEmptyListHead": {
+		"message": "No Resolutions in list."
+	},
+	"advSettScreenResEmptyListSubhead": {
+		"message": "Protection will not work unless you specify a resolution"
+	},
+	"advSettScreenResAddWidth":{
+		"message": "Width (px)"
+	},
+	"advSettScreenResAddHeight":{
+		"message": "Height (px)"
+	},
+	"advSettScreenResAddDepth":{
+		"message": "Depth (px)"
+	},
+	"advSettScreenResAddButton":{
+		"message": "Add Resolution"
+	},
+	"advSettScreenResAddCommon":{
+		"message": "Add Common Resolutions"
+	},
+	"advSettScreenResClearList":{
+		"message": "Clear List"
+	},
+
+	"advSettWebglGpuSubhead": {
+		"message": "Below you can add specific GPU models to be selected by Trace, if you don't add any, Trace's built in list will be used."
+	},
+	"advSettWebglGpuEmptyListHead": {
+		"message": "No GPUs in list."
+	},
+	"advSettWebglGpuAddButton":{
+		"message": "Add GPU"
+	},
+	"advSettWebglGpuAddCommon":{
+		"message": "Import Trace's List"
+	},
+	"advSettWebglGpuClearList":{
+		"message": "Clear List"
+	},
+
+
+	"advWhitelistListSearch": {
+		"message": "Search..."
+	},
+	"advWhitelistListRefresh": {
+		"message": "Refresh List"
+	},
+	"advWhitelistListClear": {
+		"message": "Clear List"
+	},
+	"advWhitelistListTest": {
+		"message": "Test URL"
+	},
+	"advWhitelistListAdd": {
+		"message": "Add Entry"
+	},
+	"advWhitelistListRemove": {
+		"message": "Remove Entry"
+	},
+	"advWhitelistListEdit": {
+		"message": "Edit Entry"
+	},
+	"advWhitelistListImport": {
+		"message": "Import/Export"
+	},
+	"advWhitelistListHelp": {
+		"message": "I Need Help"
+	},
+
+	"advWhitelistListClearConfirm": {
+		"message": "Are you sure you wish to clear the entire list?"
+	},
+	"advWhitelistListNoEntries": {
+		"message": "Whitelist contains no entries."
+	},
+
+	"advWhitelistEditorProtections": {
+		"message": "Click a protection to change whether it runs or not"
+	},
+
+	"advWhitelistAddTitle": {
+		"message": "Add entry to list"
+	},
+
+	"advWhitelistEditTitle": {
+		"message": "Edit whitelist entry"
+	},
+
+	"advWhitelistTestTitle": {
+		"message": "Test List"
+	},
+
+	"advWhitelistHelpTitle": {
+		"message": "Whitelist Help"
+	},
+	"advWhitelistHelpSubhead": {
+		"message": "If you don't find what you're looking for here, please email me"
+	},
+
+	"advWhitelistImportTitle": {
+		"message": "Import/Export Whitelist"
+	},
+
+
+	"tutSettingsTitle": {
+		"message": "Introduction to Trace's settings"
+	},
+	"tutRequestsTitle": {
+		"message": "Trace's Request Settings"
+	},
+	"tutWhitelistTitle": {
+		"message": "Whitelist Options"
+	},
+
+
+	"mainNavProtection":{
+		"message":"Protection",
+		"description":""
+	},
+	"mainNavSiteList":{
+		"message":"Site List",
+		"description":""
+	},
+	"mainNavAdvanced":{
+		"message":"Advanced",
+		"description":""
+	},
+	"mainNavAbout":{
+		"message":"About",
+		"description":""
+	},
+
+	"mainTitleProtection":{
+		"message":"Trace Dashboard",
+		"description":""
+	},
+	"mainTitlePresets":{
+		"message":"Trace Protection Level",
+		"description":""
+	},
+	"mainTitleSiteList":{
+		"message":"Site List",
+		"description":""
+	},
+	"mainSubTitleProtection":{
+		"message":"Welcome to the new settings page",
+		"description":""
+	},
+	"mainSubTitlePresets":{
+		"message":"Global protection level for all websites",
+		"description":""
+	},
+  	"mainSubTitleSiteList":{
+		"message":"Set a custom protection level for a website",
+		"description":""
+  	},
+
+  	"mainCardTitleDisabled": {
+	  	"message":"No Protection"
+	},
+  	"mainCardTitleWeb": {
+	  	"message":"Website Blocking"
+	},
+  	"mainCardTitlePremium": {
+	  	"message":"Trace Premium"
+	},
+  	"mainCardTitleLow": {
+	  	"message":"Minimum"
+	},
+  	"mainCardTitleMedium": {
+	  	"message":"Standard"
+	},
+  	"mainCardTitleHigh": {
+	  	"message":"High"
+	},
+  	"mainCardTitleExtreme": {
+	  	"message":"Extreme"
+	},
+  	"mainCardTitleCustom": {
+	  	"message":"Custom"
+	},
+
+  	"mainCardDescDisabled": {
+	  	"message":"When paused, all of Trace's protections will be disabled. When you restart your browser they will be turned back on."
+	},
+  	"mainCardDescWeb": {
+	  	"message":"This will enable Trace to block trackers, malicious domains and clean URLs of tracking information."
+	},
+  	"mainCardDescPremium": {
+	  	"message":"Get access to Premium blocklists and support Trace's development by buying Trace Premium."
+	},
+  	"mainCardDescLow": {
+	  	"message":"Lowest level of tracking protection. Better than nothing?"
+	},
+  	"mainCardDescMedium": {
+	  	"message":"Default level of tracking protection."
+	},
+  	"mainCardDescHigh": {
+	  	"message":"A heightened level of tracking protection. Websites may break some times as a result of some protections here."
+	},
+  	"mainCardDescExtreme": {
+	  	"message":"A very high level of tracking protection. Almost all protections are enabled, which can cause websites to break."
+	},
+  	"mainCardDescCustom": {
+	  	"message":"Control each Trace setting individually, including ones that are not included in these presets."
+	},
+
+  	"mainCardCtrlPause": {
+	  	"message":"Pause"
+	},
+  	"mainCardCtrlUnpause": {
+	  	"message":"Unpause"
+	},
+  	"mainCardCtrlWeb": {
+	  	"message":"Configure"
+	},
+  	"mainCardCtrlPremium": {
+	  	"message":"Options"
+	},
+  	"mainCardCtrlSelect": {
+	  	"message":"Click to select this preset"
+	},
+  	"mainCardCtrlSelected": {
+	  	"message":"This preset is selected"
+	},
+
+  	"mainSiteListSearchPlaceholder": {
+	  	"message":"Search..."
+	},
+  	"mainSiteListAddPlaceholder": {
+	  	"message":"Add URL to list"
+	},
+  	"mainSiteListSliderNone": {
+	  	"message":"Current Setting: None"
+	},
+  	"mainSiteListSliderLow": {
+	  	"message":"Current Setting: Low"
+	},
+  	"mainSiteListSliderMedium": {
+	  	"message":"Current Setting: Medium"
+	},
+  	"mainSiteListSliderHigh": {
+	  	"message":"Current Setting: High"
+	},
+  	"mainSiteListSliderExtreme": {
+	  	"message":"Current Setting: Extreme"
+	},
+  	"mainSiteListSliderCustom": {
+	  	"message":"Current Setting: Custom"
+	},
+
+
+	"popMiscMsgUnsupported":{
+		"message":"Unsupported URL"
+	},
+	"popNavCtrlPause":{
+		"message":"Pause Trace"
+	},
+	"popNavCtrlUnpause":{
+		"message":"Unpause Trace"
+	},
+	"popNavCtrlWhitelist":{
+		"message":"Temporarily Whitelist"
+	},
+	"popNavCtrlUnwhitelist":{
+		"message":"Unwhitelist"
+	},
+	"popHomeMsgNoHeaderEnabled":{
+		"message":"No Header Protections Enabled"
+	},
+	"popHomeMsgNoHeaderUsed":{
+		"message":"No Header Protections Used In This Tab"
+	},
+
+	"popReportMsgSuccess":{
+		"message":"Report Successful"
+	},
+	"popReportMsgFail":{
+		"message":"Report Sending Failed"
+	}
+}

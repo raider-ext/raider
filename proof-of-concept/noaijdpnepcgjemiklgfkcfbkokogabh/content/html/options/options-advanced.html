@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced ImTranslator</title>
+    <link rel="stylesheet" type="text/css" href="../../css/options.css">
+    <link rel="stylesheet" type="text/css" href="../../css/upload.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body id=SL_body_options>
+    <div id="SL_frozen">
+	<table width="670" cellpadding="0" cellspacing="0" style="margin-top:5px">
+		<tr>
+			<td width="35"></td>
+			<td width="270" align=left valign=middle><div id="SL_ttl"></div></td>
+			<td width="25"></td>
+			<td width="80">
+				<div id="SL_theme_ttl"></div>
+				<select name="SL_THEME" id="SL_THEME" tabindex="8">
+				    <option value="0" id="SL_theme_1"></option>
+				    <option value="1" id="SL_theme_2"></option>
+				</select>
+			</td>
+			<td width="25"></td>
+			<td width="190" align=left>
+				<div id="SL_il"></div>
+				<select name="SL_LOC" id="SL_LOC" tabindex="8">
+			            <option class="SL_opt" value="en">English</option>
+			            <option class="SL_opt" value="bg">Bulgarian - Български</option>
+			            <option class="SL_opt" value="zh">Chinese - 中文</option>
+			            <option class="SL_opt" value="zt">Chinese Trad - 中文繁體</option>
+			            <option class="SL_opt" value="cs">Czech - Čeština</option>
+			            <option class="SL_opt" value="nl">Dutch - Nederlands</option>
+			            <option class="SL_opt" value="tl">Filipino - Filipino</option>
+			            <option class="SL_opt" value="fr">French - Français</option>
+			            <option class="SL_opt" value="de">German - Deutsch</option>
+			            <option class="SL_opt" value="el">Greek - Ελληνικά</option>
+			            <option class="SL_opt" value="hi">Hindi - हिंदी</option>
+			            <option class="SL_opt" value="it">Italian - Italiano</option>
+			            <option class="SL_opt" value="ja">Japanese - 日本語</option>
+			            <option class="SL_opt" value="ko">Korean - 한국어</option>
+			            <option class="SL_opt" value="pl">Polish - Polski</option>
+			            <option class="SL_opt" value="pt">Portuguese - Português</option>
+			            <option class="SL_opt" value="ro">Romanian - Română</option>
+			            <option class="SL_opt" value="ru">Russian - Русский</option>
+			            <option class="SL_opt" value="sr">Serbian - Српски</option>
+			            <option class="SL_opt" value="sk">Slovak - Slovenčina</option>
+			            <option class="SL_opt" value="es">Spanish - Español</option>
+			            <option class="SL_opt" value="sv">Swedish - Svenska</option>
+			            <option class="SL_opt" value="tr">Turkish - Türkçe</option>
+			            <option class="SL_opt" value="uk">Ukrainian - Українська</option>
+			            <option class="SL_opt" value="vi">Vietnamese - Tiếng Việt</option>
+				</select>
+			</td>
+			<td width="0" align="right"><div id="SL_info" alt="Help" title="Help" style="position:absolute;margin-left:6px;"></div></td>
+		</tr>
+	</table>
+    </div>
+ <div id="SL_AUTOKEYS"></div>
+ <div align=left id="SL_content">
+  <div id="SL_translate_container">
+    <br><br><br>
+    <select style="display:none" name="langSrc_bbl" id="SL_langSrc"></select>
+    <select style="display:none" name="langSrc_bbl" id="SL_langDst"></select>
+    <div id="SL_canvas">
+	    <table width=220><tr><td width=120><div class="SL_BG_op" id="SL_L_BOX" style='margin-top:8px'></div></td><td width=100 align=left><div id=SL_down></div><button id="SL_LNG_STATUS" tabindex="0"></button><div id='SL_down_box'></div></td></tr></table>
+	    <br>
+	    <div class="SL_BG_op" id="SL_PDOM"></div>
+	      <div style="margin-left:13px">
+		<table width="300" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="*" align='left' nowrap><span id='SL_UDOM'></span>:</td>
+				<td width="100" align='left' nowrap>translate.google.</td>
+				<td width="75" align='left'>
+				    <select name="SL_DOM" id="SL_DOM" tabindex="8">
+					    <option value="auto">* (auto)</option>
+					    <option value="com">com</option>
+					    <option value="ca">ca (Canada)</option>
+					    <option value="com.hk">com.hk (香港)</option>
+					    <option value="com.tr">com.tr (Türkiye)</option>
+					    <option value="com.tw">com.tw (台灣)</option>
+					    <option value="com.ua">com.ua (Україна)</option>
+					    <option value="com.vn">com.vn (Việt Nam)</option>
+					    <option value="co.in">co.in (India)</option>
+					    <option value="co.jp">co.jp (日本)</option>
+					    <option value="co.kr">co.kr (한국)</option>
+					    <option value="co.uk">co.uk (UK)</option>
+					    <option value="cn">cn (中国)</option>
+					    <option value="de">de (Deutschland)</option>
+					    <option value="fr">fr (France)</option>
+					    <option value="it">it (Italia)</option>
+					    <option value="pl">pl (Polska)</option>
+					    <option value="ru">ru (Россия)</option>
+				    </select>
+				</td>
+			</tr>
+
+		 </table>
+	      </div>
+	     <br><br>
+	    <div class="SL_BG_op" id="SL_BG_op"></div>
+	      <div style="margin-left:13px">
+		<table width="100%" cellpadding="1" cellspacing="1">
+			<tr>
+				<td width="15%" align='left' nowrap><span id='SL_ADVuse'></span>&nbsp;</td>
+				<td width="5%" align='left'>
+					<select name="SL_SLVoiceState" id="SL_SLVoiceState" tabindex="8">
+					    <option value="0" id="SL_SLVoice0"></option>
+					    <option value="1" id="SL_SLVoice1"></option>
+					    <option value="2" id="SL_SLVoice2"></option>
+					</select>
+				</td>
+				<td width="100%">&nbsp;</td>
+			</tr>
+
+		 </table>
+	      </div>
+	     <br><br>
+	     <div class="SL_BG_op"><span id="SL_tb"></span></div>
+	     <table cellpadding="1" cellspacing="1" width="450" style='margin-top:8px;margin-left:10px'>
+		<tr>
+			<td width="20"><input type="radio" id="imtranslator1" name="MAINtranslator" value="1"></td>
+			<td width="430" align=left>ImTranslator</td>
+		</tr>
+		<tr>
+			<td><input type="radio" id="imtranslator2" name="MAINtranslator" value="0"></td>
+			<td align=left>Inline Translator</td>
+		</tr>
+		<tr>
+			<td><input type="radio" id="imtranslator3" name="MAINtranslator" value="0"></td>
+			<td align=left>Pop-up Bubble Translator</td>
+		</tr>
+		<tr>
+			<td><input type="radio" id="imtranslator4"  name="MAINtranslator" value="0"></td>
+			<td align=left>Webpage Translation</td>
+		</tr>
+		<tr>
+			<td><input type="radio" id="imtranslator5"  name="MAINtranslator" value="0"></td>
+			<td align=left>Mouseover Translation</td>
+		</tr>
+
+	     </table>
+	     <br><br>
+	     <div class="SL_BG_op"><span id="SL_cm"></span></div>
+	     <table width="450"  cellpadding="1" cellspacing="1" style='margin-top:8px;margin-left:10px;'>
+		 <tr>
+		     <td width="5%"><input type="checkbox" id="Context1" /></td>
+		     <td width="95%">ImTranslator</td>
+		 </tr>
+		 <tr>
+		     <td><input type="checkbox" id="Context2" /></td>
+		     <td>Inline Translator</td>
+		 </tr>
+	         <tr>
+		     <td><input type="checkbox" id="Context3" /></td>
+		     <td>Pop-up Bubble Translator</td>
+		 </tr>
+		 <tr>
+		     <td><input type="checkbox" id="Context4" /></td>
+		     <td>Webpage Translation</td>
+		 </tr>
+		 <tr>
+		     <td><input type="checkbox" id="Context5" /></td>
+		     <td>Mouseover Translation</td>
+		 </tr>
+		 <tr>
+		     <td><input type="checkbox" id="Context6" /></td>
+		     <td><span id="SL_chl"></span></td>
+		 </tr>
+		 <tr>
+		     <td><input type="checkbox" id="Context7" /></td>
+		     <td><span id="SL_cltr"></span></td>
+		 </tr>
+	     </table>
+	     <br><br>
+	     <div class="SL_BG_op"><span id="BARO"></span></div>
+	     <div class="SL_footer" style="margin-left:11px">
+		 	<table width="99%">
+				<tr>
+					<td width="25%" align=center>
+						<div id="SL_EXPO" style="cursor:alias" onclick="SL_export();">
+							<input type="button" id="upload" class="upload_button" value="Backup" name="upload" />
+						</div>
+					</td>
+					<td width="50%" align=center>
+						<div id="SL_IMPO" style="cursor:copy">
+							<label for="SL_files" id="SL_restore_lable" class="custom-file-upload">Restore</label><input id="SL_files" name="files[]" type="file"/>
+						</div>
+					</td>
+					<td width="25%" align=center>					
+						<div id="SL_DEFAULT" style="cursor:copy">
+							<input type="button" id="SL_reset" class="upload_button" value="Reset to default" name="rtd" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan=3 align=center height=30>
+						<div id="SL_upload_error"></div>
+					</td>
+				</tr>
+			</table>
+	     </div>	
+     <br><br>
+
+     <div class="SL_footer2">
+	   &copy;2023 <a id="SL_copyright-link" href="https://about.imtranslator.net/about/company/" target="_blank" class="SL_about">Smart Link Corporation</a> &nbsp; <a href="https://about.imtranslator.net/terms-of-service/" class="SL_about" target="_blank">Terms of service</a> &nbsp; <a href="https://about.imtranslator.net/privacy-policy/" class="SL_about" target="_blank">Privacy policy</a>
+     </div>
+     <br>
+   </div>
+  </div>
+ </div>
+ <script type="text/javascript" src="../../js/common/FExtension.js"></script>
+ <script type="text/javascript" src="../../browser/js/FBrowserPopup.js"></script>
+ <script type="text/javascript" src="../../browser/chrome/FBrowserPopupChrome.js"></script>
+ <script type="text/javascript" src="../../js/options/ch/util.js?v=1"></script>
+ <script type="text/javascript" src="../../js/options/ch/options-advanced.js?v=1"></script>
+ <script type="text/javascript" src="../../js/options/ch/filereader.js?v=1"></script>
+ <script type="text/javascript" src="../../js/common/ga.js?v=1"></script>
+ </body>
+</html>

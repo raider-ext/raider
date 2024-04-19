@@ -1,0 +1,13 @@
+<svg width="39" height="37" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="32" height="32" rx="8" fill="#F4F4F4"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21.925 23.0205C21.925 23.2945 21.7 23.5 21.4 23.5H10.525C10.225 23.5 10 23.2945 10 23.0205V8.97945C10 8.70548 10.225 8.5 10.525 8.5H21.4C21.7 8.5 21.925 8.70548 21.925 8.97945V23.0205Z" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.9248 11.4248H18.9248" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.1748 15.9248H16.6748" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.9248 15.9248H19.6748" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.1748 18.1748H16.6748" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.9248 18.1748H19.6748" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.1748 20.4248H16.6748" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.9248 20.4248H19.6748" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="31" cy="29" r="7" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M38.3332 29.0003C38.3332 33.0504 35.0499 36.3337 30.9998 36.3337C26.9497 36.3337 23.6665 33.0504 23.6665 29.0003C23.6665 24.9502 26.9497 21.667 30.9998 21.667C35.0499 21.667 38.3332 24.9502 38.3332 29.0003ZM28.222 26.2225C28.4905 25.954 28.9258 25.954 29.1943 26.2225L30.9998 28.0281L32.8054 26.2225C33.0739 25.954 33.5092 25.954 33.7776 26.2225C34.0461 26.491 34.0461 26.9263 33.7776 27.1948L31.9721 29.0003L33.7776 30.8059C34.0461 31.0743 34.0461 31.5096 33.7776 31.7781C33.5092 32.0466 33.0739 32.0466 32.8054 31.7781L30.9998 29.9726L29.1943 31.7781C28.9258 32.0466 28.4905 32.0466 28.222 31.7781C27.9535 31.5096 27.9535 31.0743 28.222 30.8059L30.0276 29.0003L28.222 27.1948C27.9535 26.9263 27.9535 26.491 28.222 26.2225Z" fill="#D9475A"/>
+</svg>

@@ -1,0 +1,10 @@
+{
+  "appDesc": {
+    "message": "方便、快捷地將參考文獻和PDF導入到Mendeley 引文管理工具庫"
+  },
+  "pleaseDoNotCloseAnyExternalWindowsThatPopUpDuringTheSignInProcess": {
+    "message": "登入過程中，請不要關掉任何跳出的新視窗."
+  },
+  "signingInToMendeleyWebImporter": { "message": "登入Mendeley Web Importer" },
+  "thisMayTakeAFewSeconds": { "message": "請等候數秒." }
+}

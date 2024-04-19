@@ -1,0 +1,1 @@
+importScripts("dist/background.js"),chrome.runtime.setUninstallURL("https://flash2022.com/contact"),chrome.runtime.onInstalled.addListener((e=>{"install"===e.reason&&chrome.tabs.create({url:"https://flash2022.com/install"})})),chrome.storage.local.get(["ruffleEnable"],(e=>{void 0===e.ruffleEnable&&chrome.storage.local.set({ruffleEnable:!0})}));

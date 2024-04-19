@@ -1,0 +1,320 @@
+{
+    "appDesc": {
+        "message": "Importação rápida e conveniente de referências e PDFs para sua biblioteca no Mendeley Reference Manager."
+    },
+    "thisExtensionUsesCookiesCollectsTechnicalAndUsageDataAndRequiresBrowserPermissionsToProvideServiceToYou": {
+        "message": "Esta extensão se utiliza de cookies, coleta dados técnicos e de utilização e requer permissões do navegador para fornecer serviços para você."
+    },
+    "forMoreInformationPleaseReferToThe": {
+        "message": "Para mais informações, por favor consulte"
+    },
+    "privacyPolicy": {
+        "message": "Política de Privacidade"
+    },
+    "signIn": {
+        "message": "Acessar"
+    },
+    "cantSignIn": {
+        "message": "Não consegue acessar?"
+    },
+    "dontHaveAnAccount": {
+        "message": "Não tem uma conta?"
+    },
+    "selectAll": {
+        "message": "Selecionar tudo"
+    },
+    "myLibrary": {
+        "message": "Minha biblioteca"
+    },
+    "addToMendeley": {
+        "message": "Adicionar"
+    },
+    "add": {
+        "message": "Adicionar"
+    },
+    "addPdfsIfAvailable": {
+        "message": "Adicionar PDFs se disponíveis"
+    },
+    "reference": {
+        "message": "referência"
+    },
+    "references": {
+        "message": "referências"
+    },
+    "more": {
+        "message": "mais"
+    },
+    "detectedOnPage": {
+        "message": "encontrados na página"
+    },
+    "viewPdf": {
+        "message": "Visualizar PDF"
+    },
+    "pdfNotFound": {
+        "message": "PDF não encontrado"
+    },
+    "viewLibrary": {
+        "message": "Visualizar biblioteca"
+    },
+    "viewPdfInLibrary": {
+        "message": "Visualizar PDF na bibilioteca"
+    },
+    "addReferencesTo": {
+        "message": "Adicionar referências a"
+    },
+    "collections": {
+        "message": "Coleções"
+    },
+    "searchCollections": {
+        "message": "Buscar coleções"
+    },
+    "privateGroups": {
+        "message": "Grupos privados"
+    },
+    "publicGroups": {
+        "message": "Grupos públicos"
+    },
+    "searchGroups": {
+        "message": "Buscar grupos"
+    },
+    "searchCollectionsAndGroups": {
+        "message": "Buscar coleções e grupos"
+    },
+    "recentlyUsed": {
+        "message": "Recentemente utilizados"
+    },
+    "clearAll": {
+        "message": "Limpar todos"
+    },
+    "backToList": {
+        "message": "Voltar a lista"
+    },
+    "signOut": {
+        "message": "Deslogar"
+    },
+    "supportCenter": {
+        "message": "Central de ajuda"
+    },
+    "ifYouAreHavingIssuesUsingTheWebImporterYouCanContactUs": {
+        "message": "Se você estiver com problemas para utilizar o Web Import você pode nos contactar"
+    },
+    "sendFeedback": {
+        "message": "Enviar feedback"
+    },
+    "webImporterHelpGuide": {
+        "message": "Web Importer guia de suporte"
+    },
+    "releaseNotes": {
+        "message": "Notas de lançamento"
+    },
+    "submitATranslation": {
+        "message": "Envie uma tradução"
+    },
+    "referenceType": {
+        "message": "Tipo de referência"
+    },
+    "bill": {
+        "message": "Projeto de lei"
+    },
+    "book": {
+        "message": "Livro"
+    },
+    "bookSection": {
+        "message": "Seção do livro"
+    },
+    "case": {
+        "message": "Caso"
+    },
+    "computerProgram": {
+        "message": "Programa de Computador"
+    },
+    "conferenceProceedings": {
+        "message": "Anais da conferência"
+    },
+    "encyclopedia": {
+        "message": "Enciclopédia"
+    },
+    "encyclopediaArticle": {
+        "message": "Artigo de Enciclopédia"
+    },
+    "film": {
+        "message": "Filme"
+    },
+    "hearing": {
+        "message": "Audiência"
+    },
+    "journalArticle": {
+        "message": "Artigo de periódico"
+    },
+    "magazineArticle": {
+        "message": "Artigo de revista"
+    },
+    "newspaperArticle": {
+        "message": "Artigo de jornal"
+    },
+    "patent": {
+        "message": "Patente"
+    },
+    "report": {
+        "message": "Relatório"
+    },
+    "statute": {
+        "message": "Estatuto"
+    },
+    "televisionBroadcast": {
+        "message": "Transmissão televisiva"
+    },
+    "thesis": {
+        "message": "Tese"
+    },
+    "unspecified": {
+        "message": "Não especificado"
+    },
+    "webPage": {
+        "message": "Página da web"
+    },
+    "workingPaper": {
+        "message": "Artigo em revisão"
+    },
+    "cancelEdits": {
+        "message": "Cancelar edição"
+    },
+    "title": {
+        "message": "Título"
+    },
+    "authors": {
+        "message": "Autores"
+    },
+    "journal": {
+        "message": "Periódico"
+    },
+    "authorKeywords": {
+        "message": "Palavras-chave de autores"
+    },
+    "editors": {
+        "message": "Editores"
+    },
+    "publication": {
+        "message": "Publicação"
+    },
+    "publicationDetails": {
+        "message": "Detalhes de publicação"
+    },
+    "year": {
+        "message": "Ano"
+    },
+    "month": {
+        "message": "Mês"
+    },
+    "day": {
+        "message": "Dia"
+    },
+    "pages": {
+        "message": "Páginas"
+    },
+    "abstract": {
+        "message": "Resumo"
+    },
+    "websites": {
+        "message": "Websites"
+    },
+    "dateAccessed": {
+        "message": "Data acessada"
+    },
+    "identifiers": {
+        "message": "Identificador"
+    },
+    "reporter": {
+        "message": "Relator"
+    },
+    "city": {
+        "message": "Cidade"
+    },
+    "institution": {
+        "message": "Instituição"
+    },
+    "department": {
+        "message": "Departamento"
+    },
+    "issuer": {
+        "message": "Emissor"
+    },
+    "inventors": {
+        "message": "Inventores"
+    },
+    "legislativeBody": {
+        "message": "Câmara"
+    },
+    "number": {
+        "message": "Número"
+    },
+    "statuteNumber": {
+        "message": "Número do estatuto"
+    },
+    "source": {
+        "message": "Fonte"
+    },
+    "chapter": {
+        "message": "Capítulo"
+    },
+    "volume": {
+        "message": "Volume"
+    },
+    "issue": {
+        "message": "Número"
+    },
+    "edition": {
+        "message": "Edição"
+    },
+    "series": {
+        "message": "Séries"
+    },
+    "publisher": {
+        "message": "Editor"
+    },
+    "version": {
+        "message": "Versão"
+    },
+    "directors": {
+        "message": "Diretores"
+    },
+    "distributor": {
+        "message": "Distribuidor"
+    },
+    "lastName": {
+        "message": "Sobrenome"
+    },
+    "firstName": {
+        "message": "Nome"
+    },
+    "enterKeywordsSeparatedByCommas": {
+        "message": "Entre as palavras-cahve separadas por vírgula"
+    },
+    "enterAuthorsOnSeparateLines": {
+        "message": "Entre os autores em linhas separadas"
+    },
+    "enterEditorsOnSeparateLines": {
+        "message": "Entre editores em linhas separadas"
+    },
+    "enterURLsOnSeparateLines": {
+        "message": "Entre URLs em linhas separadas"
+    },
+    "checkingForPdf": {
+        "message": "Procurando PDF…"
+    },
+    "cannotImportPdf": {
+        "message": "Impossível importar PDF"
+    },
+    "mendeleyWebImporterCannotAccessLocalFilesOnYourComputer": {
+        "message": "Mendeley Web Importer não pode aceder a arquivos locais em seu computador"
+    },
+    "adding": { "message": "Adicionando…" },
+    "editReference": {"message": "Editar referência"},
+    "settings": {"message": "Configurações"},
+    "displayPopUp": {"message": "Exibir o  botão ‘Visualizar PDF’ como pop-up quando o PDF está localizado em uma página web"},
+    "pleaseDoNotCloseAnyExternalWindowsThatPopUpDuringTheSignInProcess": {
+        "message": "Por favor não feche nenhuma janela externa que apareça durante o processo de iniciar sessão."
+      },
+      "signingInToMendeleyWebImporter": { "message": "Iniciando sessão no Mendeley Web Importer" },
+      "thisMayTakeAFewSeconds": { "message": "Isto pode demorar alguns segundos." }
+}

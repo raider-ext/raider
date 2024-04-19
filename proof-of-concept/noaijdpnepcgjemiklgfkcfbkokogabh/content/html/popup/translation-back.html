@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>ImTranslator</title>
+      <link rel="stylesheet" type="text/css" href="../../css/translator.css">
+   </head>
+   <body id="SL_body">
+      <div align=left>
+	 <div id='SL_LR' align="left" style="width:470px;">
+            <div id="SL_translate_container_app">
+               <table width="330">
+                  <tr>
+                     <td><a id="SL_logo-link" style="text-decoration:none;cursor:pointer;"><span id="SL_h1">ImTranslator</span></a> &nbsp; <span id="SL_h3"></span></td>
+                     <td><span id="SL_h2"></span></td>
+                  </tr>
+               </table>
+               <div id=SL_posterSRC>
+                  <div align=right style="padding:5px;"><img src="../../img/util/clear.png" style="cursor:pointer;" id="SL_CloseMeSRC" alt="Close" title=""></div>
+                  <div align=center style="padding:10px;">
+                     <span id="SL_tts_limit"></span>
+                     <br><br>
+                     <button id="SL_GotItSRC" tabindex="8"></button> &nbsp; &nbsp; &nbsp; <button id="SL_ClosePosterSRC" tabindex="8"></button>
+                  </div>
+               </div>
+               <div id=SL_posterDST>
+                  <div align=right style="padding:5px;"><img src="../../img/util/clear.png" style="cursor:pointer;" id="SL_CloseMeDST" alt="" title=""></div>
+                  <div align=center style="padding:10px;">
+                     <span id="SL_tts_limit2"></span>
+                     <br><br>
+                     <button id="SL_GotItDST" tabindex="8"></button> &nbsp; &nbsp; &nbsp; <button id="SL_ClosePosterDST" tabindex="8"></button>
+                  </div>
+               </div>
+               <div id=SL_alert>
+                  <div align=right style="padding:5px;"><img src="../../img/util/clear.png" style="cursor:pointer;" id="SL_CloseAlert" alt="Close" title="Close"></div>
+                  <div id="SLalertcont" align="center" style="padding:10px;"></div>
+                  <br>
+                  <div align=center><button id="SL_CloseAlertBTN" tabindex="8">OK</button></div>
+               </div>
+               <div id="SL_links" style="margin-left:100px;position:absolute;margin-top:-25px;width:100%;">
+                  <table width="350">
+                     <tr>
+                        <td width="*"></td>
+                        <td align="center" width="10%" nowrap>
+                           <div id="SLcompare"><img src="../../img/util/compare.png" id="SLcompare_ttl" alt="" title=""></div>
+                           <div id="SL_view_menu" title="">
+                              <li id=M_V3><img src="../../img/util/3windows.png" id="SLcompare_ttl" alt="" title=""></li>
+                              <li id=M_V2><img src="../../img/util/2windows.png" id="SLcompare_ttl" alt="" title=""></li>
+                              <li id=M_V1><img src="../../img/util/1window.png" id="SLcompare_ttl" alt="" title=""></li>
+                           </div>
+                        </td>
+                        <td align="center" width="10%" nowrap>
+                           <a id=SL_l1 href="../options/options.html" target="_blank">
+                              <div id="SLoptions"><img src="../../img/util/settings.png" id="SLoptions_ttl" alt="" title=""></div>
+                           </a>
+                        </td>
+                        <td align="center" width="10%" nowrap>
+                           <a id=SL_l2 href="../options/options.html?hist" target="_blank">
+                              <div id="SLhistory"><img src="../../img/util/history.png" id="SLhistory_ttl" alt="" title=""></div>
+                           </a>
+                        </td>
+                        <td align="center" width="10%" nowrap>
+                           <a href="#" id="SLhelp_a" class="SL_links" target="_blank">
+                              <div id="SLhelp"><img src="../../img/util/help.png" id="SLhelp_ttl" alt="" title=""></div>
+                           </a>
+                        </td>
+                        <td align="center" width="10%" nowrap>
+                           <a id=SL_l4 href="#">
+                              <div align="right" id="SL_donate"><img src="../../img/util/donate.png" id="SL_PP" alt="" title=""></div>
+                           </a>
+                           <div id="SL_donate_menu">
+                              <li id=M_D1>$5</li>
+                              <li id=M_D2>$10</li>
+                              <li id=M_D3>$20</li>
+                              <li id=M_D4>$ ...</li>
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+               <div style="height:30px"></div>
+               <div align="left">
+                  <div class="SL_TABS">
+                     <table width="446" id="SL_services" border=0 cellspacing=0 cellpadding=0>
+                        <tr>
+                           <td align="left" width="5%" nowrap>
+                              <div id="SL_tab1" class="SL_TAB" title=""></div>
+                           </td>
+                           <td align="left" width="5%" nowrap>
+                              <div id="SL_tab2" class="SL_TAB_OFF" title=""></div>
+                           </td>
+                           <td width="85%" class="SL_TAB_BLANK">&nbsp;</td>
+                           <td width="5%" class="SL_WHITE">
+                              <div class="SLspacer2"></div>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+                  <fieldset class="SL_fieldset" id="SL_fieldset" style="margin-top:5px;">
+                     <div style="height:10px"></div>
+                     <div class="SL_icons" id="SL_icons">
+                        <img class="SL_icn" id="SL_src_delete" src="../../img/util/clear.png" alt="" title="">
+                        <img class="SL_icn" id="SL_src_copy" src="../../img/util/copy.png" alt="" title=""><br>
+                        <img class="SL_icn" id="SL_src_font" src="../../img/util/font.png" alt="" title=""><br>
+                        <img class="SL_icn" id="SL_src_tts" src="../../img/util/ttsvoice.png" alt="" title="">
+                     </div>
+                     <textarea id="SL_source" dir="ltr" spellcheck="true" ></textarea>
+                  </fieldset>
+               </div>
+               <div id="SL_TTS_player1"></div>
+               <div id="SL_CTRLS" >
+                  <table width="100%">
+                     <tr>
+                        <td colspan="5" height="16"><span id="SL_detect"></span></td>
+                     </tr>
+                     <tr>
+                        <td>                                             		
+                           <img src="../../img/util/box.png" id="SLlocbox">
+                           <input type="checkbox" id="SLlocpl" style="opacity:0;cursor:pointer;"/>
+                        </td>
+                        <td>
+                           <select name="langSrc" id="SL_langSrc" tabindex="2" style="width:145px;"></select>
+                        </td>
+                        <td>
+                           <img src="../../img/util/switch.png" id="SL_switch"  valign="bottom" alt="" title="" style="cursor:pointer;">
+                        </td>
+                        <td>
+                           <select name="langDst" id="SL_langDst" tabindex="3" style="width:145px;"></select>
+                        </td>
+                        <td><input type="button" id="SL_trans_button" value=""></td>
+                     </tr>
+                  </table>
+               </div>
+               <div align="left">
+                  <div id="ClosedTab"></div>
+                  <div id="SL_PROVIDERS">
+                     <div id="SL_topic">&nbsp;</div>
+                  </div>
+                  <div style="height:5px"></div>
+                  <fieldset class="SL_fieldset" id="SL_fieldset_trg">
+                     <div class="SL_icons" id=SL_icons_target>
+                        <img class="SL_icn" id="SL_dst_delete" src="../../img/util/clear.png" alt="" title="">
+                        <img class="SL_icn" id="SL_dst_copy" src="../../img/util/copy.png" alt="" title=""><br>
+                        <img class="SL_icn" id="SL_dst_view" src="../../img/util/comp-trans.png" alt="" title=""><br>
+                        <!--
+                           <div id="SL_view_menu2" title="">
+                           	<li id=M_2V3><img src="../../img/util/3windows.png" id="SLcompare_ttl" alt="" title=""></li>
+                           	<li id=M_2V2><img src="../../img/util/2windows.png" id="SLcompare_ttl" alt="" title=""></li>
+                           	<li id=M_2V1><img src="../../img/util/1window.png" id="SLcompare_ttl" alt="" title=""></li>
+                           </div>			
+                           -->
+                        <img class="SL_icn" id="SL_dst_tts" src="../../img/util/ttsvoice.png" alt="" title="">
+                     </div>
+                     <div id="SL_indicator1"></div>
+                     <textarea id="SL_target" dir="ltr" spellcheck="true"></textarea>
+                  </fieldset>
+               </div>
+               <div align="left" id="SL_back_view2">
+                  <div class="SL_TABSback">
+                     <table width="100%" border=0 cellspacing=0 cellpadding=0>
+                        <tr>
+                           <td align="left" width="90" nowrap><div id="SL_TR" class="SL_TABback" title=""></div></td>
+                           <td align="left" width="90" nowrap><div id="SL_BT" class="SL_TAB_OFFback"  style="border-left:0px" title=""></div></td>
+                           <td width="*"><div class="SL_TAB_BLANKback" title=""></div></td>
+                           <td width="39"><div class="SLspacer"></div></td>
+                        </tr>
+                     </table>
+                     <input type="checkbox" id="SL_backbox" style="opacity:0;position:absolute;">
+                  </div>
+                  <div id="SL_back_zone2">
+                     <div id="SL_indicator2"></div>
+                     <div id="SL_BACK_patch"></div>
+                     <textarea id="SL_back" dir="ltr" spellcheck="true"></textarea>
+                  </div>
+               </div>
+               <div id="SL_TTS_player2"></div>
+            </div>
+	    <div id="SL_extra-padding" style="height:5px;">
+		  <div style="width:480px;">
+			   <div class="SL_footer" id="SL_footer"></div>
+		  </div>
+	   </div>
+         </div>
+      </div>
+      <script type="text/javascript" src="../../js/common/FExtension.js"></script>
+      <script type="text/javascript" src="../../browser/js/FBrowserPopup.js"></script>
+      <script type="text/javascript" src="../../browser/chrome/FBrowserPopupChrome.js"></script>
+      <script type="text/javascript" src="../../js/options/ch/util.js?v=1"></script>
+      <script type="text/javascript" src="../../js/popup/redirect.js?v=1"></script>
+      <script type="text/javascript" src="../../js/popup/selector.js?v=1"></script>
+      <script type="text/javascript" src="../../js/common/ga.js?v=1"></script>
+   </body>
+</html>

@@ -1,0 +1,14 @@
+<svg width="39" height="37" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="32" height="32" rx="8" fill="#F4F4F4"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21.925 23.0205C21.925 23.2945 21.7 23.5 21.4 23.5H10.525C10.225 23.5 10 23.2945 10 23.0205V8.97945C10 8.70548 10.225 8.5 10.525 8.5H21.4C21.7 8.5 21.925 8.70548 21.925 8.97945V23.0205Z" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.925 11.4248H18.925" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.175 15.9248H16.675" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.925 15.9248H19.675" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.175 18.1748H16.675" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.925 18.1748H19.675" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.175 20.4248H16.675" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.925 20.4248H19.675" stroke="#0B1426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="31" cy="29" r="7" fill="white"/>
+<circle cx="31.0001" cy="29.0003" r="7.33333" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M31.0001 36.3337C35.0502 36.3337 38.3334 33.0504 38.3334 29.0003C38.3334 24.9502 35.0502 21.667 31.0001 21.667C26.95 21.667 23.6667 24.9502 23.6667 29.0003C23.6667 33.0504 26.95 36.3337 31.0001 36.3337ZM34.6945 27.7601L30.5696 31.8851C30.3011 32.1536 29.8658 32.1536 29.5973 31.8851C29.5848 31.8726 29.5729 31.8598 29.5616 31.8467L27.6112 29.7462C27.3427 29.4777 27.3427 29.0424 27.6112 28.7739C27.8797 28.5054 28.315 28.5054 28.5834 28.7739L30.1598 30.3503L33.7223 26.7878C33.9908 26.5193 34.4261 26.5193 34.6945 26.7878C34.963 27.0563 34.963 27.4916 34.6945 27.7601Z" fill="#00A68C"/>
+</svg>

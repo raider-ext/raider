@@ -1,0 +1,21 @@
+#SL_files{width:215px !important;height:25px !important;}
+.upload_button,.custom-file-upload{width:115px !important;height:35px !important;background:#1186BB;z-index:1000;position:relative;border:0px;color:#fff; font-size:14px; cursor:pointer;}
+.upload_button:hover,.custom-file-upload:hover{background:#EBEBEB;color:#000;border: 1px #C1C1C1 solid;}
+#upload_manager{display:block;opacity:0.99;}
+#SL_upload_error{
+ font-family: Arial, Tahoma, Helvetica, sans-serif !important;
+ font-size: 14px;
+ color:red;
+ margin-top:-5px;
+ margin-left:20px;
+}
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+	padding-left:32px;
+	padding-right:32px;
+	padding-top:10px;
+	padding-bottom:10px;
+	margin-top:1px;
+}

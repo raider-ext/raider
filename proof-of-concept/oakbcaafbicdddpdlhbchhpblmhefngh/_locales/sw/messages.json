@@ -1,0 +1,62 @@
+{
+    "action_reload": {
+        "message": "Reload tab to apply changes"
+    },
+    "desc": {
+        "message": "Experience the power of Ruffle - the Flash Player emulator that allows you to effortlessly run your favorite Flash games, playlists and more across the web! With this intuitive Flash Emulator, you can enjoy all your favorite content with ease and convenience in 2023."
+    },
+    "name": {
+        "message": "Flash Player for Chrome"
+    },
+    "open_settings_page": {
+        "message": "Open Settings Page"
+    },
+    "save_settings": {
+        "message": "Save Settings"
+    },
+    "settings_ignore_optout": {
+        "message": "Ignore website compatibility warnings"
+    },
+    "settings_page": {
+        "message": "Settings Page"
+    },
+    "settings_page_ignore_optout": {
+        "message": "Play Flash content even on sites that disable Ruffle"
+    },
+    "settings_ruffle_enable": {
+        "message": "Flash Player 2023"
+    },
+    "settings_saved": {
+        "message": "Settings Saved"
+    },
+    "status_init": {
+        "message": "Reading current tab…"
+    },
+    "status_message_init": {
+        "message": "Checking Ruffle status on current tab…"
+    },
+    "status_no_tabs": {
+        "message": "There is no active tab."
+    },
+    "status_result_disabled": {
+        "message": "Ruffle is not loaded because it was disabled by the user."
+    },
+    "status_result_error": {
+        "message": "An error occurred when querying the current tab's instance of Ruffle."
+    },
+    "status_result_optout": {
+        "message": "Ruffle is not loaded because the current page has marked itself as incompatible."
+    },
+    "status_result_protected": {
+        "message": "Ruffle cannot load on protected browser pages."
+    },
+    "status_result_running": {
+        "message": "Ruffle is loaded and running Flash content on the current tab."
+    },
+    "status_tabs_error": {
+        "message": "An error occurred when looking up the current tab."
+    },
+    "title": {
+        "message": "Flash Player for Web (update 2023)"
+    }
+}

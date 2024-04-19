@@ -1,0 +1,79 @@
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "name": "Crypto.com | Wallet Extension",
+    "version": "2.25.3",
+    "version_name": "2.25.3",
+    "manifest_version": 3,
+    "description": "A Non-Custodial Crypto Wallet to Store, Earn and Grow your Crypto.",
+    "action": {
+        "default_popup": "index.html#/",
+        "default_title": "Crypto.com | Wallet Extension",
+        "default_icon": {
+            "16": "icon-16.png",
+            "19": "icon-19.png",
+            "32": "icon-32.png",
+            "38": "icon-38.png",
+            "48": "icon-48.png",
+            "64": "icon-64.png",
+            "128": "icon-128.png",
+            "512": "icon-512.png"
+        }
+    },
+    "permissions": [
+        "alarms",
+        "notifications",
+        "storage"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "browser-polyfill.min.js",
+                "content_script.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "icons": {
+        "16": "icon-16.png",
+        "19": "icon-19.png",
+        "32": "icon-32.png",
+        "38": "icon-38.png",
+        "48": "icon-48.png",
+        "64": "icon-64.png",
+        "128": "icon-128.png",
+        "512": "icon-512.png"
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "inpage_script.js",
+                "assets/*.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        },
+        {
+            "resources": [
+                "index.html*"
+            ],
+            "matches": [
+                "https://js.3ona.co/*",
+                "https://js.crypto.com/*",
+                "http://js.3ona.co/*",
+                "http://js.crypto.com/*"
+            ]
+        }
+    ]
+}

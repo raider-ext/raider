@@ -1,0 +1,75 @@
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "name": "Gener8 Genie",
+    "author": "Gener8",
+    "description": "Automatically find and apply discount codes to save you money while you shop online.",
+    "version": "1.4.0",
+    "manifest_version": 3,
+    "minimum_chrome_version": "101",
+    "background": {
+        "service_worker": "dist/background.js"
+    },
+    "homepage_url": "https://gener8ads.com",
+    "permissions": [
+        "activeTab",
+        "cookies",
+        "gener8Private",
+        "alarms"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*",
+        "*://*/*",
+        "http://*/*"
+    ],
+    "action": {
+        "default_title": "Gener8 Genie",
+        "default_icon": {
+            "16": "/src/ui/assets/img/icons/icon-16.png",
+            "48": "/src/ui/assets/img/icons/icon-48.png",
+            "128": "/src/ui/assets/img/icons/icon-128.png"
+        }
+    },
+    "icons": {
+        "16": "/src/ui/assets/img/icons/icon-16.png",
+        "48": "/src/ui/assets/img/icons/icon-48.png",
+        "128": "/src/ui/assets/img/icons/icon-128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "http://*/*"
+            ],
+            "css": [
+                "dist/ui/content.css"
+            ],
+            "js": [
+                "dist/content-script.js"
+            ],
+            "match_about_blank": false,
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "http://*/*"
+            ],
+            "resources": [
+                "/src/debug.html",
+                "/dist/*.png",
+                "/dist/*.svg",
+                "/dist/*.gif",
+                "/dist/*.webm",
+                "/dist/*.mp4",
+                "/dist/*.woff",
+                "/dist/*.ttf",
+                "/dist/*.css"
+            ]
+        }
+    ]
+}
