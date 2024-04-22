@@ -2,7 +2,9 @@
 ## Peeking through the ``window``: Fingerprinting Browser Extensions through Page-Visible Execution Traces and Interactions
 
 ### Test: Script injection by browser extensions \& their order of execution
-The injection and execution of JavaScript code injected by browser extensions with respect to the execution of the Web page JavaScript depend on:
+
+The [Google Chrome documentaion](https://chromium.googlesource.com/chromium/src/+/master/extensions/common/api/extension_types.json) states that a browser extension can inject JavaScript into the Web page visited by the user as early as the first script to be executed by the browser, when injected at ``document_start``.
+However, we observe that the injection and execution of JavaScript code injected by browser extensions with respect to the execution of the Web page JavaScript actually depend on:
 - how they were injected, and
 - the extension context used for injection
 
