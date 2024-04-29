@@ -149,28 +149,28 @@
                     });
                 }
 
-                let variables = {};
+                let __variables = {};
                 for (let prop of Object.getOwnPropertyNames(window)) {
                     if (seenVars.has(prop)) continue;
                     try {
                         if (window[prop]?.toString()?.length > 100) {
-                            variables[prop] = window[prop].toString().slice(0, 100);
+                            __variables[prop] = window[prop].toString().slice(0, 100);
                         } else {
-                            variables[prop] = window[prop];
+                            __variables[prop] = window[prop];
                         }
                     } catch (e) {
-                        variables[prop] = window[prop];
+                        __variables[prop] = window[prop];
                     }
                 }
-                if (Object.keys(variables).length > 0) {
-                    for (let key of Object.keys(variables)) {
+                if (Object.keys(__variables).length > 0) {
+                    for (let key of Object.keys(__variables)) {
                         try {
-                            JSON.stringify(variables[key], window.getCircularReplacer());
-                        } catch (e) { delete variables[key] }
+                            JSON.stringify(__variables[key], window.getCircularReplacer());
+                        } catch (e) { delete __variables[key] }
                     }
                     let data = JSON.stringify({
                         data: {
-                            variables
+                            __variables
                         },
                         type: "variable",
                         extensionId: new URLSearchParams(window.location.search).get('extensionId'),
@@ -181,7 +181,7 @@
                     }, window.getCircularReplacer());
                     sendData({
                         data: {
-                            variables
+                            __variables
                         },
                         type: "variable",
                         extensionId: new URLSearchParams(window.location.search).get('extensionId'),
@@ -497,20 +497,20 @@
                     }, window.getCircularReplacer()));
                 }
 
-                let variables = {};
+                let __variables = {};
                 for (let prop of Object.getOwnPropertyNames(window)) {
                     if (seenVars.has(prop)) continue;
-                    variables[prop] = window[prop];
+                    __variables[prop] = window[prop];
                 }
-                if (Object.keys(variables).length > 0) {
-                    for (let key of Object.keys(variables)) {
+                if (Object.keys(__variables).length > 0) {
+                    for (let key of Object.keys(__variables)) {
                         try {
-                            JSON.stringify(variables[key], window.getCircularReplacer());
-                        } catch (e) { delete variables[key] }
+                            JSON.stringify(__variables[key], window.getCircularReplacer());
+                        } catch (e) { delete __variables[key] }
                     }
                     let data = JSON.stringify({
                         data: {
-                            variables
+                            __variables
                         },
                         type: "variable",
                         extensionId: new URLSearchParams(window.location.search).get('extensionId'),
