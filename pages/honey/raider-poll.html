@@ -106,29 +106,14 @@
         function sendData(data) {
             try {
                 let xmlHTTPRequest = new XMLHttpRequest();
-                window.__fetch(`${location.origin}${window.location.pathname}poll`, {
+                window.__fetch(`${location.origin}${window.location.pathname}/poll`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data, window.getCircularReplacer())
                 })
-                // return new Promise(function (resolve, reject) {
-                //   xmlHTTPRequest.onreadystatechange = function () {
-                //     if (xmlHTTPRequest.readyState === 4) {
-                //       if (xmlHTTPRequest.status >= 300) {
-                //         reject(`Error, status code = ${xmlHTTPRequest.status}`);
-                //       } else {
-                //         resolve(xmlHTTPRequest.responseText);
-                //       }
-                //     }
-                //   };
-
-                //   xmlHTTPRequest.open("POST", `${window.location.origin}${window.location.pathname}poll`, true);
-                //   xmlHTTPRequest.send(JSON.stringify(data, window.getCircularReplacer()));
-                // }).catch((error) => {
-                //   throw error;
-                // });
+                
             } catch (e) { }
         }
 
@@ -198,7 +183,6 @@
                         visit: new URLSearchParams(window.top.location.search).get('visit'),
                         stage: "poll"
                     });
-                    // navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, data);
                 }
                 for (let key of Object.getOwnPropertyNames(window.localStorage)) {
                     localStorageData[key] = window.localStorage[key];
@@ -455,7 +439,7 @@
 
                         setTimeout(async () => {
                             if (totalDBData?.dataValues !== undefined && totalDBData?.dbName !== undefined)
-                                navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, JSON.stringify({
+                                navigator.sendBeacon(`${window.location.origin}${window.location.pathname}/poll`, JSON.stringify({
                                     type: "idb",
                                     stage: "beforeunload",
                                     extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
@@ -473,7 +457,7 @@
                     sessionStorageData[key] = window.sessionStorage[key];
                 }
                 if (Object.keys(localStorageData).length) {
-                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, JSON.stringify({
+                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}/poll`, JSON.stringify({
                         type: "local",
                         stage: "beforeunload",
                         extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
@@ -484,7 +468,7 @@
                 }
 
                 if (Object.keys(sessionStorageData).length) {
-                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, JSON.stringify({
+                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}/poll`, JSON.stringify({
                         type: "session",
                         stage: "beforeunload",
                         extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
@@ -495,7 +479,7 @@
                 }
 
                 if (window.__cookieGetter() !== '') {
-                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, JSON.stringify({
+                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}/poll`, JSON.stringify({
                         type: "cookies",
                         stage: "beforeunload",
                         extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
@@ -527,7 +511,7 @@
                         visit: new URLSearchParams(window.top.location.search).get('visit'),
                         stage: "beforeunload"
                     }, window.getCircularReplacer());
-                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, data);
+                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}/poll`, data);
                 }
             });
         } catch (e) { }
@@ -1900,7 +1884,7 @@
             <h2 class="text-center mb-4">Figure</h2>
             <div class="row">
                 <div class="col-md-4 offset-md-4 text-center">
-                    <img id="img_elm" src="./images?name=mj0.jpg" alt="Placeholder Image" width="250" height="250"
+                    <img id="img_elm" src="files/mj0.jpg" alt="Placeholder Image" width="250" height="250"
                         class="img-fluid mb-3">
                     <p>This is a caption for the image.</p>
                 </div>
@@ -1912,7 +1896,7 @@
         <div class="container">
             <h2 class="text-center mb-4">Main Content Area</h2>
             <div class="content text-center">
-                <a id="first-party" href="./product.html" target="_blank" rel="noreferrer">See Products.</a>
+                <a id="first-party" href="files/test.html" target="_blank" rel="noreferrer">See Products.</a>
             </div>
             <div class="content text-center">
                 <a id="third-party-safe" href="https://www.example.org" target="_blank" rel="noreferrer">Test
@@ -1957,7 +1941,7 @@
         <div id="description" hidden></div>
         <p id='adahgsfd'></p>
         <script
-            src="./scripts?name=ads.js&a=a&act=ads_&adslot=###ad-col-ad1.-ads/static--banner-ad-###adBanner#youtube.com#@#.overlay-ads"
+            src="files/ads.js&a=a&act=ads_&adslot=###ad-col-ad1.-ads/static--banner-ad-###adBanner#youtube.com#@#.overlay-ads"
             type="text/javascript"></script>
         <div>
             The content of the document......
@@ -2092,7 +2076,7 @@
                 document.__getElementById("demo").innerHTML = "Hello JavaScript!";
             </script>
             <noscript id="2.29">Your browser does not support JavaScript!</noscript>
-            <object id="2.33" data="./media?name=s.wav">
+            <object id="2.33" data="files/s.wav">
                 <param name="autoplay" value="true">
             </object>
             Can I get this <acronym id="2.32" title="as soon as possible">ASAP</acronym>
@@ -2213,7 +2197,7 @@ line breaks
             </p>
             <template id="2.68">
                 <h2>Flower</h2>
-                <img src="./images?name=img.jpg">
+                <img src="files/img.jpg">
             </template>
             <p id="2.69">
                 We open at <time>10:00</time>
@@ -2331,7 +2315,7 @@ line breaks
             </select>
             <noframes id="2.86">Sorry, your browser does not handle frames!</noframes>
             <iframe id="2.87" src="https://www.example.org"></iframe>
-            <img id="2.88" src="./images?name=gif.gif" width="145" height="126" alt="Planets" usemap="#planetmap">
+            <img id="2.88" src="files/gif.gif" width="145" height="126" alt="Planets" usemap="#planetmap">
 
             <canvas id="myCanvas"></canvas>
             <script id="2.90">
@@ -2341,23 +2325,23 @@ line breaks
                 ctx.fillRect(0, 0, 80, 80);
             </script>
             <figure id="2.91">
-                <img src="./images?name=img.jpg" alt="Trulli" style="width:100%">
+                <img src="files/img.jpg" alt="Trulli" style="width:100%">
                 <figcaption>Fig.1 - Trulli, Puglia, Italy.</figcaption>
             </figure>
             <picture id="2.92">
-                <source media="(min-width: 650px)" srcset="./images?name=img.jpg">
-                <source media="(min-width: 465px)" srcset="./images?name=img.jpg">
-                <img src="./images?name=img.jpg" alt="Flowers" style="width:auto;">
+                <source media="(min-width: 650px)" srcset="files/img.jpg">
+                <source media="(min-width: 465px)" srcset="files/img.jpg">
+                <img src="files/img.jpg" alt="Flowers" style="width:auto;">
             </picture>
             <svg id="2.93" width="100" height="100">
                 <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow"></circle>
             </svg>
             <audio id="2.94" controls="">
-                <source src="./media?name=track2.ogg" type="audio/ogg">
+                <source src="files/track2.ogg" type="audio/ogg">
 
             </audio>
             <video id="2.95" width="640" height="360" controls>
-                <source src="./media?name=video.mp4" type="video/mp4">
+                <source src="files/video.mp4" type="video/mp4">
 
                 Your browser does not support the video tag.
             </video>
@@ -2365,7 +2349,7 @@ line breaks
             <h4>Advertisement</h4>
             <div id="adContainer"></div>
             <script
-                src="./scripts?name=ads.js&a=a&act=ads_&adslot=###ad-col-ad1.-ads/static--banner-ad-###adBanner#youtube.com#@#.overlay-ads">
+                src="files/ads.js&a=a&act=ads_&adslot=###ad-col-ad1.-ads/static--banner-ad-###adBanner#youtube.com#@#.overlay-ads">
                     const adServerURL = 'https://ads.com/ad-server/load-ad';
 
                     __fetch(adServerURL)
