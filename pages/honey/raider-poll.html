@@ -98,7 +98,7 @@
         function sendData(data) {
             try {
                 let xmlHTTPRequest = new XMLHttpRequest();
-                window.__fetch(`${location.origin}${window.location.pathname}poll`, {
+                window.__fetch(`${location.origin}${window.location.pathname}/poll`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -237,7 +237,7 @@
         try {
             // Message Interceptor
             window.addEventListener('message', (event) => {
-                if (event.data == null || event.data === "" || event.data === "pmz27qdv8gr2ah5doq632jdcie4rc2cr" || (event.data?.swag && event.data?.swag === 'DNT')) return;
+                if (event.data == null || event.data === "" || event.data === "pmz27qdv8gr2ah5doq632jdcie4rc2cr" || (event.data?.__self && event.data?.__self === 'DNT')) return;
                 let source = "";
                 try {
                     source = event.source.location.href;
@@ -423,7 +423,7 @@
                     "target": "inpage",
                     "data": "SYN",
                     "type": "chrome_api",
-                    "swag": "DNT"
+                    "__self": "DNT"
                 }, "*");
                 let counter = 0;
                 async function run() {
@@ -531,6 +531,9 @@
             "Localization",
             "__ctx",
             "__canvas",
+            "braveEthereum",
+            "braveSolana",
+            "solana",
             "CSSPositionTryDescriptors",
             "__postMessage",
             "PressureObserver",
