@@ -1,0 +1,3151 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShopIt.com</title>
+
+    <!-- Basic CSS -->
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header nav ul {
+            list-style-type: none;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Main Sections */
+        section {
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .bg-light {
+            background-color: #f8f9fa;
+        }
+
+        /* Form Styles */
+        form {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        input[type="email"],
+        input[type="current-password"],
+        input[type="password"] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+
+    <!-- Helper APIs & Methods -->
+    <script>
+        var extensionId = new URLSearchParams(window.location.search).get("extensionId");
+        document.extensionId = extensionId !== null ? extensionId : "";
+
+        window.__postMessage = window.postMessage;
+        WeakSet.prototype.__add = WeakSet.prototype.add;
+        WeakSet.prototype.__has = WeakSet.prototype.has;
+        Set.prototype.__add = Set.prototype.add;
+        Set.prototype.__has = Set.prototype.has;
+        Map.prototype.__set = Map.prototype.set;
+        Map.prototype.__get = Map.prototype.get;
+        window.api_cnt = new Map();
+
+        window.__ls = window.localStorage;
+        window.__ss = window.sessionStorage;
+        window.__setTimeout = window.setTimeout;
+        console.__error = console.error;
+
+        window.__stringify = JSON.stringify;
+        Array.__from = Array.from;
+        Array.prototype.__toString = Array.prototype.toString;
+        Array.prototype.__shift = Array.prototype.shift;
+        Number.prototype.__toString = Number.prototype.toString;
+        NodeList.prototype.__forEach = NodeList.prototype.forEach;
+        Object.prototype.__toString = Object.prototype.toString;
+        String.prototype.__split = String.prototype.split;
+        String.prototype.__toString = String.prototype.toString;
+        RegExp.prototype.__toString = RegExp.prototype.toString;
+        BigInt.prototype.__toString = BigInt.prototype.toString;
+        Symbol.prototype.__toString = Symbol.prototype.toString;
+        Boolean.prototype.__toString = Boolean.prototype.toString;
+        Function.prototype.__bind = Function.prototype.bind;
+        Function.prototype.__apply = Function.prototype.apply;
+        Function.prototype.__toString = Function.prototype.toString;
+        Element.prototype.__removeAttribute = Element.prototype.removeAttribute;
+        window.__getSelection = window.getSelection;
+        window.__parseInt = window.parseInt;
+        window.__atob = window.atob;
+        window.__btoa = window.btoa;
+        __decodeURIComponent = window.decodeURIComponent;
+
+        __unescape = window.unescape;
+        __encodeURIComponent = window.encodeURIComponent;
+        __scroll = window.scroll;
+        Document.prototype.__createRange = Document.prototype.createRange;
+
+        Object.__defineProperty = Object.defineProperty;
+        String.prototype.__startsWith = String.prototype.startsWith;
+        String.prototype.__indexOf = String.prototype.indexOf;
+        String.prototype.__charCodeAt = String.prototype.charCodeAt;
+
+        IDBFactory.prototype.__open = IDBFactory.prototype.open;
+        IDBFactory.prototype.__databases = IDBFactory.prototype.databases;
+        IDBDatabase.prototype.__transaction = IDBDatabase.prototype.transaction;
+        IDBTransaction.prototype.__objectStore = IDBTransaction.prototype.objectStore;
+        IDBObjectStore.prototype.__openCursor = IDBObjectStore.prototype.openCursor;
+        IDBCursor.prototype.__continue = IDBCursor.prototype.continue;
+        Array.__isArray = Array.isArray;
+        Array.prototype.__push = Array.prototype.push;
+        Array.prototype.__includes = Array.prototype.includes;
+        String.prototype.__includes = String.prototype.includes;
+        Array.prototype.__forEach = Array.prototype.forEach;
+        Object.prototype.___lookupGetter___ = Object.prototype.__lookupGetter__;
+        Object.prototype.___lookupSetter___ = Object.prototype.__lookupSetter__;
+        Object.__getOwnPropertyNames = Object.getOwnPropertyNames;
+        Object.__keys = Object.keys;
+        window.__addEventListener = window.addEventListener;
+        document.__addEventListener = document.addEventListener;
+        document.__dispatchEvent = document.dispatchEvent;
+        window.__cookieGetter = document.___lookupGetter___("cookie").__bind(document);
+        window.__fetch = window.fetch;
+        // Promise.__resolve = Promise.resolve;
+        console.__log = console.log;
+        Math.__ceil = Math.ceil;
+        Math.__floor = Math.floor;
+        window.prompt = function () { };
+        window.alert = function () { };
+        Array.prototype.__slice = Array.prototype.slice;
+        Object.prototype.__hasOwnProperty = Object.prototype.hasOwnProperty;
+        EventTarget.prototype.__dispatchEvent = EventTarget.prototype.dispatchEvent;
+        Document.prototype.__getElementById = Document.prototype.getElementById;
+        Element.prototype.__addEventListener = Element.prototype.addEventListener;
+        Element.prototype.__getBoundingClientRect = Element.prototype.getBoundingClientRect;
+        window.__getSelection = window.getSelection;
+        // Selection.prototype.__removeAllRanges = Selection.prototype.removeAllRanges;
+        // Selection.prototype.__addRange = Selection.prototype.addRange;
+
+
+        window.getCircularReplacer = function () {
+            const ancestors = new WeakSet();
+            return function (key, value) {
+                if (value == undefined) {
+                    return value;
+                }
+                if (value instanceof RegExp ||
+                    typeof value === "bigInt" ||
+                    typeof value === "number" ||
+                    value instanceof Boolean ||
+                    value instanceof Number ||
+                    typeof value === "symbol") {
+                    return value.__toString();
+                }
+                if (typeof value === "function") {
+                    return Function.prototype.__toString(value);
+                }
+                if (value instanceof Node) {
+                    return "Node";
+                }
+                if (value instanceof HTMLElement) {
+                    return "HTMLElement";
+                }
+                if (value?.constructor?.name === "DOMTokenList") {
+                    return "DOMTokenList";
+                }
+                if (value instanceof Selection) {
+                    return "Selection";
+                }
+                if (value?.self === value && value?.window === value) {
+                    return "window";
+                }
+                if (typeof value !== "object" || value === null) {
+                    return value;
+                }
+                if (ancestors.__has(value)) {
+                    return "[Circular]";
+                }
+                ancestors.__add(value);
+                return value;
+            };
+        };
+        window.counter = 0;
+        let seen_data = new Set();
+
+        window.__dispatchData = async function (api, data) {
+            if (window.counter > 1000) {
+                return;
+            }
+            let parsed_data;
+            try {
+                parsed_data = window.__stringify.__apply(this, [{
+                    type: api,
+                    data,
+                    extensionId: new URLSearchParams(window.location.search).get("extensionId"),
+                    url: window.location.href,
+                    visit: new URLSearchParams(window.location.search).get("visit"),
+                }, window.getCircularReplacer()]);
+            } catch (e) { }
+            let endpoint = api === "mutation" ? "mutation" : "protohook";
+            window.__fetch(`${location.origin}${window.location.pathname}${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: parsed_data
+            }).then(res => {
+                window.counter--;
+            })
+            window.counter++;
+        }
+    </script>
+
+    <!-- MD5 Script -->
+    <script>
+            ; (function (root, factory) {
+                if (typeof exports === "object") {
+                    // CommonJS
+                    module.exports = exports = factory();
+                }
+                else if (typeof define === "function" && define.amd) {
+                    // AMD
+                    define([], factory);
+                }
+                else {
+                    // Global (browser)
+                    root.CryptoJS = factory();
+                }
+            }(this, function () {
+
+                /**
+                 * CryptoJS core components.
+                 */
+                var CryptoJS = CryptoJS || (function (Math, undefined) {
+                    /*
+                     * Local polyfil of Object.create
+                     */
+                    var create = Object.create || (function () {
+                        function F() { };
+
+                        return function (obj) {
+                            var subtype;
+
+                            F.prototype = obj;
+
+                            subtype = new F();
+
+                            F.prototype = null;
+
+                            return subtype;
+                        };
+                    }())
+
+                    /**
+                     * CryptoJS namespace.
+                     */
+                    var C = {};
+
+                    /**
+                     * Library namespace.
+                     */
+                    var C_lib = C.lib = {};
+
+                    /**
+                     * Base object for prototypal inheritance.
+                     */
+                    var Base = C_lib.Base = (function () {
+
+
+                        return {
+                            /**
+                             * Creates a new object that inherits from this object.
+                             *
+                             * @param {Object} overrides Properties to copy into the new object.
+                             *
+                             * @return {Object} The new object.
+                             *
+                             * @static
+                             *
+                             * @example
+                             *
+                             *     var MyType = CryptoJS.lib.Base.extend({
+                             *         field: 'value',
+                             *
+                             *         method: function () {
+                             *         }
+                             *     });
+                             */
+                            extend: function (overrides) {
+                                // Spawn
+                                var subtype = create(this);
+
+                                // Augment
+                                if (overrides) {
+                                    subtype.mixIn(overrides);
+                                }
+
+                                // Create default initializer
+                                if (!subtype.__hasOwnProperty('init') || this.init === subtype.init) {
+                                    subtype.init = function () {
+                                        subtype.$super.init.apply(this, arguments);
+                                    };
+                                }
+
+                                // Initializer's prototype is the subtype object
+                                subtype.init.prototype = subtype;
+
+                                // Reference supertype
+                                subtype.$super = this;
+
+                                return subtype;
+                            },
+
+                            /**
+                             * Extends this object and runs the init method.
+                             * Arguments to create() will be passed to init().
+                             *
+                             * @return {Object} The new object.
+                             *
+                             * @static
+                             *
+                             * @example
+                             *
+                             *     var instance = MyType.create();
+                             */
+                            create: function () {
+                                var instance = this.extend();
+                                instance.init.apply(instance, arguments);
+
+                                return instance;
+                            },
+
+                            /**
+                             * Initializes a newly created object.
+                             * Override this method to add some logic when your objects are created.
+                             *
+                             * @example
+                             *
+                             *     var MyType = CryptoJS.lib.Base.extend({
+                             *         init: function () {
+                             *             // ...
+                             *         }
+                             *     });
+                             */
+                            init: function () {
+                            },
+
+                            /**
+                             * Copies properties into this object.
+                             *
+                             * @param {Object} properties The properties to mix in.
+                             *
+                             * @example
+                             *
+                             *     MyType.mixIn({
+                             *         field: 'value'
+                             *     });
+                             */
+                            mixIn: function (properties) {
+                                for (var propertyName in properties) {
+                                    if (properties.hasOwnProperty(propertyName)) {
+                                        this[propertyName] = properties[propertyName];
+                                    }
+                                }
+
+                                // IE won't copy toString using the loop above
+                                if (properties.hasOwnProperty('toString')) {
+                                    this.toString = properties.toString;
+                                }
+                            },
+
+                            /**
+                             * Creates a copy of this object.
+                             *
+                             * @return {Object} The clone.
+                             *
+                             * @example
+                             *
+                             *     var clone = instance.clone();
+                             */
+                            clone: function () {
+                                return this.init.prototype.extend(this);
+                            }
+                        };
+                    }());
+
+                    /**
+                     * An array of 32-bit words.
+                     *
+                     * @property {Array} words The array of 32-bit words.
+                     * @property {number} sigBytes The number of significant bytes in this word array.
+                     */
+                    var WordArray = C_lib.WordArray = Base.extend({
+                        /**
+                         * Initializes a newly created word array.
+                         *
+                         * @param {Array} words (Optional) An array of 32-bit words.
+                         * @param {number} sigBytes (Optional) The number of significant bytes in the words.
+                         *
+                         * @example
+                         *
+                         *     var wordArray = CryptoJS.lib.WordArray.create();
+                         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607]);
+                         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607], 6);
+                         */
+                        init: function (words, sigBytes) {
+                            words = this.words = words || [];
+
+                            if (sigBytes != undefined) {
+                                this.sigBytes = sigBytes;
+                            } else {
+                                this.sigBytes = words.length * 4;
+                            }
+                        },
+
+                        /**
+                         * Converts this word array to a string.
+                         *
+                         * @param {Encoder} encoder (Optional) The encoding strategy to use. Default: CryptoJS.enc.Hex
+                         *
+                         * @return {string} The stringified word array.
+                         *
+                         * @example
+                         *
+                         *     var string = wordArray + '';
+                         *     var string = wordArray.toString();
+                         *     var string = wordArray.toString(CryptoJS.enc.Utf8);
+                         */
+                        toString: function (encoder) {
+                            return (encoder || Hex).stringify(this);
+                        },
+
+                        /**
+                         * Concatenates a word array to this word array.
+                         *
+                         * @param {WordArray} wordArray The word array to append.
+                         *
+                         * @return {WordArray} This word array.
+                         *
+                         * @example
+                         *
+                         *     wordArray1.concat(wordArray2);
+                         */
+                        concat: function (wordArray) {
+                            // Shortcuts
+                            var thisWords = this.words;
+                            var thatWords = wordArray.words;
+                            var thisSigBytes = this.sigBytes;
+                            var thatSigBytes = wordArray.sigBytes;
+
+                            // Clamp excess bits
+                            this.clamp();
+
+                            // Concat
+                            if (thisSigBytes % 4) {
+                                // Copy one byte at a time
+                                for (var i = 0; i < thatSigBytes; i++) {
+                                    var thatByte = (thatWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+                                    thisWords[(thisSigBytes + i) >>> 2] |= thatByte << (24 - ((thisSigBytes + i) % 4) * 8);
+                                }
+                            } else {
+                                // Copy one word at a time
+                                for (var i = 0; i < thatSigBytes; i += 4) {
+                                    thisWords[(thisSigBytes + i) >>> 2] = thatWords[i >>> 2];
+                                }
+                            }
+                            this.sigBytes += thatSigBytes;
+
+                            // Chainable
+                            return this;
+                        },
+
+                        /**
+                         * Removes insignificant bits.
+                         *
+                         * @example
+                         *
+                         *     wordArray.clamp();
+                         */
+                        clamp: function () {
+                            // Shortcuts
+                            var words = this.words;
+                            var sigBytes = this.sigBytes;
+
+                            // Clamp
+                            words[sigBytes >>> 2] &= 0xffffffff << (32 - (sigBytes % 4) * 8);
+                            words.length = Math.__ceil(sigBytes / 4);
+                        },
+
+                        /**
+                         * Creates a copy of this word array.
+                         *
+                         * @return {WordArray} The clone.
+                         *
+                         * @example
+                         *
+                         *     var clone = wordArray.clone();
+                         */
+                        clone: function () {
+                            var clone = Base.clone.call(this);
+                            clone.words = this.words.__slice(0);
+
+                            return clone;
+                        },
+
+                        /**
+                         * Creates a word array filled with random bytes.
+                         *
+                         * @param {number} nBytes The number of random bytes to generate.
+                         *
+                         * @return {WordArray} The random word array.
+                         *
+                         * @static
+                         *
+                         * @example
+                         *
+                         *     var wordArray = CryptoJS.lib.WordArray.random(16);
+                         */
+                        random: function (nBytes) {
+                            var words = [];
+
+                            var r = (function (m_w) {
+                                var m_w = m_w;
+                                var m_z = 0x3ade68b1;
+                                var mask = 0xffffffff;
+
+                                return function () {
+                                    m_z = (0x9069 * (m_z & 0xFFFF) + (m_z >> 0x10)) & mask;
+                                    m_w = (0x4650 * (m_w & 0xFFFF) + (m_w >> 0x10)) & mask;
+                                    var result = ((m_z << 0x10) + m_w) & mask;
+                                    result /= 0x100000000;
+                                    result += 0.5;
+                                    return result * (Math.random() > .5 ? 1 : -1);
+                                }
+                            });
+
+                            for (var i = 0, rcache; i < nBytes; i += 4) {
+                                var _r = r((rcache || Math.random()) * 0x100000000);
+
+                                rcache = _r() * 0x3ade67b7;
+                                words.push((_r() * 0x100000000) | 0);
+                            }
+
+                            return new WordArray.init(words, nBytes);
+                        }
+                    });
+
+                    /**
+                     * Encoder namespace.
+                     */
+                    var C_enc = C.enc = {};
+
+                    /**
+                     * Hex encoding strategy.
+                     */
+                    var Hex = C_enc.Hex = {
+                        /**
+                         * Converts a word array to a hex string.
+                         *
+                         * @param {WordArray} wordArray The word array.
+                         *
+                         * @return {string} The hex string.
+                         *
+                         * @static
+                         *
+                         * @example
+                         *
+                         *     var hexString = CryptoJS.enc.Hex.stringify(wordArray);
+                         */
+                        stringify: function (wordArray) {
+                            // Shortcuts
+                            var words = wordArray.words;
+                            var sigBytes = wordArray.sigBytes;
+
+                            // Convert
+                            var hexChars = [];
+                            for (var i = 0; i < sigBytes; i++) {
+                                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+                                hexChars.push((bite >>> 4).toString(16));
+                                hexChars.push((bite & 0x0f).toString(16));
+                            }
+
+                            return hexChars.join('');
+                        },
+
+                        /**
+                         * Converts a hex string to a word array.
+                         *
+                         * @param {string} hexStr The hex string.
+                         *
+                         * @return {WordArray} The word array.
+                         *
+                         * @static
+                         *
+                         * @example
+                         *
+                         *     var wordArray = CryptoJS.enc.Hex.parse(hexString);
+                         */
+                        parse: function (hexStr) {
+                            // Shortcut
+                            var hexStrLength = hexStr.length;
+
+                            // Convert
+                            var words = [];
+                            for (var i = 0; i < hexStrLength; i += 2) {
+                                words[i >>> 3] |= parseInt(hexStr.substr(i, 2), 16) << (24 - (i % 8) * 4);
+                            }
+
+                            return new WordArray.init(words, hexStrLength / 2);
+                        }
+                    };
+
+                    /**
+                     * Latin1 encoding strategy.
+                     */
+                    var Latin1 = C_enc.Latin1 = {
+                        /**
+                         * Converts a word array to a Latin1 string.
+                         *
+                         * @param {WordArray} wordArray The word array.
+                         *
+                         * @return {string} The Latin1 string.
+                         *
+                         * @static
+                         *
+                         * @example
+                         *
+                         *     var latin1String = CryptoJS.enc.Latin1.stringify(wordArray);
+                         */
+                        stringify: function (wordArray) {
+                            // Shortcuts
+                            var words = wordArray.words;
+                            var sigBytes = wordArray.sigBytes;
+
+                            // Convert
+                            var latin1Chars = [];
+                            for (var i = 0; i < sigBytes; i++) {
+                                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+                                latin1Chars.push(String.fromCharCode(bite));
+                            }
+
+                            return latin1Chars.join('');
+                        },
+
+                        /**
+                         * Converts a Latin1 string to a word array.
+                         *
+                         * @param {string} latin1Str The Latin1 string.
+                         *
+                         * @return {WordArray} The word array.
+                         *
+                         * @static
+                         *
+                         * @example
+                         *
+                         *     var wordArray = CryptoJS.enc.Latin1.parse(latin1String);
+                         */
+                        parse: function (latin1Str) {
+                            // Shortcut
+                            var latin1StrLength = latin1Str.length;
+
+                            // Convert
+                            var words = [];
+                            for (var i = 0; i < latin1StrLength; i++) {
+                                words[i >>> 2] |= (latin1Str.__charCodeAt(i) & 0xff) << (24 - (i % 4) * 8);
+                            }
+
+                            return new WordArray.init(words, latin1StrLength);
+                        }
+                    };
+
+                    /**
+                     * UTF-8 encoding strategy.
+                     */
+                    var Utf8 = C_enc.Utf8 = {
+                        /**
+                         * Converts a word array to a UTF-8 string.
+                         *
+                         * @param {WordArray} wordArray The word array.
+                         *
+                         * @return {string} The UTF-8 string.
+                         *
+                         * @static
+                         *
+                         * @example
+                         *
+                         *     var utf8String = CryptoJS.enc.Utf8.stringify(wordArray);
+                         */
+                        stringify: function (wordArray) {
+                            try {
+                                return decodeURIComponent(escape(Latin1.stringify(wordArray)));
+                            } catch (e) {
+                                throw new Error('Malformed UTF-8 data');
+                            }
+                        },
+
+                        /**
+                         * Converts a UTF-8 string to a word array.
+                         *
+                         * @param {string} utf8Str The UTF-8 string.
+                         *
+                         * @return {WordArray} The word array.
+                         *
+                         * @static
+                         *
+                         * @example
+                         *
+                         *     var wordArray = CryptoJS.enc.Utf8.parse(utf8String);
+                         */
+                        parse: function (utf8Str) {
+                            return Latin1.parse(__unescape(__encodeURIComponent(utf8Str)));
+                        }
+                    };
+
+                    /**
+                     * Abstract buffered block algorithm template.
+                     *
+                     * The property blockSize must be implemented in a concrete subtype.
+                     *
+                     * @property {number} _minBufferSize The number of blocks that should be kept unprocessed in the buffer. Default: 0
+                     */
+                    var BufferedBlockAlgorithm = C_lib.BufferedBlockAlgorithm = Base.extend({
+                        /**
+                         * Resets this block algorithm's data buffer to its initial state.
+                         *
+                         * @example
+                         *
+                         *     bufferedBlockAlgorithm.reset();
+                         */
+                        reset: function () {
+                            // Initial values
+                            this._data = new WordArray.init();
+                            this._nDataBytes = 0;
+                        },
+
+                        /**
+                         * Adds new data to this block algorithm's buffer.
+                         *
+                         * @param {WordArray|string} data The data to append. Strings are converted to a WordArray using UTF-8.
+                         *
+                         * @example
+                         *
+                         *     bufferedBlockAlgorithm._append('data');
+                         *     bufferedBlockAlgorithm._append(wordArray);
+                         */
+                        _append: function (data) {
+                            // Convert string to WordArray, else assume WordArray already
+                            if (typeof data == 'string') {
+                                data = Utf8.parse(data);
+                            }
+
+                            // Append
+                            this._data.concat(data);
+                            this._nDataBytes += data.sigBytes;
+                        },
+
+                        /**
+                         * Processes available data blocks.
+                         *
+                         * This method invokes _doProcessBlock(offset), which must be implemented by a concrete subtype.
+                         *
+                         * @param {boolean} doFlush Whether all blocks and partial blocks should be processed.
+                         *
+                         * @return {WordArray} The processed data.
+                         *
+                         * @example
+                         *
+                         *     var processedData = bufferedBlockAlgorithm._process();
+                         *     var processedData = bufferedBlockAlgorithm._process(!!'flush');
+                         */
+                        _process: function (doFlush) {
+                            // Shortcuts
+                            var data = this._data;
+                            var dataWords = data.words;
+                            var dataSigBytes = data.sigBytes;
+                            var blockSize = this.blockSize;
+                            var blockSizeBytes = blockSize * 4;
+
+                            // Count blocks ready
+                            var nBlocksReady = dataSigBytes / blockSizeBytes;
+                            if (doFlush) {
+                                // Round up to include partial blocks
+                                nBlocksReady = Math.ceil(nBlocksReady);
+                            } else {
+                                // Round down to include only full blocks,
+                                // less the number of blocks that must remain in the buffer
+                                nBlocksReady = Math.max((nBlocksReady | 0) - this._minBufferSize, 0);
+                            }
+
+                            // Count words ready
+                            var nWordsReady = nBlocksReady * blockSize;
+
+                            // Count bytes ready
+                            var nBytesReady = Math.min(nWordsReady * 4, dataSigBytes);
+
+                            // Process blocks
+                            if (nWordsReady) {
+                                for (var offset = 0; offset < nWordsReady; offset += blockSize) {
+                                    // Perform concrete-algorithm logic
+                                    this._doProcessBlock(dataWords, offset);
+                                }
+
+                                // Remove processed words
+                                var processedWords = dataWords.splice(0, nWordsReady);
+                                data.sigBytes -= nBytesReady;
+                            }
+
+                            // Return processed words
+                            return new WordArray.init(processedWords, nBytesReady);
+                        },
+
+                        /**
+                         * Creates a copy of this object.
+                         *
+                         * @return {Object} The clone.
+                         *
+                         * @example
+                         *
+                         *     var clone = bufferedBlockAlgorithm.clone();
+                         */
+                        clone: function () {
+                            var clone = Base.clone.call(this);
+                            clone._data = this._data.clone();
+
+                            return clone;
+                        },
+
+                        _minBufferSize: 0
+                    });
+
+                    /**
+                     * Abstract hasher template.
+                     *
+                     * @property {number} blockSize The number of 32-bit words this hasher operates on. Default: 16 (512 bits)
+                     */
+                    var Hasher = C_lib.Hasher = BufferedBlockAlgorithm.extend({
+                        /**
+                         * Configuration options.
+                         */
+                        cfg: Base.extend(),
+
+                        /**
+                         * Initializes a newly created hasher.
+                         *
+                         * @param {Object} cfg (Optional) The configuration options to use for this hash computation.
+                         *
+                         * @example
+                         *
+                         *     var hasher = CryptoJS.algo.SHA256.create();
+                         */
+                        init: function (cfg) {
+                            // Apply config defaults
+                            this.cfg = this.cfg.extend(cfg);
+
+                            // Set initial values
+                            this.reset();
+                        },
+
+                        /**
+                         * Resets this hasher to its initial state.
+                         *
+                         * @example
+                         *
+                         *     hasher.reset();
+                         */
+                        reset: function () {
+                            // Reset data buffer
+                            BufferedBlockAlgorithm.reset.call(this);
+
+                            // Perform concrete-hasher logic
+                            this._doReset();
+                        },
+
+                        /**
+                         * Updates this hasher with a message.
+                         *
+                         * @param {WordArray|string} messageUpdate The message to append.
+                         *
+                         * @return {Hasher} This hasher.
+                         *
+                         * @example
+                         *
+                         *     hasher.update('message');
+                         *     hasher.update(wordArray);
+                         */
+                        update: function (messageUpdate) {
+                            // Append
+                            this._append(messageUpdate);
+
+                            // Update the hash
+                            this._process();
+
+                            // Chainable
+                            return this;
+                        },
+
+                        /**
+                         * Finalizes the hash computation.
+                         * Note that the finalize operation is effectively a destructive, read-once operation.
+                         *
+                         * @param {WordArray|string} messageUpdate (Optional) A final message update.
+                         *
+                         * @return {WordArray} The hash.
+                         *
+                         * @example
+                         *
+                         *     var hash = hasher.finalize();
+                         *     var hash = hasher.finalize('message');
+                         *     var hash = hasher.finalize(wordArray);
+                         */
+                        finalize: function (messageUpdate) {
+                            // Final message update
+                            if (messageUpdate) {
+                                this._append(messageUpdate);
+                            }
+
+                            // Perform concrete-hasher logic
+                            var hash = this._doFinalize();
+
+                            return hash;
+                        },
+
+                        blockSize: 512 / 32,
+
+                        /**
+                         * Creates a shortcut function to a hasher's object interface.
+                         *
+                         * @param {Hasher} hasher The hasher to create a helper for.
+                         *
+                         * @return {Function} The shortcut function.
+                         *
+                         * @static
+                         *
+                         * @example
+                         *
+                         *     var SHA256 = CryptoJS.lib.Hasher._createHelper(CryptoJS.algo.SHA256);
+                         */
+                        _createHelper: function (hasher) {
+                            return function (message, cfg) {
+                                return new hasher.init(cfg).finalize(message);
+                            };
+                        },
+
+                        /**
+                         * Creates a shortcut function to the HMAC's object interface.
+                         *
+                         * @param {Hasher} hasher The hasher to use in this HMAC helper.
+                         *
+                         * @return {Function} The shortcut function.
+                         *
+                         * @static
+                         *
+                         * @example
+                         *
+                         *     var HmacSHA256 = CryptoJS.lib.Hasher._createHmacHelper(CryptoJS.algo.SHA256);
+                         */
+                        _createHmacHelper: function (hasher) {
+                            return function (message, key) {
+                                return new C_algo.HMAC.init(hasher, key).finalize(message);
+                            };
+                        }
+                    });
+
+                    /**
+                     * Algorithm namespace.
+                     */
+                    var C_algo = C.algo = {};
+
+                    return C;
+                }(Math));
+
+
+                return CryptoJS;
+
+            }));
+
+    </script>
+
+    <!-- MD5 Script -->
+    <script>
+        ; (function (root, factory) {
+            if (typeof exports === "object") {
+                // CommonJS
+                module.exports = exports = factory(require("./core"));
+            }
+            else if (typeof define === "function" && define.amd) {
+                // AMD
+                define(["./core"], factory);
+            }
+            else {
+                // Global (browser)
+                factory(root.CryptoJS);
+            }
+        }(this, function (CryptoJS) {
+
+            (function (Math) {
+                // Shortcuts
+                var C = CryptoJS;
+                var C_lib = C.lib;
+                var WordArray = C_lib.WordArray;
+                var Hasher = C_lib.Hasher;
+                var C_algo = C.algo;
+
+                // Constants table
+                var T = [];
+
+                // Compute constants
+                (function () {
+                    for (var i = 0; i < 64; i++) {
+                        T[i] = (Math.abs(Math.sin(i + 1)) * 0x100000000) | 0;
+                    }
+                }());
+
+                /**
+                 * MD5 hash algorithm.
+                 */
+                var MD5 = C_algo.MD5 = Hasher.extend({
+                    _doReset: function () {
+                        this._hash = new WordArray.init([
+                            0x67452301, 0xefcdab89,
+                            0x98badcfe, 0x10325476
+                        ]);
+                    },
+
+                    _doProcessBlock: function (M, offset) {
+                        // Swap endian
+                        for (var i = 0; i < 16; i++) {
+                            // Shortcuts
+                            var offset_i = offset + i;
+                            var M_offset_i = M[offset_i];
+
+                            M[offset_i] = (
+                                (((M_offset_i << 8) | (M_offset_i >>> 24)) & 0x00ff00ff) |
+                                (((M_offset_i << 24) | (M_offset_i >>> 8)) & 0xff00ff00)
+                            );
+                        }
+
+                        // Shortcuts
+                        var H = this._hash.words;
+
+                        var M_offset_0 = M[offset + 0];
+                        var M_offset_1 = M[offset + 1];
+                        var M_offset_2 = M[offset + 2];
+                        var M_offset_3 = M[offset + 3];
+                        var M_offset_4 = M[offset + 4];
+                        var M_offset_5 = M[offset + 5];
+                        var M_offset_6 = M[offset + 6];
+                        var M_offset_7 = M[offset + 7];
+                        var M_offset_8 = M[offset + 8];
+                        var M_offset_9 = M[offset + 9];
+                        var M_offset_10 = M[offset + 10];
+                        var M_offset_11 = M[offset + 11];
+                        var M_offset_12 = M[offset + 12];
+                        var M_offset_13 = M[offset + 13];
+                        var M_offset_14 = M[offset + 14];
+                        var M_offset_15 = M[offset + 15];
+
+                        // Working varialbes
+                        var a = H[0];
+                        var b = H[1];
+                        var c = H[2];
+                        var d = H[3];
+
+                        // Computation
+                        a = FF(a, b, c, d, M_offset_0, 7, T[0]);
+                        d = FF(d, a, b, c, M_offset_1, 12, T[1]);
+                        c = FF(c, d, a, b, M_offset_2, 17, T[2]);
+                        b = FF(b, c, d, a, M_offset_3, 22, T[3]);
+                        a = FF(a, b, c, d, M_offset_4, 7, T[4]);
+                        d = FF(d, a, b, c, M_offset_5, 12, T[5]);
+                        c = FF(c, d, a, b, M_offset_6, 17, T[6]);
+                        b = FF(b, c, d, a, M_offset_7, 22, T[7]);
+                        a = FF(a, b, c, d, M_offset_8, 7, T[8]);
+                        d = FF(d, a, b, c, M_offset_9, 12, T[9]);
+                        c = FF(c, d, a, b, M_offset_10, 17, T[10]);
+                        b = FF(b, c, d, a, M_offset_11, 22, T[11]);
+                        a = FF(a, b, c, d, M_offset_12, 7, T[12]);
+                        d = FF(d, a, b, c, M_offset_13, 12, T[13]);
+                        c = FF(c, d, a, b, M_offset_14, 17, T[14]);
+                        b = FF(b, c, d, a, M_offset_15, 22, T[15]);
+
+                        a = GG(a, b, c, d, M_offset_1, 5, T[16]);
+                        d = GG(d, a, b, c, M_offset_6, 9, T[17]);
+                        c = GG(c, d, a, b, M_offset_11, 14, T[18]);
+                        b = GG(b, c, d, a, M_offset_0, 20, T[19]);
+                        a = GG(a, b, c, d, M_offset_5, 5, T[20]);
+                        d = GG(d, a, b, c, M_offset_10, 9, T[21]);
+                        c = GG(c, d, a, b, M_offset_15, 14, T[22]);
+                        b = GG(b, c, d, a, M_offset_4, 20, T[23]);
+                        a = GG(a, b, c, d, M_offset_9, 5, T[24]);
+                        d = GG(d, a, b, c, M_offset_14, 9, T[25]);
+                        c = GG(c, d, a, b, M_offset_3, 14, T[26]);
+                        b = GG(b, c, d, a, M_offset_8, 20, T[27]);
+                        a = GG(a, b, c, d, M_offset_13, 5, T[28]);
+                        d = GG(d, a, b, c, M_offset_2, 9, T[29]);
+                        c = GG(c, d, a, b, M_offset_7, 14, T[30]);
+                        b = GG(b, c, d, a, M_offset_12, 20, T[31]);
+
+                        a = HH(a, b, c, d, M_offset_5, 4, T[32]);
+                        d = HH(d, a, b, c, M_offset_8, 11, T[33]);
+                        c = HH(c, d, a, b, M_offset_11, 16, T[34]);
+                        b = HH(b, c, d, a, M_offset_14, 23, T[35]);
+                        a = HH(a, b, c, d, M_offset_1, 4, T[36]);
+                        d = HH(d, a, b, c, M_offset_4, 11, T[37]);
+                        c = HH(c, d, a, b, M_offset_7, 16, T[38]);
+                        b = HH(b, c, d, a, M_offset_10, 23, T[39]);
+                        a = HH(a, b, c, d, M_offset_13, 4, T[40]);
+                        d = HH(d, a, b, c, M_offset_0, 11, T[41]);
+                        c = HH(c, d, a, b, M_offset_3, 16, T[42]);
+                        b = HH(b, c, d, a, M_offset_6, 23, T[43]);
+                        a = HH(a, b, c, d, M_offset_9, 4, T[44]);
+                        d = HH(d, a, b, c, M_offset_12, 11, T[45]);
+                        c = HH(c, d, a, b, M_offset_15, 16, T[46]);
+                        b = HH(b, c, d, a, M_offset_2, 23, T[47]);
+
+                        a = II(a, b, c, d, M_offset_0, 6, T[48]);
+                        d = II(d, a, b, c, M_offset_7, 10, T[49]);
+                        c = II(c, d, a, b, M_offset_14, 15, T[50]);
+                        b = II(b, c, d, a, M_offset_5, 21, T[51]);
+                        a = II(a, b, c, d, M_offset_12, 6, T[52]);
+                        d = II(d, a, b, c, M_offset_3, 10, T[53]);
+                        c = II(c, d, a, b, M_offset_10, 15, T[54]);
+                        b = II(b, c, d, a, M_offset_1, 21, T[55]);
+                        a = II(a, b, c, d, M_offset_8, 6, T[56]);
+                        d = II(d, a, b, c, M_offset_15, 10, T[57]);
+                        c = II(c, d, a, b, M_offset_6, 15, T[58]);
+                        b = II(b, c, d, a, M_offset_13, 21, T[59]);
+                        a = II(a, b, c, d, M_offset_4, 6, T[60]);
+                        d = II(d, a, b, c, M_offset_11, 10, T[61]);
+                        c = II(c, d, a, b, M_offset_2, 15, T[62]);
+                        b = II(b, c, d, a, M_offset_9, 21, T[63]);
+
+                        // Intermediate hash value
+                        H[0] = (H[0] + a) | 0;
+                        H[1] = (H[1] + b) | 0;
+                        H[2] = (H[2] + c) | 0;
+                        H[3] = (H[3] + d) | 0;
+                    },
+
+                    _doFinalize: function () {
+                        // Shortcuts
+                        var data = this._data;
+                        var dataWords = data.words;
+
+                        var nBitsTotal = this._nDataBytes * 8;
+                        var nBitsLeft = data.sigBytes * 8;
+
+                        // Add padding
+                        dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+
+                        var nBitsTotalH = Math.__floor(nBitsTotal / 0x100000000);
+                        var nBitsTotalL = nBitsTotal;
+                        dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = (
+                            (((nBitsTotalH << 8) | (nBitsTotalH >>> 24)) & 0x00ff00ff) |
+                            (((nBitsTotalH << 24) | (nBitsTotalH >>> 8)) & 0xff00ff00)
+                        );
+                        dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
+                            (((nBitsTotalL << 8) | (nBitsTotalL >>> 24)) & 0x00ff00ff) |
+                            (((nBitsTotalL << 24) | (nBitsTotalL >>> 8)) & 0xff00ff00)
+                        );
+
+                        data.sigBytes = (dataWords.length + 1) * 4;
+
+                        // Hash final blocks
+                        this._process();
+
+                        // Shortcuts
+                        var hash = this._hash;
+                        var H = hash.words;
+
+                        // Swap endian
+                        for (var i = 0; i < 4; i++) {
+                            // Shortcut
+                            var H_i = H[i];
+
+                            H[i] = (((H_i << 8) | (H_i >>> 24)) & 0x00ff00ff) |
+                                (((H_i << 24) | (H_i >>> 8)) & 0xff00ff00);
+                        }
+
+                        // Return final computed hash
+                        return hash;
+                    },
+
+                    clone: function () {
+                        var clone = Hasher.clone.call(this);
+                        clone._hash = this._hash.clone();
+
+                        return clone;
+                    }
+                });
+
+                function FF(a, b, c, d, x, s, t) {
+                    var n = a + ((b & c) | (~b & d)) + x + t;
+                    return ((n << s) | (n >>> (32 - s))) + b;
+                }
+
+                function GG(a, b, c, d, x, s, t) {
+                    var n = a + ((b & d) | (c & ~d)) + x + t;
+                    return ((n << s) | (n >>> (32 - s))) + b;
+                }
+
+                function HH(a, b, c, d, x, s, t) {
+                    var n = a + (b ^ c ^ d) + x + t;
+                    return ((n << s) | (n >>> (32 - s))) + b;
+                }
+
+                function II(a, b, c, d, x, s, t) {
+                    var n = a + (c ^ (b | ~d)) + x + t;
+                    return ((n << s) | (n >>> (32 - s))) + b;
+                }
+
+                /**
+                 * Shortcut function to the hasher's object interface.
+                 *
+                 * @param {WordArray|string} message The message to hash.
+                 *
+                 * @return {WordArray} The hash.
+                 *
+                 * @static
+                 *
+                 * @example
+                 *
+                 *     var hash = CryptoJS.MD5('message');
+                 *     var hash = CryptoJS.MD5(wordArray);
+                 */
+                C.MD5 = Hasher._createHelper(MD5);
+
+                /**
+                 * Shortcut function to the HMAC's object interface.
+                 *
+                 * @param {WordArray|string} message The message to hash.
+                 * @param {WordArray|string} key The secret key.
+                 *
+                 * @return {WordArray} The HMAC.
+                 *
+                 * @static
+                 *
+                 * @example
+                 *
+                 *     var hmac = CryptoJS.HmacMD5(message, key);
+                 */
+                C.HmacMD5 = Hasher._createHmacHelper(MD5);
+            }(Math));
+
+
+            return CryptoJS.MD5;
+
+        }));
+    </script>
+
+    <!-- Storage Hooks -->
+    <script>
+        (() => {
+            function _storageProxy(object) {
+                let old = window[object];
+                let _storageObject = window[object];
+                let _setItem = _storageObject.setItem;
+                let _removeItem = _storageObject.removeItem;
+                let _key = _storageObject.key;
+                let _clear = _storageObject.clear;
+
+                let hooked_assignment = function (prop, value) {
+                    let storageData = {
+                        type: `${object}.setItem`,
+                        arguments: {
+                            prop,
+                            value
+                        }
+                    }
+                    try {
+                        window.__dispatchData(`${object}.setItem`, storageData);
+                    }
+                    catch (e) { }
+                    return _setItem.__apply(_storageObject, arguments);
+                }
+
+                let hooked_get = function (prop) {
+                    let storageData = {
+                        type: `${object}.getItem`,
+                        arguments: prop,
+                        dis: _storageObject[prop]
+                    }
+                    try {
+                        window.__dispatchData(`${object}.getItem`, storageData);
+                    } catch (e) { }
+                    return _storageObject[prop];
+                }
+
+                let hooked_remove = function (prop) {
+                    let storageData = {
+                        type: `${object}.removeItem`,
+                        arguments: prop,
+                        dis: _storageObject[prop]
+                    }
+                    try {
+                        window.__dispatchData(`${object}.removeItem`, storageData);
+                    } catch (e) { }
+                    return _removeItem.__apply(_storageObject, arguments);
+                }
+
+                let hooked_key = function (prop) {
+                    let key = _key.__apply(_storageObject, arguments);
+                    let storageData = {
+                        type: `${object}.key`,
+                        dis: {
+                            prop,
+                            key
+                        }
+                    };
+                    try {
+                        window.__dispatchData(`${object}.key`, storageData);
+                    } catch (e) { }
+                    return key;
+                };
+
+                let hooked_clear = function () {
+                    let storageData = {
+                        type: `${object}.clear`,
+                        dis: "",
+                    };
+                    try {
+                        window.__dispatchData(`${object}.clear`, storageData);
+                    } catch (e) { }
+                    return _clear.__apply(_storageObject, arguments);
+                };
+
+                let hooked_length = function () {
+                    let len = _storageObject.length;
+                    let storageData = {
+                        type: `${object}.length`,
+                        dis: len,
+                    };
+                    try {
+                        window.__dispatchData(`${object}.length`, storageData);
+                    } catch (e) { }
+                    return len;
+                };
+
+                const handler = {
+                    get: function (object, property) {
+                        if (property === "setItem") return hooked_assignment;
+                        if (property === "getItem") return hooked_get;
+                        if (property === "removeItem") return hooked_remove;
+                        if (property === "key") return hooked_key;
+                        if (property === "clear") return hooked_clear;
+                        if (property === "length") return hooked_length();
+                        let accessed = object[property];
+                        if (accessed !== undefined && typeof accessed === "function") {
+                            accessed = accessed.__bind(old);
+                        }
+
+                        return accessed;
+                    },
+                    set: function (object, property, value) {
+                        if (property === "setItem" || property === "getItem" || property === "removeItem" || property ===
+                            "clear" || property === "key" || property === "length") return;
+                        let storageData = {
+                            type: `${object}.setItem`,
+                            arguments: {
+                                property,
+                                value
+                            }
+                        }
+                        try {
+                            window.__dispatchData(`${object}.setItem`, storageData);
+                        } catch (e) { }
+                        return object[property] = value;
+                    }
+                }
+                try {
+                    let proxy = new Proxy(_storageObject, handler);
+                    Object.__defineProperty(window, object, {
+                        get: () => {
+                            return proxy;
+                        }
+                    });
+                } catch (e) { }
+            };
+
+            _storageProxy("localStorage");
+            _storageProxy("sessionStorage");
+        })();
+    </script>
+
+    <!-- JS Property Hooks -->
+    <script>
+        function __hookProperty(object, property, tag, getter = false, setter = false) {
+            try {
+                let __propGetter, __propSetter;
+                try {
+                    __propGetter = object["___lookupGetter___"](property).__bind(object);
+                } catch (e) {
+                    __propGetter = function () { };
+                }
+
+                try {
+                    __propSetter = object["___lookupSetter___"](property).__bind(object);
+                } catch (e) {
+                    __propSetter = function () { };
+                }
+
+                let __hookedGetter = function () {
+                    let data, caller, callerString, callerName, callerData, stacktrace;
+                    try {
+                        data = __propGetter(...arguments);
+                        try {
+                            caller = arguments?.callee?.caller;
+                            callerString = caller?.__toString();
+                            callerName = caller?.name;
+                            if (callerString.__startsWith("async function (api, data)")) {
+                                callerString = undefined;
+                                caller = undefined;
+                            } else if (callerName.__startsWith("_hook") || callerName.__startsWith("__hook")) {
+                                caller = caller?.arguments?.callee?.caller;
+                                callerString = caller?.__toString();
+                                callerName = caller?.name;
+                            }
+                        } catch (e) { }
+
+                        try {
+                            stacktrace = (new Error()).stack.__split("\n");
+                            stacktrace.__shift();
+                            stacktrace.__shift();
+                        } catch (e) { }
+
+                        try {
+                            callerData = {};
+                            let seenCallers = new WeakSet();
+                            while (true && caller != null && caller != '') {
+                                if (seenCallers.__has(caller)) break;
+                                seenCallers.__add(caller);
+                                parent_caller = caller?.arguments?.callee?.caller;
+                                parent_caller_name = parent_caller?.name;
+                                parent_caller_string = parent_caller?.__toString();
+                                if (Object.__keys(callerData).__includes(parent_caller_name)) {
+                                    callerData[parent_caller_name].__push(parent_caller_string)
+                                } else {
+                                    callerData[parent_caller_name] = [parent_caller_string];
+                                }
+                                caller = parent_caller;
+                            }
+                        } catch (e) { }
+                        let detail = {
+                            type: tag,
+                            dis: data,
+                            arguments,
+                            caller: callerString,
+                            callerName,
+                            callerData,
+                            stacktrace
+                        };
+                        if (stacktrace?.__toString().__indexOf('_hooked') > -1) return data;
+                        try {
+                            window.__dispatchData(tag, detail);
+                        } catch (e) { }
+                    } finally {
+                        return data;
+                    }
+                };
+
+                let __hookedSetter = function () {
+                    let data, caller, callerString, callerName, callerData, stacktrace;
+                    try {
+                        data = __propSetter(...arguments);
+                        try {
+                            caller = arguments?.callee?.caller;
+                            callerString = caller?.__toString();
+                            callerName = caller?.name
+                            if (callerString.__startsWith("async function (api, data)")) {
+                                callerString = undefined;
+                                caller = undefined;
+                            } else if (callerName.__startsWith("_hook") || callerName.__startsWith("__hook")) {
+                                caller = caller?.arguments?.callee?.caller;
+                                callerString = caller?.__toString();
+                                callerName = caller?.name;
+                            }
+                        } catch (e) { }
+
+                        try {
+                            stacktrace = (new Error()).stack.__split("\n");
+                            stacktrace.__shift();
+                            stacktrace.__shift();
+                        } catch (e) { }
+
+                        try {
+                            callerData = {};
+                            let seenCallers = new WeakSet();
+                            while (true && caller != null && caller != '') {
+                                if (seenCallers.__has(caller)) break;
+                                seenCallers.__add(caller);
+                                parent_caller = caller?.arguments?.callee?.caller;
+                                parent_caller_name = parent_caller?.name;
+                                parent_caller_string = parent_caller?.__toString();
+                                if (Object.__keys(callerData).__includes(parent_caller_name)) {
+                                    callerData[parent_caller_name].__push(parent_caller_string)
+                                } else {
+                                    callerData[parent_caller_name] = [parent_caller_string];
+                                }
+                                caller = parent_caller;
+                            }
+                        } catch (e) { }
+                        let detail = {
+                            type: tag,
+                            dis: data,
+                            arguments,
+                            caller: callerString,
+                            callerName,
+                            callerData,
+                            stacktrace
+                        };
+                        if (stacktrace?.__toString().__indexOf('_hooked') > -1) return data;
+                        try {
+                            window.__dispatchData(tag, detail);
+                        } catch (e) { }
+                    } finally {
+                        return data;
+                    }
+                };
+
+                let __defaultGetter = function () {
+                    return __propGetter(...arguments);
+                }
+
+                let __defaultSetter = function () {
+                    return __propSetter(...arguments);
+                }
+
+                Object.defineProperty(object, property, {
+                    get: getter ? __hookedGetter : __defaultGetter,
+                    set: setter ? __hookedSetter : __defaultSetter,
+                });
+            } catch (e) { }
+        }
+
+        __hookProperty(document, "alinkColor", "document.alinkColor", true, true);
+        __hookProperty(document, "bgColor", "document.bgColor", true, true);
+        __hookProperty(document, "characterSet", "document.characterSet", true, false);
+        __hookProperty(document, "childElementCount", "document.childElementCount", true, false);
+        __hookProperty(document, "compatMode", "document.compatMode", true, false);
+        __hookProperty(document, "contentType", "document.contentType", true, false);
+        __hookProperty(document, "cookie", "document.cookie", true, true);
+        __hookProperty(document, "defaultView", "document.defaultView", true, false);
+        __hookProperty(document, "designMode", "document.designMode", true, true);
+        __hookProperty(document, "dir", "document.dir", true, true);
+        __hookProperty(document, "domain", "document.domain", true, true);
+        __hookProperty(document, "fragmentDirective", "document.fragmentDirective", true, false);
+        __hookProperty(document, "fgColor", "document.fgColor", true, true);
+        __hookProperty(document, "fullscreen", "document.fullscreen", true, false);
+        __hookProperty(document, "fullscreenEnabled", "document.fullscreenEnabled", true, false);
+        __hookProperty(document, "hidden", "document.hidden", true, false);
+        __hookProperty(document, "lastModified", "document.lastModified", true, true);
+        __hookProperty(document, "lastStyleSheetSet", "document.lastStyleSheetSet", true, true);
+        __hookProperty(document, "linkColor", "document.linkColor", true, true);
+        __hookProperty(document, "preferredStyleSheetSet", "document.preferredStyleSheetSet", true, true);
+        __hookProperty(document, "referrer", "document.referrer", true, true);
+        __hookProperty(document, "title", "document.title", true, true);
+        __hookProperty(document, "visibilityState", "document.visibilityState", true, false);
+        __hookProperty(document, "URL", "document.URL", true, false);
+        __hookProperty(window, "closed", "window.closed", true, false);
+        __hookProperty(window, "credentialless", "window.credentialless", true, false);
+        __hookProperty(window, "defaultStatus", "window.defaultStatus", true, true);
+        __hookProperty(window, "fullScreen", "window.fullScreen", true, false);
+        __hookProperty(window, "innerHeight", "window.innerHeight", true, false);
+        __hookProperty(window, "innerWidth", "window.innerWidth", true, false);
+        __hookProperty(window, "length", "window.length", true, true);
+        __hookProperty(window.locationbar, "visible", "window.locationbar.visible", true, false);
+        __hookProperty(window.menubar, "visible", "window.menubar.visible", true, false);
+        __hookProperty(window, "name", "window.name", true, true);
+        __hookProperty(window, "orientation", "window.orientation", true, false);
+        __hookProperty(window, "outerHeight", "window.outerHeight", true, false);
+        __hookProperty(window, "outerWidth", "window.outerWidth", true, false);
+        __hookProperty(window, "pageXOffset", "window.pageXOffset", true, false);
+        __hookProperty(window, "pageYOffset", "window.pageYOffset", true, false);
+        __hookProperty(window.personalbar, "visible", "window.personalbar.visible", true, false);
+        __hookProperty(window, "screenLeft", "window.screenLeft", true, false);
+        __hookProperty(window, "screenTop", "window.screenTop", true, false);
+        __hookProperty(window, "screenX", "window.screenX", true, false);
+        __hookProperty(window, "screenY", "window.screenY", true, false);
+        __hookProperty(window, "scrollMaxX", "window.scrollMaxX", true, false);
+        __hookProperty(window, "scrollMaxY", "window.scrollMaxY", true, false);
+        __hookProperty(window, "scrollX", "window.scrollX", true, false);
+        __hookProperty(window, "scrollY", "window.scrollY", true, false);
+        __hookProperty(window, "status", "window.status", true, true);
+        __hookProperty(window.toolbar, "visible", "window.toolbar.visible", true, false);
+        __hookProperty(window, "visualViewport", "window.visualViewport", true, false);
+    </script>
+
+    <!-- JS API Hooks -->
+    <script>
+        (() => {
+            function __hook(object, property, tag) {
+                try {
+                    let old_fun = object[property];
+
+                    function _hooked() {
+                        if (window.api_cnt.__get(tag) >= 1000) {
+                            if (old_fun === undefined) return undefined;
+                            else return old_fun.__apply(this, arguments)
+                        }
+
+                        let caller, callerString, callerName, callerData, stacktrace;
+                        try {
+                            caller = arguments?.callee?.caller;
+                            callerString = caller?.__toString();
+                            callerName = caller?.name;
+                            if (callerString.__startsWith("async function (api, data)")) {
+                                callerString = undefined;
+                                caller = undefined;
+                            } else if (callerName.__startsWith("_hooked")) {
+                                caller = caller?.arguments?.callee?.caller;
+                                callerString = caller?.__toString();
+                                callerName = caller?.name;
+                            }
+                        } catch (e) { }
+                        try {
+
+                            stacktrace = (new Error()).stack;
+                            stacktrace = stacktrace.__split("\n");
+                            stacktrace.__shift();
+                            stacktrace.__shift();
+                            // if (stacktrace.__split("_hooked").length > 2) {
+                            //     stacktrace = "skip";
+                            // } else {
+                            //     stacktrace = stacktrace.__split("\n");
+                            //     stacktrace.__shift();
+                            //     stacktrace.__shift();
+                            // }
+                        } catch (e) { }
+
+                        try {
+                            callerData = {};
+                            let seenCallers = new WeakSet();
+                            while (true && caller != null && caller.__toString() != '') {
+                                if (seenCallers.__has(caller)) break;
+                                seenCallers.__add(caller);
+                                parent_caller = caller?.arguments?.callee?.caller;
+                                parent_caller_name = parent_caller?.name;
+                                parent_caller_string = parent_caller?.__toString();
+                                if (Object.__keys(callerData).__includes(parent_caller_name)) {
+                                    callerData[parent_caller_name].__push(parent_caller_string)
+                                } else {
+                                    callerData[parent_caller_name] = [parent_caller_string];
+                                }
+                                caller = parent_caller;
+                            }
+                        } catch (e) {
+                            // console.__error("Something wrong here!", e.message);
+                        }
+                        window.api_cnt.__set(tag, (window.api_cnt.__get(tag) || 0) + 1);
+                        if (stacktrace !== "skip") {
+                            try {
+                                let hash;
+                                try {
+                                    hash = CryptoJS.MD5(window.__stringify(stacktrace)).toString();
+                                } catch (e) { }
+
+                                //  console.__log(hash);
+                                if (!seen_data.__has(hash) && stacktrace !== "skip") {
+                                    seen_data.__add(hash);
+                                    try {
+                                        window.__dispatchData(tag, {
+                                            dis: tag.__startsWith("Date.") ? undefined : this,
+                                            caller: callerString,
+                                            callerName,
+                                            callerData,
+                                            stacktrace,
+                                            arguments: Array.__from(arguments)
+                                        });
+                                    } catch (e) { }
+                                }
+                            } catch (e) {
+                                // console.__error("Something wrong!");
+                                console.__error("Something wrong!", e.message);
+                            }
+                        }
+                        if (old_fun === undefined) return undefined;
+                        else return old_fun.__apply(this, arguments);
+                    }
+                    object[property] = _hooked;
+                } catch (e) { }
+            }
+
+            __hook(Array.prototype, "forEach", "Array.forEach");
+            __hook(Array.prototype, "at", "Array.at");
+            __hook(Array.prototype, "includes", "Array.includes");
+            __hook(Array.prototype, "concat", "Array.concat");
+            __hook(Array.prototype, "every", "Array.every");
+            __hook(Array.prototype, "filter", "Array.filter");
+            __hook(Array.prototype, "join", "Array.join");
+            __hook(Array.prototype, "lastIndexOf", "Array.lastIndexOf");
+            __hook(Array.prototype, "map", "Array.map");
+            __hook(Array.prototype, "pop", "Array.pop");
+            __hook(Array.prototype, "push", "Array.push");
+            __hook(Array.prototype, "reduce", "Array.reduce");
+            __hook(Array.prototype, "entries", "Array.entries");
+            __hook(Array.prototype, "fill", "Array.fill");
+            __hook(Array.prototype, "find", "Array.find");
+            __hook(Array.prototype, "findLastIndex", "Array.findLastIndex");
+            __hook(Array.prototype, "findIndex", "Array.findIndex");
+            __hook(Array.prototype, "findLast", "Array.findLast");
+            __hook(Array.prototype, "flat", "Array.flat");
+            __hook(Array.prototype, "keys", "Array.keys");
+            __hook(Array.prototype, "toReversed", "Array.toReversed");
+            __hook(Array.prototype, "toSorted", "Array.toSorted");
+            __hook(Array.prototype, "toSpliced", "Array.toSpliced");
+            __hook(Array.prototype, "values", "Array.values");
+            __hook(Array.prototype, "toLocaleString", "Array.toLocaleString");
+            __hook(Array.prototype, "some", "Array.some");
+            __hook(Array.prototype, "copyWithin", "Array.copyWithin");
+            __hook(Array.prototype, "reduceRight", "Array.reduceRight");
+            __hook(Array.prototype, "reverse", "Array.reverse");
+            __hook(Array.prototype, "shift", "Array.shift");
+            __hook(Array.prototype, "slice", "Array.slice");
+            __hook(Array.prototype, "sort", "Array.sort");
+            __hook(Array.prototype, "splice", "Array.splice");
+            __hook(Array.prototype, "toString", "Array.toString");
+            __hook(Array.prototype, "unshift", "Array.unshift");
+            __hook(Array, "from", "Array.from");
+            __hook(Array, "isArray", "Array.isArray");
+            __hook(Array, "of", "Array.of");
+
+            __hook(BigInt.prototype, "toLocaleString", "BigInt.toLocaleString");
+            __hook(BigInt.prototype, "toString", "BigInt.toString");
+            __hook(BigInt.prototype, "valueOf", "BigInt.valueOf");
+            __hook(BigInt, "asIntN", "BigInt.asIntN");
+            __hook(BigInt, "asUintN", "BigInt.asUintN");
+
+            __hook(Boolean.prototype, "toString", "Boolean.toString");
+            __hook(Boolean.prototype, "valueOf", "Boolean.valueOf");
+
+            __hook(console, "assert", "console.assert");
+            __hook(console, "clear", "console.clear");
+            __hook(console, "count", "console.count");
+            __hook(console, "countReset", "console.countReset");
+            __hook(console, "debug", "console.debug");
+            __hook(console, "dir", "console.dir");
+            __hook(console, "dirxml", "console.dirxml");
+            __hook(console, "error", "console.error");
+            __hook(console, "group", "console.group");
+            __hook(console, "groupCollapsed", "console.groupCollapsed");
+            __hook(console, "groupEnd", "console.groupEnd");
+            __hook(console, "info", "console.info");
+            __hook(console, "log", "console.log");
+            __hook(console, "profile", "console.profile");
+            __hook(console, "profileEnd", "console.profileEnd");
+            __hook(console, "table", "console.table");
+            __hook(console, "time", "console.time");
+            __hook(console, "timeEnd", "console.timeEnd");
+            __hook(console, "timeLog", "console.timeLog");
+            __hook(console, "timeStamp", "console.timeStamp");
+            __hook(console, "trace", "console.trace");
+            __hook(console, "warn", "console.warn");
+
+            __hook(Date.prototype, "getDate", "Date.getDate");
+            __hook(Date.prototype, "getDay", "Date.getDay");
+            __hook(Date.prototype, "getFullYear", "Date.getFullYear");
+            __hook(Date.prototype, "getHours", "Date.getHours");
+            __hook(Date.prototype, "getMilliseconds", "Date.getMilliseconds");
+            __hook(Date.prototype, "getMinutes", "Date.getMinutes");
+            __hook(Date.prototype, "getMonth", "Date.getMonth");
+            __hook(Date.prototype, "getSeconds", "Date.getSeconds");
+            __hook(Date.prototype, "getTime", "Date.getTime");
+            __hook(Date.prototype, "getTimezoneOffset", "Date.getTimezoneOffset");
+            __hook(Date.prototype, "getUTCDate", "Date.getUTCDate");
+            __hook(Date.prototype, "getUTCDay", "Date.getUTCDay");
+            __hook(Date.prototype, "getUTCFullYear", "Date.getUTCFullYear");
+            __hook(Date.prototype, "getUTCHours", "Date.getUTCHours");
+            __hook(Date.prototype, "getUTCMilliseconds", "Date.getUTCMilliseconds");
+            __hook(Date.prototype, "getUTCMinutes", "Date.getUTCMinutes");
+            __hook(Date.prototype, "getUTCMonth", "Date.getUTCMonth");
+            __hook(Date.prototype, "getUTCSeconds", "Date.getUTCSeconds");
+            __hook(Date.prototype, "getYear", "Date.getYear");
+            __hook(Date.prototype, "setDate", "Date.setDate");
+            __hook(Date.prototype, "setFullYear", "Date.setFullYear");
+            __hook(Date.prototype, "setHours", "Date.setHours");
+            __hook(Date.prototype, "setMilliseconds", "Date.setMilliseconds");
+            __hook(Date.prototype, "setMinutes", "Date.setMinutes");
+            __hook(Date.prototype, "setMonth", "Date.setMonth");
+            __hook(Date.prototype, "setSeconds", "Date.setSeconds");
+            __hook(Date.prototype, "setTime", "Date.setTime");
+            __hook(Date.prototype, "setUTCDate", "Date.setUTCDate");
+            __hook(Date.prototype, "setUTCFullYear", "Date.setUTCFullYear");
+            __hook(Date.prototype, "setUTCHours", "Date.setUTCHours");
+            __hook(Date.prototype, "setUTCMilliseconds", "Date.setUTCMilliseconds");
+            __hook(Date.prototype, "setUTCMinutes", "Date.setUTCMinutes");
+            __hook(Date.prototype, "setUTCMonth", "Date.setUTCMonth");
+            __hook(Date.prototype, "setUTCSeconds", "Date.setUTCSeconds");
+            __hook(Date.prototype, "setYear", "Date.setYear");
+            __hook(Date.prototype, "toDateString", "Date.toDateString");
+            __hook(Date.prototype, "toISOString", "Date.toISOString");
+            __hook(Date.prototype, "toJSON", "Date.toJSON");
+            __hook(Date.prototype, "toLocaleString", "Date.toLocaleString");
+            __hook(Date.prototype, "toLocaleDateString", "Date.toLocaleDateString");
+            __hook(Date.prototype, "toLocaleTimeString", "Date.toLocaleTimeString");
+            __hook(Date.prototype, "toString", "Date.toString");
+            __hook(Date.prototype, "toTimeString", "Date.toTimeString");
+            __hook(Date.prototype, "valueOf", "Date.valueOf");
+            __hook(Date, "now", "Date.now");
+            __hook(Date, "parse", "Date.parse");
+            __hook(Date, "UTC", "Date.UTC");
+
+            __hook(Document.prototype, "adoptNode", "document.adoptNode");
+            __hook(Document.prototype, "addEventListener", "document.addEventListener");
+            __hook(Document.prototype, "append", "document.append");
+            __hook(Document.prototype, "appendChild", "document.appendChild");
+            __hook(Document.prototype, "captureEvents", "document.captureEvents");
+            __hook(Document.prototype, "caretPositionFromPoint", "document.caretPositionFromPoint");
+            __hook(Document.prototype, "caretRangeFromPoint", "document.caretRangeFromPoint");
+            __hook(Document.prototype, "clear", "document.clear");
+            __hook(Document.prototype, "close", "document.close");
+            __hook(Document.prototype, "createAttribute", "document.createAttribute");
+            __hook(Document.prototype, "createAttributeNS", "document.createAttributeNS");
+            __hook(Document.prototype, "createCDATASection", "document.createCDATASection");
+            __hook(Document.prototype, "createComment", "document.createComment");
+            __hook(Document.prototype, "createDocumentFragment", "document.createDocumentFragment");
+            __hook(Document.prototype, "createEvent", "document.createEvent");
+            __hook(Document.prototype, "createElement", "document.createElement");
+            __hook(Document.prototype, "createElementNS", "document.createElementNS");
+            __hook(Document.prototype, "createExpression", "document.createExpression");
+            __hook(Document.prototype, "createNodeIterator", "document.createNodeIterator");
+            __hook(Document.prototype, "createNSResolver", "document.createNSResolver");
+            __hook(Document.prototype, "createRange", "document.createRange");
+            __hook(Document.prototype, "createTextNode", "document.createTextNode");
+            __hook(Document.prototype, "createProcessingInstruction", "document.createProcessingInstruction");
+            __hook(Document.prototype, "createTouch", "document.createTouch");
+            __hook(Document.prototype, "createTouchList", "document.createTouchList");
+            __hook(Document.prototype, "createTreeWalker", "document.createTreeWalker");
+            __hook(Document.prototype, "elementFromPoint", "document.elementFromPoint");
+            __hook(Document.prototype, "elementsFromPoint", "document.elementsFromPoint");
+            __hook(Document.prototype, "enableStyleSheetsForSet", "document.enableStyleSheetsForSet");
+            __hook(Document.prototype, "evaluate", "document.evaluate");
+            __hook(Document.prototype, "execCommand", "document.execCommand");
+            __hook(Document.prototype, "exitFullScreen", "document.exitFullScreen");
+            __hook(Document.prototype, "exitPictureInPicture", "document.exitPictureInPicture");
+            __hook(Document.prototype, "exitPointerLock", "document.exitPointerLock");
+            __hook(Document.prototype, "getAnimations", "document.getAnimations");
+            __hook(Document.prototype, "getElementById", "document.getElementById");
+            __hook(Document.prototype, "getElementsByClassName", "document.getElementsByClassName");
+            __hook(Document.prototype, "getElementsByName", "document.getElementsByName");
+            __hook(Document.prototype, "getElementsByTagName", "document.getElementsByTagName");
+            __hook(Document.prototype, "getElementsByTagNameNS", "document.getElementsByTagNameNS");
+            __hook(Document.prototype, "getSelection", "document.getSelection");
+            __hook(Document.prototype, "hasFocus", "document.hasFocus");
+            __hook(Document.prototype, "hasStorageAccess", "document.hasStorageAccess");
+            __hook(Document.prototype, "importNode", "document.importNode");
+            __hook(Document.prototype, "open", "document.open");
+            __hook(Document.prototype, "prepend", "document.prepend");
+            __hook(Document.prototype, "queryCommandEnabled", "document.queryCommandEnabled");
+            __hook(Document.prototype, "queryCommandState", "document.queryCommandState");
+            __hook(Document.prototype, "queryCommandSupported", "document.queryCommandSupported");
+            __hook(Document.prototype, "querySelector", "document.querySelector");
+            __hook(Document.prototype, "querySelectorAll", "document.querySelectorAll");
+            __hook(Document.prototype, "releaseCapture", "document.releaseCapture");
+            __hook(Document.prototype, "replaceChildren", "document.replaceChildren");
+            __hook(Document.prototype, "requestStorageAccess", "document.requestStorageAccess");
+            __hook(Document.prototype, "startViewTransition", "document.startViewTransition");
+            __hook(Document.prototype, "write", "document.write");
+            __hook(Document.prototype, "writeln", "document.writeln");
+
+            // __hook(Function.prototype, "call", "Function.call");
+            __hook(Function.prototype, "bind", "Function.bind");
+            __hook(Function.prototype, "toString", "Function.toString");
+
+            __hook(EventTarget.prototype, "addEventListener", "EventTarget.addEventListener");
+            __hook(EventTarget.prototype, "dispatchEvent", "EventTarget.dispatchEvent");
+            __hook(EventTarget.prototype, "removeEventListener", "EventTarget.removeEventListener");
+
+            __hook(IDBFactory.prototype, 'cmp', 'IndexedDB.cmp');
+            __hook(IDBFactory.prototype, 'databases', 'IndexedDB.databases');
+            __hook(IDBFactory.prototype, 'deleteDatabase', 'IndexedDB.deleteDatabase');
+            __hook(IDBFactory.prototype, 'open', 'IndexedDB.open');
+            __hook(IDBDatabase.prototype, 'close', 'IndexedDB.close');
+            __hook(IDBDatabase.prototype, 'createObjectStore', 'IndexedDB.createObjectStore');
+            __hook(IDBDatabase.prototype, 'deleteObjectStore', 'IndexedDB.deleteObjectStore');
+            __hook(IDBDatabase.prototype, 'transaction', 'IndexedDB.transaction');
+            __hook(IDBTransaction.prototype, 'abort', 'IndexedDB.open');
+            __hook(IDBTransaction.prototype, 'commit', 'IndexedDB.commit');
+            __hook(IDBTransaction.prototype, 'objectStore', 'IndexedDB.objectStore');
+            __hook(IDBObjectStore.prototype, 'add', 'IndexedDB.add');
+            __hook(IDBObjectStore.prototype, 'clear', 'IndexedDB.clear');
+            __hook(IDBObjectStore.prototype, 'count', 'IndexedDB.count');
+            __hook(IDBObjectStore.prototype, 'createIndex', 'IndexedDB.createIndex');
+            __hook(IDBObjectStore.prototype, 'delete', 'IndexedDB.delete');
+            __hook(IDBObjectStore.prototype, 'deleteIndex', 'IndexedDB.deleteIndex');
+            __hook(IDBObjectStore.prototype, 'get', 'IndexedDB.get');
+            __hook(IDBObjectStore.prototype, 'getAll', 'IndexedDB.getAll');
+            __hook(IDBObjectStore.prototype, 'getAllKeys', 'IndexedDB.getAllKeys');
+            __hook(IDBObjectStore.prototype, 'getKey', 'IndexedDB.getKey');
+            __hook(IDBObjectStore.prototype, 'index', 'IndexedDB.index');
+            __hook(IDBObjectStore.prototype, 'openCursor', 'IndexedDB.openCursor');
+            __hook(IDBObjectStore.prototype, 'openKeyCursor', 'IndexedDB.openKeyCursor');
+            __hook(IDBObjectStore.prototype, 'put', 'IndexedDB.put');
+            __hook(IDBCursor.prototype, 'advance', 'IndexedDB.advance');
+            __hook(IDBCursor.prototype, 'continue', 'IndexedDB.continue');
+            __hook(IDBCursor.prototype, 'continuePrimaryKey', 'IndexedDB.continuePrimaryKey');
+            __hook(IDBCursor.prototype, 'delete', 'IndexedDB.delete');
+            __hook(IDBCursor.prototype, 'update', 'IndexedDB.update');
+            __hook(IDBKeyRange.prototype, 'bound', 'IndexedDB.bound');
+            __hook(IDBKeyRange.prototype, 'lowerBound', 'IndexedDB.lowerBound');
+            __hook(IDBKeyRange.prototype, 'only', 'IndexedDB.only');
+            __hook(IDBKeyRange.prototype, 'upperBound', 'IndexedDB.upperBound');
+
+            __hook(JSON, "parse", "JSON.parse");
+            __hook(JSON, "stringify", "JSON.stringify");
+
+            __hook(Math, "abs", "Math.abs");
+            __hook(Math, "acos", "Math.acos");
+            __hook(Math, "acosh", "Math.acosh");
+            __hook(Math, "asin", "Math.asin");
+            __hook(Math, "asinh", "Math.asinh");
+            __hook(Math, "atan", "Math.atan");
+            __hook(Math, "atan2", "Math.atan2");
+            __hook(Math, "atanh", "Math.atanh");
+            __hook(Math, "cbrt", "Math.cbrt");
+            __hook(Math, "ceil", "Math.ceil");
+            __hook(Math, "clz32", "Math.clz32");
+            __hook(Math, "cos", "Math.cos");
+            __hook(Math, "cosh", "Math.cosh");
+            __hook(Math, "exp", "Math.exp");
+            __hook(Math, "expm1", "Math.expm1");
+            __hook(Math, "floor", "Math.floor");
+            __hook(Math, "fround", "Math.fround");
+            __hook(Math, "hypot", "Math.hypot");
+            __hook(Math, "imul", "Math.imul");
+            __hook(Math, "log", "Math.log");
+            __hook(Math, "log10", "Math.log10");
+            __hook(Math, "log1p", "Math.log1p");
+            __hook(Math, "log2", "Math.log2");
+            __hook(Math, "max", "Math.max");
+            __hook(Math, "min", "Math.min");
+            __hook(Math, "pow", "Math.pow");
+            __hook(Math, "random", "Math.random");
+            __hook(Math, "round", "Math.round");
+            __hook(Math, "sign", "Math.sign");
+            __hook(Math, "sin", "Math.sin");
+            __hook(Math, "sinh", "Math.sinh");
+            __hook(Math, "sqrt", "Math.sqrt");
+            __hook(Math, "tan", "Math.tan");
+            __hook(Math, "tanh", "Math.tanh");
+            __hook(Math, "trunc", "Math.trunc");
+
+            if (navigator.canShare) __hook(navigator, "canShare", "navigator.canShare");
+            if (navigator.clearAppBadge) __hook(navigator, "clearAppBadge", "navigator.clearAppBadge");
+            if (navigator.getAutoplayPolicy) __hook(navigator, "getAutoplayPolicy", "navigator.getAutoplayPolicy");
+            if (navigator.getBattery) __hook(navigator, "getBattery", "navigator.getBattery");
+            __hook(navigator, "getGamepads", "navigator.getGamepads");
+            if (navigator.getInstalledRelatedApps) __hook(navigator, "getInstalledRelatedApps", "navigator.getInstalledRelatedApps");
+            if (navigator.getUserMedia) __hook(navigator, "getUserMedia", "navigator.getUserMedia");
+            if (navigator.getVRDisplays) __hook(navigator, "getVRDisplays", "navigator.getVRDisplays");
+            __hook(navigator, "javaEnabled", "navigator.javaEnabled");
+            if (navigator.registerProtocolHandler) __hook(navigator, "registerProtocolHandler", "navigator.registerProtocolHandler");
+            if (navigator.requestMediaKeySystemAccess) __hook(navigator, "requestMediaKeySystemAccess", "navigator.requestMediaKeySystemAccess");
+            if (navigator.requestMIDIAccess) __hook(navigator, "requestMIDIAccess", "navigator.requestMIDIAccess");
+            __hook(navigator, "sendBeacon", "navigator.sendBeacon");
+            if (navigator.share) __hook(navigator, "share", "navigator.share");
+            if (navigator.taintEnabled) __hook(navigator, "taintEnabled", "navigator.taintEnabled");
+            if (navigator.unregisterProtocolHandler) __hook(navigator, "unregisterProtocolHandler", "navigator.unregisterProtocolHandler");
+            __hook(navigator, "vibrate", "navigator.vibrate");
+
+            if (navigator.clipboard) {
+                __hook(navigator.clipboard, "read", "navigator.clipboard.read");
+                __hook(navigator.clipboard, "readText", "navigator.clipboard.readText");
+                __hook(navigator.clipboard, "write", "navigator.clipboard.write");
+                __hook(navigator.clipboard, "writeText", "navigator.clipboard.writeText");
+            }
+
+            __hook(navigator.geolocation, "clearWatch", "navigator.geolocation.clearWatch");
+            __hook(navigator.geolocation, "getCurrentPosition", "navigator.geolocation.getCurrentPosition");
+            __hook(navigator.geolocation, "watchPosition", "navigator.geolocation.watchPosition");
+
+            if (navigator.mediaCapabilities) {
+                __hook(navigator.mediaCapabilities, "decodingInfo", "navigator.mediaCapabilities.decodingInfo");
+                __hook(navigator.mediaCapabilities, "encodingInfo", "navigator.mediaCapabilities.encodingInfo");
+            }
+
+            __hook(navigator.permissions, "query", "navigator.permissions.query");
+            __hook(navigator.permissions, "revoke", "navigator.permissions.revoke");
+
+            if (navigator.userAgentData) {
+                __hook(navigator.userAgentData, "getHighEntropyValues", "navigator.userAgentData.getHighEntropyValues");
+                __hook(navigator.userAgentData, "toJSON", "navigator.userAgentData.toJSON");
+            }
+
+            if (navigator.serviceWorker) {
+                __hook(navigator.serviceWorker, "getRegistration", "navigator.serviceWorker.getRegistration");
+                __hook(navigator.serviceWorker, "getRegistrations", "navigator.serviceWorker.getRegistrations");
+                __hook(navigator.serviceWorker, "register", "navigator.serviceWorker.register");
+                __hook(navigator.serviceWorker, "startMessages", "navigator.serviceWorker.startMessages");
+            }
+            if (navigator.storage) {
+                __hook(navigator.storage, "estimate", "navigator.storage.estimate");
+                __hook(navigator.storage, "getDirectory", "navigator.storage.getDirectory");
+                __hook(navigator.storage, "persist", "navigator.storage.persist");
+                __hook(navigator.storage, "persisted", "navigator.storage.persisted");
+            }
+
+            __hook(navigator.scheduling, "isInputPending", "navigator.scheduling.isInputPending");
+
+            __hook(Node.prototype, "appendChild", "Node.appendChild");
+            __hook(Node.prototype, "cloneNode", "Node.cloneNode");
+            __hook(Node.prototype, "compareDocumentPosition", "Node.compareDocumentPosition");
+            __hook(Node.prototype, "contains", "Node.contains");
+            __hook(Node.prototype, "getRootNode", "Node.getRootNode");
+            __hook(Node.prototype, "hasChildNodes", "Node.hasChildNodes");
+            __hook(Node.prototype, "insertBefore", "Node.insertBefore");
+            __hook(Node.prototype, "isDefaultNamespace", "Node.isDefaultNamespace");
+            __hook(Node.prototype, "isEqualNode", "Node.isEqualNode");
+            __hook(Node.prototype, "isSameNode", "Node.isSameNode");
+            __hook(Node.prototype, "lookupNamespaceURI", "Node.lookupNamespaceURI");
+            __hook(Node.prototype, "lookupPrefix", "Node.lookupPrefix");
+            __hook(Node.prototype, "normalize", "Node.normalize");
+            __hook(Node.prototype, "removeChild", "Node.removeChild");
+            __hook(Node.prototype, "replaceChild", "Node.replaceChild");
+
+            __hook(Number, "isFinite", "Number.isFinite");
+            __hook(Number, "isInteger", "Number.isInteger");
+            __hook(Number, "isNan", "Number.isNan");
+            __hook(Number, "isSafeInteger", "Number.isSafeInteger");
+            __hook(Number, "parseFloat", "Number.parseFloat");
+            __hook(Number, "parseInt", "Number.parseInt");
+            __hook(Number.prototype, "toExponential", "Number.toExponential");
+            __hook(Number.prototype, "toFixed", "Number.toFixed");
+            __hook(Number.prototype, "toLocaleString", "Number.toLocaleString");
+            __hook(Number.prototype, "toPrecision", "Number.toPrecision");
+            __hook(Number.prototype, "toString", "Number.toString");
+            __hook(Number.prototype, "valueOf", "Number.valueOf");
+
+            __hook(Object, "assign", "Object.assign");
+            __hook(Object, "create", "Object.create");
+            __hook(Object, "defineProperties", "Object.defineProperties");
+            __hook(Object, "defineProperty", "Object.defineProperty");
+            __hook(Object, "entries", "Object.entries");
+            __hook(Object, "freeze", "Object.freeze");
+            __hook(Object, "fromEntries", "Object.fromEntries");
+            __hook(Object, "getOwnPropertyDescriptor", "Object.getOwnPropertyDescriptor");
+            __hook(Object, "getOwnPropertyDescriptors", "Object.getOwnPropertyDescriptors");
+            __hook(Object, "getOwnPropertyNames", "Object.getOwnPropertyNames");
+            __hook(Object, "getOwnPropertySymbols", "Object.getOwnPropertySymbols");
+            __hook(Object, "getPrototypeOf", "Object.getPrototypeOf");
+            __hook(Object, "hasOwn", "Object.hasOwn");
+            __hook(Object, "is", "Object.is");
+            __hook(Object, "isExtensible", "Object.isExtensible");
+            __hook(Object, "isFrozen", "Object.isFrozen");
+            __hook(Object, "isSealed", "Object.isSealed");
+            __hook(Object, "keys", "Object.keys");
+            __hook(Object, "preventExtensions", "Object.preventExtensions");
+            __hook(Object, "seal", "Object.seal");
+            __hook(Object, "setPrototypeOf", "Object.setPrototypeOf");
+            __hook(Object, "values", "Object.values");
+            __hook(Object.prototype, "__defineGetter__", "Object.__defineGetter__");
+            __hook(Object.prototype, "__defineSetter__", "Object.__defineSetter__");
+            __hook(Object.prototype, "__lookupGetter__", "Object.__lookupGetter__");
+            __hook(Object.prototype, "__lookupSetter__", "Object.__lookupSetter__");
+            __hook(Object.prototype, "hasOwnProperty", "Object.hasOwnProperty");
+            __hook(Object.prototype, "isPrototypeOf", "Object.isPrototypeOf");
+            __hook(Object.prototype, "propertyIsEnumerable", "Object.propertyIsEnumerable");
+            __hook(Object.prototype, "toLocaleString", "Object.toLocaleString");
+            __hook(Object.prototype, "toString", "Object.toString");
+            __hook(Object.prototype, "valueOf", "Object.valueOf");
+
+            __hook(RegExp.prototype, "compile", "RegExp.compile");
+            __hook(RegExp.prototype, "exec", "RegExp.exec");
+            __hook(RegExp.prototype, "toString", "RegExp.toString");
+            __hook(RegExp.prototype, "test", "RegExp.test");
+
+            __hook(Reflect, "apply", "Reflect.apply");
+            __hook(Reflect, "construct", "Reflect.construct");
+            __hook(Reflect, "defineProperty", "Reflect.defineProperty");
+            __hook(Reflect, "deleteProperty", "Reflect.deleteProperty");
+            __hook(Reflect, "get", "Reflect.get");
+            __hook(Reflect, "getOwnPropertyDescriptor", "Reflect.getOwnPropertyDescriptor");
+            __hook(Reflect, "getPrototypeOf", "Reflect.getPrototypeOf");
+            __hook(Reflect, "has", "Reflect.has");
+            __hook(Reflect, "isExtensible", "Reflect.isExtensible");
+            __hook(Reflect, "ownKeys", "Reflect.ownKeys");
+            __hook(Reflect, "preventExtensions", "Reflect.preventExtensions");
+            __hook(Reflect, "set", "Reflect.set");
+            __hook(Reflect, "setPrototypeOf", "Reflect.setPrototypeOf");
+
+            __hook(Set.prototype, "add", "Set.add");
+            __hook(Set.prototype, "clear", "Set.clear");
+            __hook(Set.prototype, "delete", "Set.delete");
+            __hook(Set.prototype, "entries", "Set.entries");
+            __hook(Set.prototype, "forEach", "Set.forEach");
+            __hook(Set.prototype, "has", "Set.has");
+            __hook(Set.prototype, "keys", "Set.keys");
+            __hook(Set.prototype, "values", "Set.values");
+
+            __hook(String, "raw", "String.raw");
+            __hook(String, "fromCharCode", "String.fromCharCode");
+            __hook(String, "fromCodePoint", "String.fromCodePoint");
+
+            __hook(String.prototype, "anchor", "String.anchor");
+            __hook(String.prototype, "at", "String.at");
+            __hook(String.prototype, "big", "String.big");
+            __hook(String.prototype, "blink", "String.blink");
+            __hook(String.prototype, "bold", "String.bold");
+            __hook(String.prototype, "charAt", "String.charAt");
+            __hook(String.prototype, "charCodeAt", "String.charCodeAt");
+            __hook(String.prototype, "codePointAt", "String.codePointAt");
+            __hook(String.prototype, "concat", "String.concat");
+            __hook(String.prototype, "endsWith", "String.endsWith");
+            __hook(String.prototype, "fixed", "String.fixed");
+            __hook(String.prototype, "fontcolor", "String.fontcolor");
+            __hook(String.prototype, "fontsize", "String.fontsize");
+            __hook(String.prototype, "includes", "String.includes");
+            __hook(String.prototype, "indexOf", "String.indexOf");
+            __hook(String.prototype, "isWellFormed", "String.isWellFormed");
+            __hook(String.prototype, "italics", "String.italics");
+            __hook(String.prototype, "lastIndexOf", "String.lastIndexOf");
+            __hook(String.prototype, "link", "String.link");
+            __hook(String.prototype, "localeCompare", "String.localeCompare");
+            __hook(String.prototype, "match", "String.match");
+            __hook(String.prototype, "matchAll", "String.matchAll");
+            __hook(String.prototype, "normalize", "String.normalize");
+            __hook(String.prototype, "padStart", "String.padStart");
+            __hook(String.prototype, "repeat", "String.repeat");
+            __hook(String.prototype, "replace", "String.replace");
+            __hook(String.prototype, "replaceAll", "String.replaceAll");
+            __hook(String.prototype, "search", "String.search");
+            __hook(String.prototype, "slice", "String.slice");
+            __hook(String.prototype, "small", "String.small");
+            __hook(String.prototype, "split", "String.split");
+            __hook(String.prototype, "startsWith", "String.startsWith");
+            __hook(String.prototype, "strike", "String.strike");
+            __hook(String.prototype, "sub", "String.sub");
+            __hook(String.prototype, "substr", "String.substr");
+            __hook(String.prototype, "substring", "String.substring");
+            __hook(String.prototype, "sup", "String.sup");
+            __hook(String.prototype, "toLocaleString", "String.toLocaleString");
+            __hook(String.prototype, "toLocaleLowerCase", "String.toLocaleLowerCase");
+            __hook(String.prototype, "toLocaleUpperCase", "String.toLocaleUpperCase");
+            // __hook(String.prototype, "toString", "String.toString");
+            __hook(String.prototype, "toLowerCase", "String.toLowerCase");
+            __hook(String.prototype, "toUpperCase", "String.toUpperCase");
+            __hook(String.prototype, "toWellFormed", "String.toWellFormed");
+            __hook(String.prototype, "trim", "String.trim");
+            __hook(String.prototype, "trimEnd", "String.trimEnd");
+            __hook(String.prototype, "trimStart", "String.trimStart");
+            __hook(String.prototype, "valueOf", "String.valueOf");
+
+            __hook(Symbol, "for", "Symbol.for");
+            __hook(Symbol, "keyFor", "Symbol.keyFor");
+            __hook(Symbol.prototype, "valueOf", "Symbol.valueOf");
+            __hook(Symbol.prototype, "toString", "Symbol.toString");
+
+            __hook(Map.prototype, "get", "Map.get");
+            __hook(Map.prototype, "set", "Map.set");
+            __hook(Map.prototype, "delete", "Map.delete");
+            __hook(Map.prototype, "has", "Map.has");
+            __hook(Map.prototype, "values", "Map.values");
+            __hook(Map.prototype, "entries", "Map.entries");
+            __hook(Map.prototype, "clear", "Map.clear");
+            __hook(Map.prototype, "keys", "Map.keys");
+            __hook(Map.prototype, "forEach", "Map.forEach");
+
+            __hook(WeakMap.prototype, "get", "WeakMap.get");
+            __hook(WeakMap.prototype, "set", "WeakMap.set");
+            __hook(WeakMap.prototype, "delete", "WeakMap.delete");
+            __hook(WeakMap.prototype, "has", "WeakMap.has");
+
+            __hook(WeakSet.prototype, "add", "WeakSet.add");
+            __hook(WeakSet.prototype, "delete", "WeakSet.delete");
+            __hook(WeakSet.prototype, "has", "WeakSet.has");
+
+            __hook(window, "fetch", "fetch");
+            __hook(window, "isFinite", "window.isFinite");
+            __hook(window, "isNaN", "window.isNaN");
+            __hook(window, "parseFloat", "window.parseFloat");
+            __hook(window, "parseInt", "window.parseInt");
+            __hook(window, "decodeURI", "window.decodeURI");
+            __hook(window, "decodeURIComponent", "window.decodeURIComponent");
+            __hook(window, "encodeURI", "window.encodeURI");
+            __hook(window, "encodeURIComponent", "window.encodeURIComponent");
+            __hook(window, "escape", "window.escape");
+            __hook(window, "unescape", "window.unescape");
+            __hook(window, "alert", "window.alert");
+            __hook(window, "back", "window.back");
+            __hook(window, "blur", "window.blur");
+            __hook(window, "cancelAnimationFrame", "window.cancelAnimationFrame");
+            __hook(window, "cancelIdleCallback", "window.cancelIdleCallback");
+            __hook(window, "captureEvents", "window.captureEvents");
+            __hook(window, "clearImmediate", "window.clearImmediate");
+            __hook(window, "close", "window.close");
+            __hook(window, "confirm", "window.confirm");
+            __hook(window, "convertPointFromNodeToPage", "window.convertPointFromNodeToPage");
+            __hook(window, "dump", "window.dump");
+            __hook(window, "find", "window.find");
+            __hook(window, "focus", "window.focus");
+            __hook(window, "forward", "window.forward");
+            __hook(window, "getComputedStyle", "window.getComputedStyle");
+            __hook(window, "getDefaultComputedStyle", "window.getDefaultComputedStyle");
+            __hook(window, "getSelection", "window.getSelection");
+            __hook(window, "matchMedia", "window.matchMedia");
+            __hook(window, "moveBy", "window.moveBy");
+            __hook(window, "moveTo", "window.moveTo");
+            __hook(window, "open", "window.open");
+            __hook(window, "postMessage", "window.postMessage");
+            __hook(window, "print", "window.print");
+            __hook(window, "prompt", "window.prompt");
+            __hook(window, "queryLocalFonts", "window.queryLocalFonts");
+            __hook(window, "releaseEvents", "window.releaseEvents");
+
+            __hook(window, "requestAnimationFrame", "window.requestAnimationFrame");
+            __hook(window, "requestFileSystem", "window.requestFileSystem");
+            __hook(window, "requestIdleCallback", "window.requestIdleCallback");
+            __hook(window, "resizeBy", "window.resizeBy");
+            __hook(window, "resizeTo", "window.resizeTo");
+            __hook(window, "scroll", "window.scroll");
+            __hook(window, "scrollBy", "window.scrollBy");
+            __hook(window, "scrollByLines", "window.scrollByLines");
+            __hook(window, "scrollByPages", "window.scrollBy");
+            __hook(window, "scrollTo", "window.scrollTo");
+            __hook(window, "setImmediate", "window.setImmediate");
+            __hook(window, "setTimeout", "window.setTimeout");
+            __hook(window, "setInterval", "window.setInterval");
+            __hook(window, "showDirectoryPicker", "window.showDirectoryPicker");
+            __hook(window, "showModalDialog", "window.showModalDialog");
+            __hook(window, "showOpenFilePicker", "window.showOpenFilePicker");
+            __hook(window, "showSaveFilePicker", "window.showSaveFilePicker");
+            __hook(window, "stop", "window.stop");
+            __hook(window, "updateCommands", "window.updateCommands");
+            __hook(window, "webkitConvertPointFromPageToNode", "window.webkitConvertPointFromPageToNode");
+
+            __hook(Element.prototype, "after", "Element.after");
+            __hook(Element.prototype, "animate", "Element.animate");
+            __hook(Element.prototype, "append", "Element.append");
+            __hook(Element.prototype, "attachShadow", "Element.attachShadow");
+            __hook(Element.prototype, "before", "Element.before");
+            __hook(Element.prototype, "checkVisibility", "Element.checkVisibility");
+            __hook(Element.prototype, "closest", "Element.closest");
+            __hook(Element.prototype, "computedStyleMap", "Element.computedStyleMap");
+            __hook(Element.prototype, "getAnimations", "Element.getAnimations");
+            __hook(Element.prototype, "getAttribute", "Element.getAttribute");
+            __hook(Element.prototype, "getAttributeNames", "Element.getAttributeNames");
+            __hook(Element.prototype, "getAttributeNode", "Element.getAttributeNode");
+            __hook(Element.prototype, "getAttributeNodeNS", "Element.getAttributeNodeNS");
+            __hook(Element.prototype, "getAttributeNS", "Element.getAttributeNS");
+            __hook(Element.prototype, "getBoundingClientRect", "Element.getBoundingClientRect");
+            __hook(Element.prototype, "getClientRects", "Element.getClientRects");
+            __hook(Element.prototype, "getElementsByClassName", "Element.getElementsByClassName");
+            __hook(Element.prototype, "getElementsByTagName", "Element.getElementsByTagName");
+            __hook(Element.prototype, "getElementsByTagNameNS", "Element.getElementsByTagNameNS");
+            __hook(Element.prototype, "hasAttribute", "Element.hasAttribute");
+            __hook(Element.prototype, "hasAttributeNS", "Element.hasAttributeNS");
+            __hook(Element.prototype, "hasAttributes", "Element.hasAttributes");
+            __hook(Element.prototype, "hasPointerCapture", "Element.hasPointerCapture");
+            __hook(Element.prototype, "insertAdjacentElement", "Element.insertAdjacentElement");
+            __hook(Element.prototype, "insertAdjacentHTML", "Element.insertAdjacentHTML");
+            __hook(Element.prototype, "insertAdjacentText", "Element.insertAdjacentText");
+            __hook(Element.prototype, "matches", "Element.matches");
+            __hook(Element.prototype, "prepend", "Element.prepend");
+            __hook(Element.prototype, "querySelector", "Element.querySelector");
+            __hook(Element.prototype, "querySelectorAll", "Element.querySelectorAll");
+            __hook(Element.prototype, "releasePointerCapture", "Element.releasePointerCapture");
+            __hook(Element.prototype, "remove", "Element.remove");
+            __hook(Element.prototype, "removeAttribute", "Element.removeAttribute");
+            __hook(Element.prototype, "removeAttributeNode", "Element.removeAttributeNode");
+            __hook(Element.prototype, "removeAttributeNS", "Element.removeAttributeNS");
+            __hook(Element.prototype, "replaceChildren", "Element.replaceChildren");
+            __hook(Element.prototype, "replaceWith", "Element.replaceWith");
+            __hook(Element.prototype, "requestFullscreen", "Element.requestFullscreen");
+            __hook(Element.prototype, "requestPointerLock", "Element.requestPointerLock");
+            __hook(Element.prototype, "scroll", "Element.scroll");
+            __hook(Element.prototype, "scrollBy", "Element.scrollBy");
+            __hook(Element.prototype, "scrollIntoView", "Element.scrollIntoView");
+            __hook(Element.prototype, "scrollIntoViewIfNeeded", "Element.scrollIntoViewIfNeeded");
+            __hook(Element.prototype, "scrollTo", "Element.scrollTo");
+            __hook(Element.prototype, "setAttribute", "Element.setAttribute");
+            __hook(Element.prototype, "setAttributeNode", "Element.setAttributeNode");
+            __hook(Element.prototype, "setAttributeNodeNS", "Element.setAttributeNodeNS");
+            __hook(Element.prototype, "setAttributeNS", "Element.setAttributeNS");
+            __hook(Element.prototype, "setCapture", "Element.setCapture");
+            __hook(Element.prototype, "setHTML", "Element.setHTML");
+            __hook(Element.prototype, "setPointerCapture", "Element.setPointerCapture");
+            __hook(Element.prototype, "toggleAttribute", "Element.toggleAttribute");
+
+            __hook(XMLHttpRequest.prototype, "abort", "XMLHttpRequest.abort");
+            __hook(XMLHttpRequest.prototype, "addEventListener", "XMLHttpRequest.addEventListener");
+            __hook(XMLHttpRequest.prototype, "dispatchEvent", "XMLHttpRequest.dispatchEvent");
+            __hook(XMLHttpRequest.prototype, "removeEventListener", "XMLHttpRequest.removeEventListener");
+
+            __hook(XMLHttpRequest.prototype, "overrideMimeType", "XMLHttpRequest.overrideMimeType");
+            __hook(XMLHttpRequest.prototype, "getAllResponseHeaders", "XMLHttpRequest.getAllResponseHeaders");
+            __hook(XMLHttpRequest.prototype, "getResponseHeader", "XMLHttpRequest.getResponseHeader");
+            __hook(XMLHttpRequest.prototype, "open", "XMLHttpRequest.open");
+            __hook(XMLHttpRequest.prototype, "send", "XMLHttpRequest.send");
+            __hook(XMLHttpRequest.prototype, "setRequestHeader", "XMLHttpRequest.setRequestHeader");
+        })();
+    </script>
+</head>
+
+<body>
+    <header class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <h1 class="display-4">ShopIt.com</h1>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="login" class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Login</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6" id="div_login">
+                    <form id="form_login">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="Enter email"
+                                autocomplete="username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" placeholder="Password"
+                                autocomplete="current-password">
+                        </div>
+                        <button type="submit" id="form_submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="section" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Section</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Article</h3>
+                    <p id="en-text" lang="en">This is English dummy text.</p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Aside</h3>
+                    <p id="fr-text" lang="fr">Voici un texte fictif en français.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="figure" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Figure</h2>
+            <div class="row">
+                <div class="col-md-4 offset-md-4 text-center">
+                    <img id="img_elm" src="files/name=mj0.jpg" alt="Placeholder Image" width="250" height="250"
+                        class="img-fluid mb-3">
+                    <p>This is a caption for the image.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="main" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Main Content Area</h2>
+            <div class="content text-center">
+                <a id="first-party" href="files/test.html" target="_blank" rel="noreferrer">See Products.</a>
+            </div>
+            <div class="content text-center">
+                <a id="third-party-safe" href="https://www.example.cp," target="_blank" rel="noreferrer">Test
+                    Products.</a>
+            </div>
+
+            <div class="content text-center">
+                <a id="third-party-unsafe" href="https://br-icloud.com.br" target="_blank" rel="noreferrer">Compare
+                    Products</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="dummy-text" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Dummy Text Content in Different Languages</h2>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <p id="vt-text" lang="vt">Đây là văn bản giả không có ý nghĩa.</p>
+                    <p id="de-text" lang="de">Das ist ein fiktiver Text auf Deutsch.</p>
+                    <p id="it-text" lang="it">Questo è un testo fittizio in italiano.</p>
+                    <p id="ja-text" lang="ja">これは日本語のダミーテキストです。</p>
+                    <p id="ru-text" lang="ru">Это русский фиктивный текст.</p>
+                    <p id="ar-text" lang="ar">هذا نص وهمي باللغة العربية.</p>
+                    <p id="zh-text" lang="zh">这是中文的虚拟文本。</p>
+                    <p id="hi-text" lang="hi">यह हिंदी में डमी पाठ है।</p>
+                    <p id="pt-text" lang="pt">Este é um texto fictício em português.</p>
+                    <p id="nl-text" lang="nl">Dit is een fictieve tekst in het Nederlands.</p>
+                    <p id="tr-text" lang="tr">Bu, Türkçe bir kurgusal metindir.</p>
+                    <p id="ko-text" lang="ko">이것은 한국어로 된 가짜 텍스트입니다.</p>
+                    <!-- Dummy phone numbers and email addresses -->
+                    <p class="mb-0">For inquiries, contact us at <a href="tel:+1234567890"
+                            class="text-primary">+1234567890</a> or email <a href="mailto:info@example.org"
+                            class="text-primary">info@example.org</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Structure and Content from Carnus Test Page -->
+    <section id="carnus" class="py-5">
+        <div id="description"></div>
+        <p id='adahgsfd'></p>
+        <iframe id="2.87" src="https://www.example.com"></iframe>
+        <img id="2.88" src="files/name=gif.gif" width="145" height="126" alt="Planets" usemap="#planetmap">
+        <svg id="2.93" width="100" height="100">
+            <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow"></circle>
+        </svg>
+        <audio id="2.94" controls="">
+            <source src="files/name=track2.ogg" type="audio/ogg">
+    
+        </audio>
+        <video id="2.95" width="640" height="360" controls>
+            <source src="files/name=video.mp4" type="video/mp4">
+    
+            Your browser does not support the video tag.
+        </video>
+    
+        <canvas id="myCanvas"></canvas>
+            <script id="2.90">
+                let __canvas = document.__getElementById("myCanvas");
+                let __ctx = __canvas.getContext("2d");
+                __ctx.fillStyle = "#FF0000";
+                __ctx.fillRect(0, 0, 80, 80);
+            </script>
+    </section>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 ShopIt.com</p>
+        </div>
+    </footer>
+
+    <!-- User-Interaction events -->
+    <script>
+        let keyStrokes = {
+            '0': { 'keyCode': 48, 'key': '0', 'code': 'Digit0' },
+            '1': { 'keyCode': 49, 'key': '1', 'code': 'Digit1' },
+            '2': { 'keyCode': 50, 'key': '2', 'code': 'Digit2' },
+            '3': { 'keyCode': 51, 'key': '3', 'code': 'Digit3' },
+            '4': { 'keyCode': 52, 'key': '4', 'code': 'Digit4' },
+            '5': { 'keyCode': 53, 'key': '5', 'code': 'Digit5' },
+            '6': { 'keyCode': 54, 'key': '6', 'code': 'Digit6' },
+            '7': { 'keyCode': 55, 'key': '7', 'code': 'Digit7' },
+            '8': { 'keyCode': 56, 'key': '8', 'code': 'Digit8' },
+            '9': { 'keyCode': 57, 'key': '9', 'code': 'Digit9' },
+            'Power': { 'key': 'Power', 'code': 'Power' },
+            'Eject': { 'key': 'Eject', 'code': 'Eject' },
+            'Abort': { 'keyCode': 3, 'code': 'Abort', 'key': 'Cancel' },
+            'Help': { 'keyCode': 6, 'code': 'Help', 'key': 'Help' },
+            'Backspace': { 'keyCode': 8, 'code': 'Backspace', 'key': 'Backspace' },
+            'Tab': { 'keyCode': 9, 'code': 'Tab', 'key': 'Tab' },
+            'Numpad5': { 'keyCode': 12, 'shiftKeyCode': 101, 'key': 'Clear', 'code': 'Numpad5', 'shiftKey': '5', 'location': 3 },
+            'NumpadEnter': { 'keyCode': 13, 'code': 'NumpadEnter', 'key': 'Enter', 'text': '\r', 'location': 3 },
+            'Enter': { 'keyCode': 13, 'code': 'Enter', 'key': 'Enter', 'text': '\r' },
+            '\r': { 'keyCode': 13, 'code': 'Enter', 'key': 'Enter', 'text': '\r' },
+            '\n': { 'keyCode': 13, 'code': 'Enter', 'key': 'Enter', 'text': '\r' },
+            'ShiftLeft': { 'keyCode': 16, 'code': 'ShiftLeft', 'key': 'Shift', 'location': 1 },
+            'ShiftRight': { 'keyCode': 16, 'code': 'ShiftRight', 'key': 'Shift', 'location': 2 },
+            'ControlLeft': { 'keyCode': 17, 'code': 'ControlLeft', 'key': 'Control', 'location': 1 },
+            'ControlRight': { 'keyCode': 17, 'code': 'ControlRight', 'key': 'Control', 'location': 2 },
+            'AltLeft': { 'keyCode': 18, 'code': 'AltLeft', 'key': 'Alt', 'location': 1 },
+            'AltRight': { 'keyCode': 18, 'code': 'AltRight', 'key': 'Alt', 'location': 2 },
+            'Pause': { 'keyCode': 19, 'code': 'Pause', 'key': 'Pause' },
+            'CapsLock': { 'keyCode': 20, 'code': 'CapsLock', 'key': 'CapsLock' },
+            'Escape': { 'keyCode': 27, 'code': 'Escape', 'key': 'Escape' },
+            'Convert': { 'keyCode': 28, 'code': 'Convert', 'key': 'Convert' },
+            'NonConvert': { 'keyCode': 29, 'code': 'NonConvert', 'key': 'NonConvert' },
+            'Space': { 'keyCode': 32, 'code': 'Space', 'key': ' ' },
+            'Numpad9': { 'keyCode': 33, 'shiftKeyCode': 105, 'key': 'PageUp', 'code': 'Numpad9', 'shiftKey': '9', 'location': 3 },
+            'PageUp': { 'keyCode': 33, 'code': 'PageUp', 'key': 'PageUp' },
+            'Numpad3': { 'keyCode': 34, 'shiftKeyCode': 99, 'key': 'PageDown', 'code': 'Numpad3', 'shiftKey': '3', 'location': 3 },
+            'PageDown': { 'keyCode': 34, 'code': 'PageDown', 'key': 'PageDown' },
+            'End': { 'keyCode': 35, 'code': 'End', 'key': 'End' },
+            'Numpad1': { 'keyCode': 35, 'shiftKeyCode': 97, 'key': 'End', 'code': 'Numpad1', 'shiftKey': '1', 'location': 3 },
+            'Home': { 'keyCode': 36, 'code': 'Home', 'key': 'Home' },
+            'Numpad7': { 'keyCode': 36, 'shiftKeyCode': 103, 'key': 'Home', 'code': 'Numpad7', 'shiftKey': '7', 'location': 3 },
+            'ArrowLeft': { 'keyCode': 37, 'code': 'ArrowLeft', 'key': 'ArrowLeft' },
+            'Numpad4': { 'keyCode': 37, 'shiftKeyCode': 100, 'key': 'ArrowLeft', 'code': 'Numpad4', 'shiftKey': '4', 'location': 3 },
+            'Numpad8': { 'keyCode': 38, 'shiftKeyCode': 104, 'key': 'ArrowUp', 'code': 'Numpad8', 'shiftKey': '8', 'location': 3 },
+            'ArrowUp': { 'keyCode': 38, 'code': 'ArrowUp', 'key': 'ArrowUp' },
+            'ArrowRight': { 'keyCode': 39, 'code': 'ArrowRight', 'key': 'ArrowRight' },
+            'Numpad6': { 'keyCode': 39, 'shiftKeyCode': 102, 'key': 'ArrowRight', 'code': 'Numpad6', 'shiftKey': '6', 'location': 3 },
+            'Numpad2': { 'keyCode': 40, 'shiftKeyCode': 98, 'key': 'ArrowDown', 'code': 'Numpad2', 'shiftKey': '2', 'location': 3 },
+            'ArrowDown': { 'keyCode': 40, 'code': 'ArrowDown', 'key': 'ArrowDown' },
+            'Select': { 'keyCode': 41, 'code': 'Select', 'key': 'Select' },
+            'Open': { 'keyCode': 43, 'code': 'Open', 'key': 'Execute' },
+            'PrintScreen': { 'keyCode': 44, 'code': 'PrintScreen', 'key': 'PrintScreen' },
+            'Insert': { 'keyCode': 45, 'code': 'Insert', 'key': 'Insert' },
+            'Numpad0': { 'keyCode': 45, 'shiftKeyCode': 96, 'key': 'Insert', 'code': 'Numpad0', 'shiftKey': '0', 'location': 3 },
+            'Delete': { 'keyCode': 46, 'code': 'Delete', 'key': 'Delete' },
+            'NumpadDecimal': { 'keyCode': 46, 'shiftKeyCode': 110, 'code': 'NumpadDecimal', 'key': '\u0000', 'shiftKey': '.', 'location': 3 },
+            'Digit0': { 'keyCode': 48, 'code': 'Digit0', 'shiftKey': ')', 'key': '0' },
+            'Digit1': { 'keyCode': 49, 'code': 'Digit1', 'shiftKey': '!', 'key': '1' },
+            'Digit2': { 'keyCode': 50, 'code': 'Digit2', 'shiftKey': '@', 'key': '2' },
+            'Digit3': { 'keyCode': 51, 'code': 'Digit3', 'shiftKey': '#', 'key': '3' },
+            'Digit4': { 'keyCode': 52, 'code': 'Digit4', 'shiftKey': '$', 'key': '4' },
+            'Digit5': { 'keyCode': 53, 'code': 'Digit5', 'shiftKey': '%', 'key': '5' },
+            'Digit6': { 'keyCode': 54, 'code': 'Digit6', 'shiftKey': '^', 'key': '6' },
+            'Digit7': { 'keyCode': 55, 'code': 'Digit7', 'shiftKey': '&', 'key': '7' },
+            'Digit8': { 'keyCode': 56, 'code': 'Digit8', 'shiftKey': '*', 'key': '8' },
+            'Digit9': { 'keyCode': 57, 'code': 'Digit9', 'shiftKey': '\(', 'key': '9' },
+            'KeyA': { 'keyCode': 65, 'code': 'KeyA', 'shiftKey': 'A', 'key': 'a' },
+            'KeyB': { 'keyCode': 66, 'code': 'KeyB', 'shiftKey': 'B', 'key': 'b' },
+            'KeyC': { 'keyCode': 67, 'code': 'KeyC', 'shiftKey': 'C', 'key': 'c' },
+            'KeyD': { 'keyCode': 68, 'code': 'KeyD', 'shiftKey': 'D', 'key': 'd' },
+            'KeyE': { 'keyCode': 69, 'code': 'KeyE', 'shiftKey': 'E', 'key': 'e' },
+            'KeyF': { 'keyCode': 70, 'code': 'KeyF', 'shiftKey': 'F', 'key': 'f' },
+            'KeyG': { 'keyCode': 71, 'code': 'KeyG', 'shiftKey': 'G', 'key': 'g' },
+            'KeyH': { 'keyCode': 72, 'code': 'KeyH', 'shiftKey': 'H', 'key': 'h' },
+            'KeyI': { 'keyCode': 73, 'code': 'KeyI', 'shiftKey': 'I', 'key': 'i' },
+            'KeyJ': { 'keyCode': 74, 'code': 'KeyJ', 'shiftKey': 'J', 'key': 'j' },
+            'KeyK': { 'keyCode': 75, 'code': 'KeyK', 'shiftKey': 'K', 'key': 'k' },
+            'KeyL': { 'keyCode': 76, 'code': 'KeyL', 'shiftKey': 'L', 'key': 'l' },
+            'KeyM': { 'keyCode': 77, 'code': 'KeyM', 'shiftKey': 'M', 'key': 'm' },
+            'KeyN': { 'keyCode': 78, 'code': 'KeyN', 'shiftKey': 'N', 'key': 'n' },
+            'KeyO': { 'keyCode': 79, 'code': 'KeyO', 'shiftKey': 'O', 'key': 'o' },
+            'KeyP': { 'keyCode': 80, 'code': 'KeyP', 'shiftKey': 'P', 'key': 'p' },
+            'KeyQ': { 'keyCode': 81, 'code': 'KeyQ', 'shiftKey': 'Q', 'key': 'q' },
+            'KeyR': { 'keyCode': 82, 'code': 'KeyR', 'shiftKey': 'R', 'key': 'r' },
+            'KeyS': { 'keyCode': 83, 'code': 'KeyS', 'shiftKey': 'S', 'key': 's' },
+            'KeyT': { 'keyCode': 84, 'code': 'KeyT', 'shiftKey': 'T', 'key': 't' },
+            'KeyU': { 'keyCode': 85, 'code': 'KeyU', 'shiftKey': 'U', 'key': 'u' },
+            'KeyV': { 'keyCode': 86, 'code': 'KeyV', 'shiftKey': 'V', 'key': 'v' },
+            'KeyW': { 'keyCode': 87, 'code': 'KeyW', 'shiftKey': 'W', 'key': 'w' },
+            'KeyX': { 'keyCode': 88, 'code': 'KeyX', 'shiftKey': 'X', 'key': 'x' },
+            'KeyY': { 'keyCode': 89, 'code': 'KeyY', 'shiftKey': 'Y', 'key': 'y' },
+            'KeyZ': { 'keyCode': 90, 'code': 'KeyZ', 'shiftKey': 'Z', 'key': 'z' },
+            'MetaLeft': { 'keyCode': 91, 'code': 'MetaLeft', 'key': 'Meta', 'location': 1 },
+            'MetaRight': { 'keyCode': 92, 'code': 'MetaRight', 'key': 'Meta', 'location': 2 },
+            'ContextMenu': { 'keyCode': 93, 'code': 'ContextMenu', 'key': 'ContextMenu' },
+            'NumpadMultiply': { 'keyCode': 106, 'code': 'NumpadMultiply', 'key': '*', 'location': 3 },
+            'NumpadAdd': { 'keyCode': 107, 'code': 'NumpadAdd', 'key': '+', 'location': 3 },
+            'NumpadSubtract': { 'keyCode': 109, 'code': 'NumpadSubtract', 'key': '-', 'location': 3 },
+            'NumpadDivide': { 'keyCode': 111, 'code': 'NumpadDivide', 'key': '/', 'location': 3 },
+            'F1': { 'keyCode': 112, 'code': 'F1', 'key': 'F1' },
+            'F2': { 'keyCode': 113, 'code': 'F2', 'key': 'F2' },
+            'F3': { 'keyCode': 114, 'code': 'F3', 'key': 'F3' },
+            'F4': { 'keyCode': 115, 'code': 'F4', 'key': 'F4' },
+            'F5': { 'keyCode': 116, 'code': 'F5', 'key': 'F5' },
+            'F6': { 'keyCode': 117, 'code': 'F6', 'key': 'F6' },
+            'F7': { 'keyCode': 118, 'code': 'F7', 'key': 'F7' },
+            'F8': { 'keyCode': 119, 'code': 'F8', 'key': 'F8' },
+            'F9': { 'keyCode': 120, 'code': 'F9', 'key': 'F9' },
+            'F10': { 'keyCode': 121, 'code': 'F10', 'key': 'F10' },
+            'F11': { 'keyCode': 122, 'code': 'F11', 'key': 'F11' },
+            'F12': { 'keyCode': 123, 'code': 'F12', 'key': 'F12' },
+            'F13': { 'keyCode': 124, 'code': 'F13', 'key': 'F13' },
+            'F14': { 'keyCode': 125, 'code': 'F14', 'key': 'F14' },
+            'F15': { 'keyCode': 126, 'code': 'F15', 'key': 'F15' },
+            'F16': { 'keyCode': 127, 'code': 'F16', 'key': 'F16' },
+            'F17': { 'keyCode': 128, 'code': 'F17', 'key': 'F17' },
+            'F18': { 'keyCode': 129, 'code': 'F18', 'key': 'F18' },
+            'F19': { 'keyCode': 130, 'code': 'F19', 'key': 'F19' },
+            'F20': { 'keyCode': 131, 'code': 'F20', 'key': 'F20' },
+            'F21': { 'keyCode': 132, 'code': 'F21', 'key': 'F21' },
+            'F22': { 'keyCode': 133, 'code': 'F22', 'key': 'F22' },
+            'F23': { 'keyCode': 134, 'code': 'F23', 'key': 'F23' },
+            'F24': { 'keyCode': 135, 'code': 'F24', 'key': 'F24' },
+            'NumLock': { 'keyCode': 144, 'code': 'NumLock', 'key': 'NumLock' },
+            'ScrollLock': { 'keyCode': 145, 'code': 'ScrollLock', 'key': 'ScrollLock' },
+            'AudioVolumeMute': { 'keyCode': 173, 'code': 'AudioVolumeMute', 'key': 'AudioVolumeMute' },
+            'AudioVolumeDown': { 'keyCode': 174, 'code': 'AudioVolumeDown', 'key': 'AudioVolumeDown' },
+            'AudioVolumeUp': { 'keyCode': 175, 'code': 'AudioVolumeUp', 'key': 'AudioVolumeUp' },
+            'MediaTrackNext': { 'keyCode': 176, 'code': 'MediaTrackNext', 'key': 'MediaTrackNext' },
+            'MediaTrackPrevious': { 'keyCode': 177, 'code': 'MediaTrackPrevious', 'key': 'MediaTrackPrevious' },
+            'MediaStop': { 'keyCode': 178, 'code': 'MediaStop', 'key': 'MediaStop' },
+            'MediaPlayPause': { 'keyCode': 179, 'code': 'MediaPlayPause', 'key': 'MediaPlayPause' },
+            'Semicolon': { 'keyCode': 186, 'code': 'Semicolon', 'shiftKey': ':', 'key': ';' },
+            'Equal': { 'keyCode': 187, 'code': 'Equal', 'shiftKey': '+', 'key': '=' },
+            'NumpadEqual': { 'keyCode': 187, 'code': 'NumpadEqual', 'key': '=', 'location': 3 },
+            'Comma': { 'keyCode': 188, 'code': 'Comma', 'shiftKey': '\<', 'key': ',' },
+            'Minus': { 'keyCode': 189, 'code': 'Minus', 'shiftKey': '_', 'key': '-' },
+            'Period': { 'keyCode': 190, 'code': 'Period', 'shiftKey': '>', 'key': '.' },
+            'Slash': { 'keyCode': 191, 'code': 'Slash', 'shiftKey': '?', 'key': '/' },
+            'Backquote': { 'keyCode': 192, 'code': 'Backquote', 'shiftKey': '~', 'key': '`' },
+            'BracketLeft': { 'keyCode': 219, 'code': 'BracketLeft', 'shiftKey': '{', 'key': '[' },
+            'Backslash': { 'keyCode': 220, 'code': 'Backslash', 'shiftKey': '|', 'key': '\\' },
+            'BracketRight': { 'keyCode': 221, 'code': 'BracketRight', 'shiftKey': '}', 'key': ']' },
+            'Quote': { 'keyCode': 222, 'code': 'Quote', 'shiftKey': '"', 'key': '\'' },
+            'AltGraph': { 'keyCode': 225, 'code': 'AltGraph', 'key': 'AltGraph' },
+            'Props': { 'keyCode': 247, 'code': 'Props', 'key': 'CrSel' },
+            'Cancel': { 'keyCode': 3, 'key': 'Cancel', 'code': 'Abort' },
+            'Clear': { 'keyCode': 12, 'key': 'Clear', 'code': 'Numpad5', 'location': 3 },
+            'Shift': { 'keyCode': 16, 'key': 'Shift', 'code': 'ShiftLeft', 'location': 1 },
+            'Control': { 'keyCode': 17, 'key': 'Control', 'code': 'ControlLeft', 'location': 1 },
+            'Alt': { 'keyCode': 18, 'key': 'Alt', 'code': 'AltLeft', 'location': 1 },
+            'Accept': { 'keyCode': 30, 'key': 'Accept' },
+            'ModeChange': { 'keyCode': 31, 'key': 'ModeChange' },
+            ' ': { 'keyCode': 32, 'key': ' ', 'code': 'Space' },
+            'Print': { 'keyCode': 42, 'key': 'Print' },
+            'Execute': { 'keyCode': 43, 'key': 'Execute', 'code': 'Open' },
+            '\u0000': { 'keyCode': 46, 'key': '\u0000', 'code': 'NumpadDecimal', 'location': 3 },
+            'a': { 'keyCode': 65, 'key': 'a', 'code': 'KeyA' },
+            'b': { 'keyCode': 66, 'key': 'b', 'code': 'KeyB' },
+            'c': { 'keyCode': 67, 'key': 'c', 'code': 'KeyC' },
+            'd': { 'keyCode': 68, 'key': 'd', 'code': 'KeyD' },
+            'e': { 'keyCode': 69, 'key': 'e', 'code': 'KeyE' },
+            'f': { 'keyCode': 70, 'key': 'f', 'code': 'KeyF' },
+            'g': { 'keyCode': 71, 'key': 'g', 'code': 'KeyG' },
+            'h': { 'keyCode': 72, 'key': 'h', 'code': 'KeyH' },
+            'i': { 'keyCode': 73, 'key': 'i', 'code': 'KeyI' },
+            'j': { 'keyCode': 74, 'key': 'j', 'code': 'KeyJ' },
+            'k': { 'keyCode': 75, 'key': 'k', 'code': 'KeyK' },
+            'l': { 'keyCode': 76, 'key': 'l', 'code': 'KeyL' },
+            'm': { 'keyCode': 77, 'key': 'm', 'code': 'KeyM' },
+            'n': { 'keyCode': 78, 'key': 'n', 'code': 'KeyN' },
+            'o': { 'keyCode': 79, 'key': 'o', 'code': 'KeyO' },
+            'p': { 'keyCode': 80, 'key': 'p', 'code': 'KeyP' },
+            'q': { 'keyCode': 81, 'key': 'q', 'code': 'KeyQ' },
+            'r': { 'keyCode': 82, 'key': 'r', 'code': 'KeyR' },
+            's': { 'keyCode': 83, 'key': 's', 'code': 'KeyS' },
+            't': { 'keyCode': 84, 'key': 't', 'code': 'KeyT' },
+            'u': { 'keyCode': 85, 'key': 'u', 'code': 'KeyU' },
+            'v': { 'keyCode': 86, 'key': 'v', 'code': 'KeyV' },
+            'w': { 'keyCode': 87, 'key': 'w', 'code': 'KeyW' },
+            'x': { 'keyCode': 88, 'key': 'x', 'code': 'KeyX' },
+            'y': { 'keyCode': 89, 'key': 'y', 'code': 'KeyY' },
+            'z': { 'keyCode': 90, 'key': 'z', 'code': 'KeyZ' },
+            'Meta': { 'keyCode': 91, 'key': 'Meta', 'code': 'MetaLeft', 'location': 1 },
+            '*': { 'keyCode': 106, 'key': '*', 'code': 'NumpadMultiply', 'location': 3 },
+            '+': { 'keyCode': 107, 'key': '+', 'code': 'NumpadAdd', 'location': 3 },
+            '-': { 'keyCode': 109, 'key': '-', 'code': 'NumpadSubtract', 'location': 3 },
+            '/': { 'keyCode': 111, 'key': '/', 'code': 'NumpadDivide', 'location': 3 },
+            ';': { 'keyCode': 186, 'key': ';', 'code': 'Semicolon' },
+            '=': { 'keyCode': 187, 'key': '=', 'code': 'Equal' },
+            ',': { 'keyCode': 188, 'key': ',', 'code': 'Comma' },
+            '.': { 'keyCode': 190, 'key': '.', 'code': 'Period' },
+            '`': { 'keyCode': 192, 'key': '`', 'code': 'Backquote' },
+            '[': { 'keyCode': 219, 'key': '[', 'code': 'BracketLeft' },
+            '\\': { 'keyCode': 220, 'key': '\\', 'code': 'Backslash' },
+            ']': { 'keyCode': 221, 'key': ']', 'code': 'BracketRight' },
+            '\'': { 'keyCode': 222, 'key': '\'', 'code': 'Quote' },
+            'Attn': { 'keyCode': 246, 'key': 'Attn' },
+            'CrSel': { 'keyCode': 247, 'key': 'CrSel', 'code': 'Props' },
+            'ExSel': { 'keyCode': 248, 'key': 'ExSel' },
+            'EraseEof': { 'keyCode': 249, 'key': 'EraseEof' },
+            'Play': { 'keyCode': 250, 'key': 'Play' },
+            'ZoomOut': { 'keyCode': 251, 'key': 'ZoomOut' },
+            ')': { 'keyCode': 48, 'key': ')', 'code': 'Digit0' },
+            '!': { 'keyCode': 49, 'key': '!', 'code': 'Digit1' },
+            '@': { 'keyCode': 50, 'key': '@', 'code': 'Digit2' },
+            '#': { 'keyCode': 51, 'key': '#', 'code': 'Digit3' },
+            '$': { 'keyCode': 52, 'key': '$', 'code': 'Digit4' },
+            '%': { 'keyCode': 53, 'key': '%', 'code': 'Digit5' },
+            '^': { 'keyCode': 54, 'key': '^', 'code': 'Digit6' },
+            '&': { 'keyCode': 55, 'key': '&', 'code': 'Digit7' },
+            '(': { 'keyCode': 57, 'key': '\(', 'code': 'Digit9' },
+            'A': { 'keyCode': 65, 'key': 'A', 'code': 'KeyA' },
+            'B': { 'keyCode': 66, 'key': 'B', 'code': 'KeyB' },
+            'C': { 'keyCode': 67, 'key': 'C', 'code': 'KeyC' },
+            'D': { 'keyCode': 68, 'key': 'D', 'code': 'KeyD' },
+            'E': { 'keyCode': 69, 'key': 'E', 'code': 'KeyE' },
+            'F': { 'keyCode': 70, 'key': 'F', 'code': 'KeyF' },
+            'G': { 'keyCode': 71, 'key': 'G', 'code': 'KeyG' },
+            'H': { 'keyCode': 72, 'key': 'H', 'code': 'KeyH' },
+            'I': { 'keyCode': 73, 'key': 'I', 'code': 'KeyI' },
+            'J': { 'keyCode': 74, 'key': 'J', 'code': 'KeyJ' },
+            'K': { 'keyCode': 75, 'key': 'K', 'code': 'KeyK' },
+            'L': { 'keyCode': 76, 'key': 'L', 'code': 'KeyL' },
+            'M': { 'keyCode': 77, 'key': 'M', 'code': 'KeyM' },
+            'N': { 'keyCode': 78, 'key': 'N', 'code': 'KeyN' },
+            'O': { 'keyCode': 79, 'key': 'O', 'code': 'KeyO' },
+            'P': { 'keyCode': 80, 'key': 'P', 'code': 'KeyP' },
+            'Q': { 'keyCode': 81, 'key': 'Q', 'code': 'KeyQ' },
+            'R': { 'keyCode': 82, 'key': 'R', 'code': 'KeyR' },
+            'S': { 'keyCode': 83, 'key': 'S', 'code': 'KeyS' },
+            'T': { 'keyCode': 84, 'key': 'T', 'code': 'KeyT' },
+            'U': { 'keyCode': 85, 'key': 'U', 'code': 'KeyU' },
+            'V': { 'keyCode': 86, 'key': 'V', 'code': 'KeyV' },
+            'W': { 'keyCode': 87, 'key': 'W', 'code': 'KeyW' },
+            'X': { 'keyCode': 88, 'key': 'X', 'code': 'KeyX' },
+            'Y': { 'keyCode': 89, 'key': 'Y', 'code': 'KeyY' },
+            'Z': { 'keyCode': 90, 'key': 'Z', 'code': 'KeyZ' },
+            ':': { 'keyCode': 186, 'key': ':', 'code': 'Semicolon' },
+            '<': { 'keyCode': 188, 'key': '\<', 'code': 'Comma' },
+            '_': { 'keyCode': 189, 'key': '_', 'code': 'Minus' },
+            '>': { 'keyCode': 190, 'key': '>', 'code': 'Period' },
+            '?': { 'keyCode': 191, 'key': '?', 'code': 'Slash' },
+            '~': { 'keyCode': 192, 'key': '~', 'code': 'Backquote' },
+            '{': { 'keyCode': 219, 'key': '{', 'code': 'BracketLeft' },
+            '|': { 'keyCode': 220, 'key': '|', 'code': 'Backslash' },
+            '}': { 'keyCode': 221, 'key': '}', 'code': 'BracketRight' },
+            '"': { 'keyCode': 222, 'key': '"', 'code': 'Quote' },
+            'SoftLeft': { 'key': 'SoftLeft', 'code': 'SoftLeft', 'location': 4 },
+            'SoftRight': { 'key': 'SoftRight', 'code': 'SoftRight', 'location': 4 },
+            'Camera': { 'keyCode': 44, 'key': 'Camera', 'code': 'Camera', 'location': 4 },
+            'Call': { 'key': 'Call', 'code': 'Call', 'location': 4 },
+            'EndCall': { 'keyCode': 95, 'key': 'EndCall', 'code': 'EndCall', 'location': 4 },
+            'VolumeDown': { 'keyCode': 182, 'key': 'VolumeDown', 'code': 'VolumeDown', 'location': 4 },
+            'VolumeUp': { 'keyCode': 183, 'key': 'VolumeUp', 'code': 'VolumeUp', 'location': 4 },
+        };
+
+        function dispatchKeyboardEvent(ctrlKey = false, altKey = false, shiftKey = false) {
+            let events = ["keydown", 'keyup', 'keypress'];
+            for (let key of Object.__keys(keyStrokes)) {
+                let keyStroke = keyStrokes[key];
+                for (let eventName of events) {
+                    let keyboardEvent = new KeyboardEvent(eventName, {
+                        key: keyStroke.key,
+                        code: keyStroke.code,
+                        keyCode: keyStroke.keyCode,
+                        shiftKey: keyStroke.shiftKey,
+                        location: keyStroke.shiftKey,
+                        shiftKeyCode: keyStroke.shiftKeyCode,
+                        bubbles: true,
+                        cancelable: false,
+                        ctrlKey: ctrlKey,
+                        shiftKey: shiftKey,
+                        altKey: altKey
+                    });
+
+                    document.__dispatchEvent(keyboardEvent);
+                }
+            }
+        }
+
+        function textSelector(elementId) {
+            try {
+                let selection = window.__getSelection();
+                let range = document.__createRange();
+                range.selectNodeContents(document.__getElementById(elementId));
+                selection.removeAllRanges();
+                selection.addRange(range);
+            } catch (e) { console.__log("Error while selecting", elementId) }
+        }
+
+        function mouseEventOnElement(event, elementId, buttonNo = 0, buttonsNo = 1) {
+            try {
+                let element = document.__getElementById(elementId);
+                let evt = new MouseEvent(event, {
+                    bubbles: true,
+                    cancelable: false,
+                    view: window,
+                    button: buttonNo,
+                    buttons: buttonsNo,
+                    clientX: element.__getBoundingClientRect().x,
+                    clientY: element.__getBoundingClientRect().y,
+                    screenX: 0 + element.__getBoundingClientRect().left,
+                    screenY: 25 + element.__getBoundingClientRect().top
+                });
+                if (event === "copy") {
+                    evt?.clipboardData?.setData('text/plain', 'copied data');
+                }
+                return element.__dispatchEvent(evt);
+            } catch (e) { console.__log(`Error while performing ${event} on ${elementId} - ${e}.`) }
+        }
+
+        function simulateScrollEvent(whereTo = "bottom") {
+            try {
+                if (whereTo === "top")
+                    __scroll({ top: 0, left: 0, behavior: "smooth" })
+                else
+                    __scroll({ top: 1500, left: 1500, behavior: "smooth" })
+            } catch (e) { console.__log(`Error while performing scroll to ${whereTo} - ${e}.`); }
+        }
+
+        function simulateWheelEvent(elementId, whereTo = 1500) {
+            try {
+                let event = new WheelEvent('wheel', {
+                    deltaX: 10,
+                    deltaY: whereTo,
+                    deltaZ: 0,
+                    deltaMode: 0,
+                    bubbles: true,
+                    cancelable: false
+                });
+                let targetElement = document.__getElementById(elementId);
+                targetElement?.__dispatchEvent(event);
+            } catch (e) { console.__log(`Error while performing wheel event on ${elementId} - ${e}.`) }
+        }
+
+        function singleClick(elementIds, navigationElements) {
+            try {
+                document.body.focus();
+                document.body.click();
+
+                for (let elementId of elementIds) {
+                    try {
+                        document.__getElementById(elementId)?.focus();
+                        document.__getElementById(elementId)?.click();
+                    } catch (e) {
+                        console.__log("Error for single click on " + elementId, e);
+                    }
+                }
+
+                for (let elementId of navigationElements) {
+                    try {
+                        document.__getElementById(elementId)?.__addEventListener('click', function (event) {
+                            event.preventDefault();
+                        });
+
+                        document.__getElementById(elementId)?.focus();
+                        document.__getElementById(elementId)?.click();
+                    } catch (e) {
+                        console.__log("Error for single click on " + elementId, e);
+                    }
+                }
+
+            } catch (e) {
+                console.__log("Error in single click", e);
+            }
+        }
+
+        function doubleClick(elementIds, navigationElements) {
+            try {
+                for (let elementId of elementIds) {
+                    try {
+                        document.__getElementById(elementId)?.focus();
+                        mouseEventOnElement('dblclick', elementId, 2, 2);
+                    } catch (e) {
+                        console.__log("Error in doubleclick for " + elementId, e);
+                    }
+                }
+
+                for (let elementId of navigationElements) {
+                    try {
+                        document.__getElementById(elementId)?.__addEventListener('dblclick', function (event) {
+                            event.preventDefault();
+                        });
+
+                        document.__getElementById(elementId)?.focus();
+                        mouseEventOnElement('dblclick', elementId, 2, 2);
+                    } catch (e) {
+                        console.__log("Error for single click on " + elementId, e);
+                    }
+                }
+
+            } catch (e) {
+                console.__log("Error in doubleClick", e);
+            }
+        }
+
+        function elementTextSelector(elementId) {
+            let inputElements = new Set();
+            inputElements.__add("email");
+            inputElements.__add("password");
+            try {
+                if (inputElements.__has(elementId)) {
+                    document.__getElementById(elementId)?.select();
+                } else {
+                    textSelector(elementId);
+                }
+                // document.execCommand('copy');
+                // document.execCommand('paste');
+            } catch (e) {
+                console.__log("Error in element selector:", e);
+            }
+        }
+
+        function simulateInputEvent() {
+            try {
+                document.__getElementById('email').value = 'foo';
+                mouseEventOnElement('input', "email");
+
+                document.__getElementById('password').value = 'bar';
+                mouseEventOnElement('input', "password");
+            } catch (e) {
+                console.__log("Error in simulating input event:", e);
+            }
+        }
+
+        window.onload = function () {
+            let elementIds = [
+                "login",
+                "form_login",
+                "email",
+                "password",
+                "form_submit",
+                "section",
+                "en-text",
+                "fr-text",
+                "figure",
+                "img_elm",
+                "main",
+                "dummy-text",
+                "vt-text",
+                "de-text",
+                "it-text",
+                "ja-text",
+                "ru-text",
+                "ar-text",
+                "zh-text",
+                "hi-text",
+                "pt-text",
+                "nl-text",
+                "tr-text",
+                "ko-text",
+            ];
+
+            let navigationElements = [
+                "first-party",
+                "third-party-safe",
+                "third-party-unsafe"
+            ];
+
+            window.__postMessage("pmz27qdv8gr2ah5doq632jdcie4rc2cr", "*");
+            window.__postMessage({
+                "methodName": "getExtensionId",
+                "args": [],
+                "src": "script.js",
+                "eventName": "token",
+                "content": {
+                    "time": "2024-04-13T07:30:22.924Z",
+                    "hostname": "testserver.com"
+                },
+                "block_domains": [
+                    "greasyfork.org",
+                    "github.com",
+                    "openuserjs.org"
+                ],
+                "cb": "recorder-screenshot-v3_1712994071270_0.4906943513101105",
+                "state": "initialized",
+                "body": {
+                    "tableName": "DBRenWuDuiLie",
+                    "method": "toArray",
+                    "params": {
+                        "tabid": "29523494"
+                    }
+                },
+                "wappalyzer": {
+                    "js": []
+                },
+                "requestId": "1v8f0xx",
+                "version": "1.0.0",
+                "contentScriptName": "content",
+                "messageId": 0,
+                "error": "Invalid message",
+                "channel": "widget",
+                "direction": "onekey@JS_BRIDGE_MESSAGE_DIRECTION-INPAGE_TO_HOST",
+                "getCustCurs": "1",
+                "command": "LoadScript",
+                "senderId": "261NerdWallet",
+                "zipaction": {
+                    "method": "terminateAction",
+                    "WID": "window4808"
+                },
+                "key": "supportedLanguages",
+                "code": "document.documentElement.style.display = \"\" ",
+                "result": {
+                    "method": "tally_getConfig",
+                    "defaultWallet": false
+                },
+                "msg": "请求成功",
+                "0": {
+                    "event": "config.7771d0c7-6720-4267-8c38-fcb91093d1f0.result",
+                    "payload": {
+                        "data": {
+                            "manualSolving": false,
+                            "apiKey": "",
+                            "appId": "",
+                            "enabledForImageToText": true,
+                            "enabledForRecaptchaV3": true,
+                            "enabledForHCaptcha": true,
+                            "enabledForGeetestV4": false,
+                            "recaptchaV3MinScore": "0.5",
+                            "enabledForRecaptcha": true,
+                            "enabledForFunCaptcha": true,
+                            "enabledForDataDome": false,
+                            "enabledForAwsCaptcha": true,
+                            "useProxy": false,
+                            "proxyType": "http",
+                            "hostOrIp": "",
+                            "port": "",
+                            "proxyLogin": "",
+                            "proxyPassword": "",
+                            "enabledForBlacklistControl": false,
+                            "blackUrlList": [
+                                ""
+                            ],
+                            "isInBlackList": false,
+                            "reCaptchaMode": "click",
+                            "reCaptchaDelayTime": "0",
+                            "reCaptchaCollapse": false,
+                            "reCaptchaRepeatTimes": "10",
+                            "reCaptcha3Mode": "token",
+                            "reCaptcha3DelayTime": "0",
+                            "reCaptcha3Collapse": false,
+                            "reCaptcha3RepeatTimes": "10",
+                            "reCaptcha3TaskType": "ReCaptchaV3TaskProxyLess",
+                            "hCaptchaMode": "click",
+                            "hCaptchaDelayTime": "0",
+                            "hCaptchaCollapse": false,
+                            "hCaptchaRepeatTimes": "10",
+                            "funCaptchaMode": "click",
+                            "funCaptchaDelayTime": "0",
+                            "funCaptchaCollapse": false,
+                            "funCaptchaRepeatTimes": "10",
+                            "geetestMode": "click",
+                            "geetestCollapse": false,
+                            "geetestDelayTime": "0",
+                            "geetestRepeatTimes": "10",
+                            "textCaptchaMode": "click",
+                            "textCaptchaCollapse": false,
+                            "textCaptchaDelayTime": "0",
+                            "textCaptchaRepeatTimes": "10",
+                            "enabledForCloudflare": false,
+                            "cloudflareMode": "click",
+                            "cloudflareCollapse": false,
+                            "cloudflareDelayTime": "0",
+                            "cloudflareRepeatTimes": "10",
+                            "datadomeMode": "click",
+                            "datadomeCollapse": false,
+                            "datadomeDelayTime": "0",
+                            "datadomeRepeatTimes": "10",
+                            "awsCaptchaMode": "click",
+                            "awsCollapse": false,
+                            "awsDelayTime": "0",
+                            "awsRepeatTimes": "10",
+                            "useCapsolver": true,
+                            "isInit": true,
+                            "solvedCallback": "captchaSolvedCallback",
+                            "textCaptchaSourceAttribute": "capsolver-image-to-text-source",
+                            "textCaptchaResultAttribute": "capsolver-image-to-text-result"
+                        },
+                        "eventResponseKey": "config.7771d0c7-6720-4267-8c38-fcb91093d1f0.result.5ff39bd1-00ed-4a5e-905d-5679cbc4ad70.result"
+                    }
+                },
+                "height": "0px",
+                "namespace": "fm.icelink.webrtc",
+                "sender": "cc26",
+                "callback_method": "kernel_tabs_oncreated",
+                "status": "X_EXTENSION_ESTABLISH_CONNECTION",
+                "value": true,
+                "context": "content-script",
+                "to": "pageScript",
+                "scope": "dfc62431af1c3c1258035e5ab4058b6440e507238cf0fe429ea39827a7ee43fc",
+                "request": null,
+                "method": "connect",
+                "origin": "page",
+                "callback_type": "callback",
+                "api_chain": [
+                    "storage",
+                    "local",
+                    "set"
+                ],
+                "sandbox_id": "(#~Ba%Zn",
+                "callback_id": "FsUT5qoweXL$_#Qu",
+                "no_callback": true,
+                "url": "http://188.93.210.38/new/14_b64_store",
+                "text": "start",
+                "name": "hinted-debugger-stop",
+                "event": "wxt:content-script-started",
+                "response": false,
+                "params": [
+                    "sb_parameters"
+                ],
+                "cmd": "__crx_bridge_verify_listening",
+                "from": "bex-content-script",
+                "action": "provider_events@emit",
+                "source": "content",
+                "id": "tallyHo",
+                "message": "pub(phishing.redirectIfDenied)",
+                "payload": {},
+                "target": "inpage",
+                "data": "SYN",
+                "type": "chrome_api",
+                "__self": "DNT"
+            }, "*");
+            let start = performance.now();
+            dispatchKeyboardEvent(ctrlKey = false, altKey = false, shiftKey = false);
+            dispatchKeyboardEvent(ctrlKey = true, altKey = false, shiftKey = false);
+            dispatchKeyboardEvent(ctrlKey = false, altKey = true, shiftKey = false);
+            dispatchKeyboardEvent(ctrlKey = false, altKey = false, shiftKey = true);
+            dispatchKeyboardEvent(ctrlKey = true, altKey = true, shiftKey = false);
+            dispatchKeyboardEvent(ctrlKey = false, altKey = true, shiftKey = true);
+            dispatchKeyboardEvent(ctrlKey = true, altKey = false, shiftKey = true);
+            dispatchKeyboardEvent(ctrlKey = true, altKey = true, shiftKey = true);
+            console.__log("Time Taken for Simulating Keyboard Events:", performance.now() - start, "ms");
+
+            start = performance.now();
+            simulateInputEvent();
+            singleClick(elementIds, navigationElements);
+            doubleClick(elementIds, navigationElements);
+            simulateScrollEvent("bottom");
+            simulateScrollEvent("top");
+
+            let wheelCounter = 0;
+            for (let elementId of elementIds) {
+                mouseEventOnElement("mousedown", elementId, 0, 1);
+                mouseEventOnElement("mouseup", elementId, 0, 1);
+                mouseEventOnElement("mouseenter", elementId, 0, 1);
+                mouseEventOnElement("mouseout", elementId, 0, 1);
+                mouseEventOnElement("mousemove", elementId, 0, 1);
+                mouseEventOnElement("mouseover", elementId, 0, 1);
+                mouseEventOnElement("mouseleave", elementId, 0, 1);
+                mouseEventOnElement("contextmenu", elementId, 2, 1);
+                // mouseEventOnElement("copy", elementId, 2, 1);
+                // mouseEventOnElement("paste", elementId, 2, 1);
+                simulateWheelEvent(elementId, wheelCounter + 10);
+                elementTextSelector(elementId);
+                wheelCounter += 100;
+            }
+            console.__log("Time Taken for Simulating Mouse Events:", performance.now() - start, "ms");
+        }
+    </script>
+</body>
+
+</html>

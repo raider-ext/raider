@@ -3,7 +3,7 @@
 
 ### Test: Script injection by browser extensions \& their order of execution
 
-The [Google Chrome documentaion](https://chromium.googlesource.com/chromium/src/+/master/extensions/common/api/extension_types.json) states that a browser extension can inject JavaScript into the Web page visited by the user as early as the first script to be executed by the browser, when injected at ``document_start``.
+According to the [Google Chrome source code](https://chromium.googlesource.com/chromium/src/+/master/extensions/common/api/extension_types.json) and the [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/extensionTypes/RunAt), a browser extension can inject JavaScript into the Web page visited by the user as early as the first script to be executed by the browser, when injected at ``document_start``.
 However, we observe that the injection and execution of JavaScript code injected by browser extensions with respect to the execution of the Web page JavaScript actually depend on:
 - how they were injected, and
 - the extension context used for injection

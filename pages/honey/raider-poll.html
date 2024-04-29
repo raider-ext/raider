@@ -1,0 +1,2563 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Shopit</title>
+
+    <!-- Helper APIs and Polling Methods -->
+    <script>
+        window.__postMessage = window.postMessage;
+        Document.prototype.__getElementById = Document.prototype.getElementById;
+        var extensionId = new URLSearchParams(window.top.location.search).get('extensionId') || "";
+        window.__fetch = window.fetch;
+        window.__cookieGetter = document.__lookupGetter__("cookie").bind(document);
+        window.getCircularReplacer = function () {
+            const ancestors = new WeakSet();
+            return function (key, value) {
+                if (value == undefined) {
+                    return value;
+                }
+                if (value instanceof RegExp ||
+                    typeof value === "bigInt" ||
+                    typeof value === "number" ||
+                    value instanceof Boolean ||
+                    value instanceof Number ||
+                    typeof value === "symbol" ||
+                    typeof value === "function") {
+                    return value.toString();
+                }
+                if (value instanceof Node) {
+                    return "Node";
+                }
+                if (value?.constructor?.name === "DOMTokenList") {
+                    return "DOMTokenList";
+                }
+                if (value instanceof HTMLElement) {
+                    return "HTMLElement";
+                }
+                if (value instanceof Selection) {
+                    return "Selection";
+                }
+                if (value?.self === value && value?.window === value) {
+                    return "window";
+                }
+                if (typeof value !== "object" || value === null) {
+                    return value;
+                }
+                if (ancestors.has(value)) {
+                    return "[Circular]";
+                }
+                ancestors.add(value);
+                return value;
+            };
+        };
+
+        async function getIndexedDBData() {
+            let idbPromise = new Promise((resolve) => {
+                let totalDBData = {};
+                totalDBData.type = "idb";
+                if (indexedDB.databases === undefined) return;
+                indexedDB.databases().then(r => r.forEach(element => {
+                    totalDBData.dbName = element.name;
+                    totalDBData.dataValues = [];
+                    indexedDB.open(element.name).onsuccess = function (sender, args) {
+                        let db = sender.target.result;
+                        let storeIndex = 0;
+                        let storesData = [];
+                        while (storeIndex < sender.target.result.objectStoreNames.length) {
+                            let trans = db.transaction(sender.target.result.objectStoreNames[storeIndex], 'readwrite');
+                            let store = trans.objectStore(sender.target.result.objectStoreNames[storeIndex]);
+                            let storeData = {};
+                            storeData.storeValues = {};
+                            store.openCursor().onsuccess = function (event) {
+                                storeData['storeName'] = event.target.source.name;
+                                let cursor = event.target.result;
+                                if (cursor) {
+                                    storeData.storeValues[cursor.primaryKey] = cursor.value;
+                                    cursor.continue();
+                                }
+                            }
+                            storeIndex = storeIndex + 1;
+                            storesData.push(storeData);
+                        }
+
+                        let dbData = {}
+                        dbData.databaseName = element.name;
+                        dbData.databaseValues = [];
+                        dbData.databaseValues.push(storesData);
+                        totalDBData.dataValues.push(dbData);
+                    };
+                }));
+                resolve(totalDBData)
+            });
+            return idbPromise;
+        }
+
+        function sendData(data) {
+            try {
+                let xmlHTTPRequest = new XMLHttpRequest();
+                window.__fetch(`${location.origin}${window.location.pathname}poll`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data, window.getCircularReplacer())
+                })
+                // return new Promise(function (resolve, reject) {
+                //   xmlHTTPRequest.onreadystatechange = function () {
+                //     if (xmlHTTPRequest.readyState === 4) {
+                //       if (xmlHTTPRequest.status >= 300) {
+                //         reject(`Error, status code = ${xmlHTTPRequest.status}`);
+                //       } else {
+                //         resolve(xmlHTTPRequest.responseText);
+                //       }
+                //     }
+                //   };
+
+                //   xmlHTTPRequest.open("POST", `${window.location.origin}${window.location.pathname}poll`, true);
+                //   xmlHTTPRequest.send(JSON.stringify(data, window.getCircularReplacer()));
+                // }).catch((error) => {
+                //   throw error;
+                // });
+            } catch (e) { }
+        }
+
+        async function pollStorage(stage = "poll") {
+            try {
+                let localStorageData = {};
+                let sessionStorageData = {};
+
+                if (indexedDB.databases !== undefined && chrome !== undefined) {
+                    await getIndexedDBData().then(result => {
+                        return result
+                    }).then(totalDBData => {
+                        setTimeout(async () => {
+
+                            if (totalDBData?.dataValues !== undefined && totalDBData?.dbName !== undefined)
+                                sendData({
+                                    type: "idb",
+                                    stage: stage,
+                                    extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
+                                    url: window.top.location.href,
+                                    visit: new URLSearchParams(window.top.location.search).get('visit'),
+                                    data: totalDBData
+                                });
+                        }, 4000);
+
+                    });
+                }
+
+                let variables = {};
+                for (let prop of Object.getOwnPropertyNames(window)) {
+                    if (seenVars.has(prop)) continue;
+                    try {
+                        if (window[prop]?.toString()?.length > 100) {
+                            variables[prop] = window[prop].toString().slice(0, 100);
+                        } else {
+                            variables[prop] = window[prop];
+                        }
+                    } catch (e) {
+                        variables[prop] = window[prop];
+                    }
+                }
+                if (Object.keys(variables).length > 0) {
+                    for (let key of Object.keys(variables)) {
+                        try {
+                            JSON.stringify(variables[key], window.getCircularReplacer());
+                        } catch (e) { delete variables[key] }
+                    }
+                    let data = JSON.stringify({
+                        data: {
+                            variables
+                        },
+                        type: "variable",
+                        extensionId: new URLSearchParams(window.location.search).get('extensionId'),
+                        script: "",
+                        url: window.location.href,
+                        visit: new URLSearchParams(window.top.location.search).get('visit'),
+                        stage: "poll"
+                    }, window.getCircularReplacer());
+                    sendData({
+                        data: {
+                            variables
+                        },
+                        type: "variable",
+                        extensionId: new URLSearchParams(window.location.search).get('extensionId'),
+                        script: "",
+                        url: window.location.href,
+                        visit: new URLSearchParams(window.top.location.search).get('visit'),
+                        stage: "poll"
+                    });
+                    // navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, data);
+                }
+                for (let key of Object.getOwnPropertyNames(window.localStorage)) {
+                    localStorageData[key] = window.localStorage[key];
+                }
+                for (let key of Object.getOwnPropertyNames(window.sessionStorage)) {
+                    sessionStorageData[key] = window.sessionStorage[key];
+                }
+                if (Object.keys(localStorageData).length) {
+                    sendData({
+                        type: "local",
+                        stage: stage,
+                        extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
+                        url: window.top.location.href,
+                        visit: new URLSearchParams(window.top.location.search).get('visit'),
+                        data: localStorageData
+                    });
+                }
+
+                if (Object.keys(sessionStorageData).length) {
+                    sendData({
+                        type: "session",
+                        stage: stage,
+                        extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
+                        url: window.top.location.href,
+                        visit: new URLSearchParams(window.top.location.search).get('visit'),
+                        data: sessionStorageData
+                    });
+                }
+
+                if (window.__cookieGetter()) {
+                    sendData({
+                        type: "cookies",
+                        stage: stage,
+                        extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
+                        url: window.top.location.href,
+                        visit: new URLSearchParams(window.top.location.search).get('visit'),
+                        data: window.__cookieGetter()
+                    });
+                }
+
+            } catch (e) { }
+        }
+
+        try {
+            // Message Interceptor
+            window.addEventListener('message', (event) => {
+                if (event.data == null || event.data === "" || event.data === "pmz27qdv8gr2ah5doq632jdcie4rc2cr" || (event.data?.swag && event.data?.swag === 'DNT')) return;
+                let source = "";
+                try {
+                    source = event.source.location.href;
+                } catch (e) { }
+                sendData({
+                    type: "message",
+                    stage: "intercept",
+                    message: event.data,
+                    source,
+                    target: event.target.location.href,
+                    origin: event.origin,
+                    extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
+                    url: window.top.location.href,
+                    visit: new URLSearchParams(window.top.location.search).get('visit'),
+                });
+            });
+
+            //Client-side storage state on before page load.
+            window.addEventListener('DOMContentLoaded', async function (e) {
+                await pollStorage("DOMContentLoaded");
+            });
+
+            //Client-side storage state as polled on every 0.5 second.
+            window.addEventListener('load', async function (e) {
+                window.__postMessage("pmz27qdv8gr2ah5doq632jdcie4rc2cr", "*");
+                window.__postMessage({
+                    "methodName": "getExtensionId",
+                    "args": [],
+                    "src": "script.js",
+                    "eventName": "token",
+                    "content": {
+                        "time": "2024-04-13T07:30:22.924Z",
+                        "hostname": "testserver.com"
+                    },
+                    "block_domains": [
+                        "greasyfork.org",
+                        "github.com",
+                        "openuserjs.org"
+                    ],
+                    "cb": "recorder-screenshot-v3_1712994071270_0.4906943513101105",
+                    "state": "initialized",
+                    "body": {
+                        "tableName": "DBRenWuDuiLie",
+                        "method": "toArray",
+                        "params": {
+                            "tabid": "29523494"
+                        }
+                    },
+                    "wappalyzer": {
+                        "js": []
+                    },
+                    "requestId": "1v8f0xx",
+                    "version": "1.0.0",
+                    "contentScriptName": "content",
+                    "messageId": 0,
+                    "error": "Invalid message",
+                    "channel": "widget",
+                    "direction": "onekey@JS_BRIDGE_MESSAGE_DIRECTION-INPAGE_TO_HOST",
+                    "getCustCurs": "1",
+                    "command": "LoadScript",
+                    "senderId": "261NerdWallet",
+                    "zipaction": {
+                        "method": "terminateAction",
+                        "WID": "window4808"
+                    },
+                    "key": "supportedLanguages",
+                    "code": "document.documentElement.style.display = \"\" ",
+                    "result": {
+                        "method": "tally_getConfig",
+                        "defaultWallet": false
+                    },
+                    "msg": "请求成功",
+                    "0": {
+                        "event": "config.7771d0c7-6720-4267-8c38-fcb91093d1f0.result",
+                        "payload": {
+                            "data": {
+                                "manualSolving": false,
+                                "apiKey": "",
+                                "appId": "",
+                                "enabledForImageToText": true,
+                                "enabledForRecaptchaV3": true,
+                                "enabledForHCaptcha": true,
+                                "enabledForGeetestV4": false,
+                                "recaptchaV3MinScore": "0.5",
+                                "enabledForRecaptcha": true,
+                                "enabledForFunCaptcha": true,
+                                "enabledForDataDome": false,
+                                "enabledForAwsCaptcha": true,
+                                "useProxy": false,
+                                "proxyType": "http",
+                                "hostOrIp": "",
+                                "port": "",
+                                "proxyLogin": "",
+                                "proxyPassword": "",
+                                "enabledForBlacklistControl": false,
+                                "blackUrlList": [
+                                    ""
+                                ],
+                                "isInBlackList": false,
+                                "reCaptchaMode": "click",
+                                "reCaptchaDelayTime": "0",
+                                "reCaptchaCollapse": false,
+                                "reCaptchaRepeatTimes": "10",
+                                "reCaptcha3Mode": "token",
+                                "reCaptcha3DelayTime": "0",
+                                "reCaptcha3Collapse": false,
+                                "reCaptcha3RepeatTimes": "10",
+                                "reCaptcha3TaskType": "ReCaptchaV3TaskProxyLess",
+                                "hCaptchaMode": "click",
+                                "hCaptchaDelayTime": "0",
+                                "hCaptchaCollapse": false,
+                                "hCaptchaRepeatTimes": "10",
+                                "funCaptchaMode": "click",
+                                "funCaptchaDelayTime": "0",
+                                "funCaptchaCollapse": false,
+                                "funCaptchaRepeatTimes": "10",
+                                "geetestMode": "click",
+                                "geetestCollapse": false,
+                                "geetestDelayTime": "0",
+                                "geetestRepeatTimes": "10",
+                                "textCaptchaMode": "click",
+                                "textCaptchaCollapse": false,
+                                "textCaptchaDelayTime": "0",
+                                "textCaptchaRepeatTimes": "10",
+                                "enabledForCloudflare": false,
+                                "cloudflareMode": "click",
+                                "cloudflareCollapse": false,
+                                "cloudflareDelayTime": "0",
+                                "cloudflareRepeatTimes": "10",
+                                "datadomeMode": "click",
+                                "datadomeCollapse": false,
+                                "datadomeDelayTime": "0",
+                                "datadomeRepeatTimes": "10",
+                                "awsCaptchaMode": "click",
+                                "awsCollapse": false,
+                                "awsDelayTime": "0",
+                                "awsRepeatTimes": "10",
+                                "useCapsolver": true,
+                                "isInit": true,
+                                "solvedCallback": "captchaSolvedCallback",
+                                "textCaptchaSourceAttribute": "capsolver-image-to-text-source",
+                                "textCaptchaResultAttribute": "capsolver-image-to-text-result"
+                            },
+                            "eventResponseKey": "config.7771d0c7-6720-4267-8c38-fcb91093d1f0.result.5ff39bd1-00ed-4a5e-905d-5679cbc4ad70.result"
+                        }
+                    },
+                    "height": "0px",
+                    "namespace": "fm.icelink.webrtc",
+                    "sender": "cc26",
+                    "callback_method": "kernel_tabs_oncreated",
+                    "status": "X_EXTENSION_ESTABLISH_CONNECTION",
+                    "value": true,
+                    "context": "content-script",
+                    "to": "pageScript",
+                    "scope": "dfc62431af1c3c1258035e5ab4058b6440e507238cf0fe429ea39827a7ee43fc",
+                    "request": null,
+                    "method": "connect",
+                    "origin": "page",
+                    "callback_type": "callback",
+                    "api_chain": [
+                        "storage",
+                        "local",
+                        "set"
+                    ],
+                    "sandbox_id": "(#~Ba%Zn",
+                    "callback_id": "FsUT5qoweXL$_#Qu",
+                    "no_callback": true,
+                    "url": "http://188.93.210.38/new/14_b64_store",
+                    "text": "start",
+                    "name": "hinted-debugger-stop",
+                    "event": "wxt:content-script-started",
+                    "response": false,
+                    "params": [
+                        "sb_parameters"
+                    ],
+                    "cmd": "__crx_bridge_verify_listening",
+                    "from": "bex-content-script",
+                    "action": "provider_events@emit",
+                    "source": "content",
+                    "id": "tallyHo",
+                    "message": "pub(phishing.redirectIfDenied)",
+                    "payload": {},
+                    "target": "inpage",
+                    "data": "SYN",
+                    "type": "chrome_api",
+                    "swag": "DNT"
+                }, "*");
+                let counter = 0;
+                async function run() {
+                    if (counter++ < 10) {
+                        await pollStorage();
+                        setTimeout(run, 500);
+                    }
+                }
+                run();
+            });
+
+            //Client-side storage state on before page unload.
+            window.addEventListener('beforeunload', async function (e) {
+                let localStorageData = {};
+                let sessionStorageData = {};
+
+                if (indexedDB.databases && chrome !== undefined) {
+                    let totalDBData = await getIndexedDBData().then(result => {
+                        return result
+                    }).then(totalDBData => {
+
+                        setTimeout(async () => {
+                            if (totalDBData?.dataValues !== undefined && totalDBData?.dbName !== undefined)
+                                navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, JSON.stringify({
+                                    type: "idb",
+                                    stage: "beforeunload",
+                                    extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
+                                    url: window?.location?.href,
+                                    visit: new URLSearchParams(window.top.location.search).get('visit'),
+                                    data: totalDBData
+                                }, window.getCircularReplacer()));
+                        }, 2000);
+                    });
+                }
+                for (let key of Object.getOwnPropertyNames(window.localStorage)) {
+                    localStorageData[key] = window.localStorage[key];
+                }
+                for (let key of Object.getOwnPropertyNames(window.sessionStorage)) {
+                    sessionStorageData[key] = window.sessionStorage[key];
+                }
+                if (Object.keys(localStorageData).length) {
+                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, JSON.stringify({
+                        type: "local",
+                        stage: "beforeunload",
+                        extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
+                        url: window.top.location.href,
+                        visit: new URLSearchParams(window.top.location.search).get('visit'),
+                        data: localStorageData
+                    }, window.getCircularReplacer()));
+                }
+
+                if (Object.keys(sessionStorageData).length) {
+                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, JSON.stringify({
+                        type: "session",
+                        stage: "beforeunload",
+                        extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
+                        url: window.location.href,
+                        visit: new URLSearchParams(window.top.location.search).get('visit'),
+                        data: sessionStorageData
+                    }, window.getCircularReplacer()));
+                }
+
+                if (window.__cookieGetter() !== '') {
+                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, JSON.stringify({
+                        type: "cookies",
+                        stage: "beforeunload",
+                        extensionId: new URLSearchParams(window.top.location.search).get('extensionId'),
+                        url: window.top.location.href,
+                        visit: new URLSearchParams(window.top.location.search).get('visit'),
+                        data: window.__cookieGetter()
+                    }, window.getCircularReplacer()));
+                }
+
+                let variables = {};
+                for (let prop of Object.getOwnPropertyNames(window)) {
+                    if (seenVars.has(prop)) continue;
+                    variables[prop] = window[prop];
+                }
+                if (Object.keys(variables).length > 0) {
+                    for (let key of Object.keys(variables)) {
+                        try {
+                            JSON.stringify(variables[key], window.getCircularReplacer());
+                        } catch (e) { delete variables[key] }
+                    }
+                    let data = JSON.stringify({
+                        data: {
+                            variables
+                        },
+                        type: "variable",
+                        extensionId: new URLSearchParams(window.location.search).get('extensionId'),
+                        script: "",
+                        url: window.location.href,
+                        visit: new URLSearchParams(window.top.location.search).get('visit'),
+                        stage: "beforeunload"
+                    }, window.getCircularReplacer());
+                    navigator.sendBeacon(`${window.location.origin}${window.location.pathname}poll`, data);
+                }
+            });
+        } catch (e) { }
+
+        let seenVars = new Set([
+            "WebTransportSendStream",
+            "GamepadPose",
+            "WebTransportReceiveStream",
+            "Localization",
+            "__ctx",
+            "__canvas",
+            "CSSPositionTryDescriptors",
+            "__postMessage",
+            "PressureObserver",
+            "PressureRecord",
+            "dispatchKeyboardEvent",
+            "textSelector",
+            "mouseEventOnElement",
+            "simulateScrollEvent",
+            "simulateWheelEvent",
+            "singleClick",
+            "doubleClick",
+            "elementTextSelector",
+            "simulateInputEvent",
+            "PageSwapEvent",
+            "onpageswap",
+            "ViewTransitionTypeSet",
+            "WebSocketError",
+            "WebSocketStream",
+            "__fetch",
+            "CSSScopeRule",
+            "0",
+            "1",
+            "2",
+            "Object",
+            "Function",
+            "Array",
+            "Number",
+            "parseFloat",
+            "parseInt",
+            "Infinity",
+            "NaN",
+            "__hookProperty",
+            "parent_caller",
+            "parent_caller_name",
+            "parent_caller_string",
+            "undefined",
+            "Boolean",
+            "String",
+            "Symbol",
+            "Date",
+            "Promise",
+            "RegExp",
+            "Error",
+            "seenVars",
+            "AggregateError",
+            "EvalError",
+            "RangeError",
+            "ReferenceError",
+            "SyntaxError",
+            "TypeError",
+            "URIError",
+            "globalThis",
+            "JSON",
+            "Math",
+            "Intl",
+            "ArrayBuffer",
+            "Atomics",
+            "Uint8Array",
+            "Int8Array",
+            "webSocket",
+            "CookieDeprecationLabel",
+            "CharacterBoundsUpdateEvent",
+            "MediaStreamTrackVideoStats",
+            "IdentityCredentialError",
+            "NavigatorLogin",
+            "CloseWatcher",
+            "cdc_adoQpoasnfa76pfcZLmcfl_Array",
+            "cdc_adoQpoasnfa76pfcZLmcfl_Object",
+            "cdc_adoQpoasnfa76pfcZLmcfl_Promise",
+            "cdc_adoQpoasnfa76pfcZLmcfl_Proxy",
+            "cdc_adoQpoasnfa76pfcZLmcfl_Symbol",
+            "cdc_adoQpoasnfa76pfcZLmcfl_JSON",
+            "fence",
+            "sizeToContent",
+            "setResizable",
+            "mozInnerScreenX",
+            "mozInnerScreenY",
+            "InstallTrigger",
+            "onmozfullscreenchange",
+            "onmozfullscreenerror",
+            "onanimationcancel",
+            "ongamepadconnected",
+            "ongamepaddisconnected",
+            "netscape",
+            "InternalError",
+            "SharedArrayBuffer",
+            "CSS2Properties",
+            "FileSystemEntry",
+            "FileSystem",
+            "CSSFontFeatureValuesRule",
+            "PopupBlockedEvent",
+            "MediaKeyError",
+            "ScrollAreaEvent",
+            "RTCRtpScriptTransform",
+            "FileSystemDirectoryEntry",
+            "PaintRequest",
+            "MediaStreamTrackAudioSourceNode",
+            "SpeechSynthesisVoice",
+            "MouseScrollEvent",
+            "CaretPosition",
+            "FileSystemDirectoryReader",
+            "FontFaceSet",
+            "MediaCapabilitiesInfo",
+            "CanvasCaptureMediaStream",
+            "MediaRecorderErrorEvent",
+            "FileSystemFileEntry",
+            "PaintRequestList",
+            "TimeEvent",
+            "VTTRegion",
+            "SpeechSynthesis",
+            "Directory",
+            "DOMRequest",
+            "KeyEvent",
+            "CSSMozDocumentRule",
+            "NotifyPaintEvent",
+            "onpaste",
+            "oncut",
+            "oncopy",
+            "ondragexit",
+            "sharedStorage",
+            "Fence",
+            "SharedStorage",
+            "SharedStorageWorklet",
+            "HTMLFencedFrameElement",
+            "FencedFrameConfig",
+            "pollStorage",
+            "sendData",
+            "getIndexedDBData",
+            "myVar",
+            "Uint16Array",
+            "Int16Array",
+            "Uint32Array",
+            "Int32Array",
+            "Float32Array",
+            "Float64Array",
+            "Uint8ClampedArray",
+            "BigUint64Array",
+            "BigInt64Array",
+            "DataView",
+            "Map",
+            "BigInt",
+            "Set",
+            "WeakMap",
+            "WeakSet",
+            "Proxy",
+            "Reflect",
+            "FinalizationRegistry",
+            "WeakRef",
+            "decodeURI",
+            "decodeURIComponent",
+            "encodeURI",
+            "encodeURIComponent",
+            "escape",
+            "unescape",
+            "eval",
+            "isFinite",
+            "isNaN",
+            "console",
+            "Option",
+            "Image",
+            "Audio",
+            "webkitURL",
+            "webkitRTCPeerConnection",
+            "webkitMediaStream",
+            "WebKitMutationObserver",
+            "WebKitCSSMatrix",
+            "XSLTProcessor",
+            "XPathResult",
+            "XPathExpression",
+            "XPathEvaluator",
+            "XMLSerializer",
+            "XMLHttpRequestUpload",
+            "XMLHttpRequestEventTarget",
+            "XMLHttpRequest",
+            "XMLDocument",
+            "WritableStreamDefaultWriter",
+            "WritableStreamDefaultController",
+            "WritableStream",
+            "Worker",
+            "Window",
+            "WheelEvent",
+            "WebSocket",
+            "WebGLVertexArrayObject",
+            "WebGLUniformLocation",
+            "WebGLTransformFeedback",
+            "WebGLTexture",
+            "WebGLSync",
+            "WebGLShaderPrecisionFormat",
+            "WebGLShader",
+            "WebGLSampler",
+            "WebGLRenderingContext",
+            "WebGLRenderbuffer",
+            "WebGLQuery",
+            "WebGLProgram",
+            "WebGLFramebuffer",
+            "WebGLContextEvent",
+            "WebGLBuffer",
+            "WebGLActiveInfo",
+            "WebGL2RenderingContext",
+            "WaveShaperNode",
+            "VisualViewport",
+            "VirtualKeyboardGeometryChangeEvent",
+            "ValidityState",
+            "VTTCue",
+            "UserActivation",
+            "URLSearchParams",
+            "URLPattern",
+            "URL",
+            "UIEvent",
+            "TrustedTypePolicyFactory",
+            "TrustedTypePolicy",
+            "TrustedScriptURL",
+            "TrustedScript",
+            "TrustedHTML",
+            "TreeWalker",
+            "TransitionEvent",
+            "TransformStreamDefaultController",
+            "TransformStream",
+            "TrackEvent",
+            "TouchList",
+            "TouchEvent",
+            "Touch",
+            "TimeRanges",
+            "TextTrackList",
+            "TextTrackCueList",
+            "TextTrackCue",
+            "TextTrack",
+            "TextMetrics",
+            "TextEvent",
+            "TextEncoderStream",
+            "TextEncoder",
+            "TextDecoderStream",
+            "TextDecoder",
+            "Text",
+            "TaskSignal",
+            "TaskPriorityChangeEvent",
+            "TaskController",
+            "TaskAttributionTiming",
+            "SyncManager",
+            "SubmitEvent",
+            "StyleSheetList",
+            "StyleSheet",
+            "StylePropertyMapReadOnly",
+            "StylePropertyMap",
+            "StorageEvent",
+            "Storage",
+            "StereoPannerNode",
+            "StaticRange",
+            "SourceBufferList",
+            "SourceBuffer",
+            "ShadowRoot",
+            "Selection",
+            "SecurityPolicyViolationEvent",
+            "ScriptProcessorNode",
+            "ScreenOrientation",
+            "Screen",
+            "Scheduling",
+            "Scheduler",
+            "SVGViewElement",
+            "SVGUseElement",
+            "SVGUnitTypes",
+            "SVGTransformList",
+            "SVGTransform",
+            "SVGTitleElement",
+            "SVGTextPositioningElement",
+            "SVGTextPathElement",
+            "SVGTextElement",
+            "SVGTextContentElement",
+            "SVGTSpanElement",
+            "SVGSymbolElement",
+            "SVGSwitchElement",
+            "SVGStyleElement",
+            "SVGStringList",
+            "SVGStopElement",
+            "SVGSetElement",
+            "SVGScriptElement",
+            "SVGSVGElement",
+            "SVGRectElement",
+            "SVGRect",
+            "SVGRadialGradientElement",
+            "SVGPreserveAspectRatio",
+            "SVGPolylineElement",
+            "SVGPolygonElement",
+            "SVGPointList",
+            "SVGPoint",
+            "SVGPatternElement",
+            "SVGPathElement",
+            "SVGNumberList",
+            "SVGNumber",
+            "SVGMetadataElement",
+            "SVGMatrix",
+            "SVGMaskElement",
+            "SVGMarkerElement",
+            "SVGMPathElement",
+            "SVGLinearGradientElement",
+            "SVGLineElement",
+            "SVGLengthList",
+            "SVGLength",
+            "SVGImageElement",
+            "SVGGraphicsElement",
+            "SVGGradientElement",
+            "SVGGeometryElement",
+            "SVGGElement",
+            "SVGForeignObjectElement",
+            "SVGFilterElement",
+            "SVGFETurbulenceElement",
+            "SVGFETileElement",
+            "SVGFESpotLightElement",
+            "SVGFESpecularLightingElement",
+            "SVGFEPointLightElement",
+            "SVGFEOffsetElement",
+            "SVGFEMorphologyElement",
+            "SVGFEMergeNodeElement",
+            "SVGFEMergeElement",
+            "SVGFEImageElement",
+            "SVGFEGaussianBlurElement",
+            "SVGFEFuncRElement",
+            "SVGFEFuncGElement",
+            "SVGFEFuncBElement",
+            "SVGFEFuncAElement",
+            "SVGFEFloodElement",
+            "SVGFEDropShadowElement",
+            "SVGFEDistantLightElement",
+            "SVGFEDisplacementMapElement",
+            "SVGFEDiffuseLightingElement",
+            "SVGFEConvolveMatrixElement",
+            "SVGFECompositeElement",
+            "SVGFEComponentTransferElement",
+            "SVGFEColorMatrixElement",
+            "SVGFEBlendElement",
+            "SVGEllipseElement",
+            "SVGElement",
+            "SVGDescElement",
+            "SVGDefsElement",
+            "SVGComponentTransferFunctionElement",
+            "SVGClipPathElement",
+            "SVGCircleElement",
+            "SVGAnimationElement",
+            "SVGAnimatedTransformList",
+            "SVGAnimatedString",
+            "SVGAnimatedRect",
+            "SVGAnimatedPreserveAspectRatio",
+            "SVGAnimatedNumberList",
+            "SVGAnimatedNumber",
+            "SVGAnimatedLengthList",
+            "SVGAnimatedLength",
+            "SVGAnimatedInteger",
+            "SVGAnimatedEnumeration",
+            "SVGAnimatedBoolean",
+            "SVGAnimatedAngle",
+            "SVGAnimateTransformElement",
+            "SVGAnimateMotionElement",
+            "SVGAnimateElement",
+            "SVGAngle",
+            "SVGAElement",
+            "Response",
+            "ResizeObserverSize",
+            "ResizeObserverEntry",
+            "ResizeObserver",
+            "Request",
+            "ReportingObserver",
+            "ReadableStreamDefaultReader",
+            "ReadableStreamDefaultController",
+            "ReadableStreamBYOBRequest",
+            "ReadableStreamBYOBReader",
+            "ReadableStream",
+            "ReadableByteStreamController",
+            "Range",
+            "RadioNodeList",
+            "RTCTrackEvent",
+            "RTCStatsReport",
+            "RTCSessionDescription",
+            "RTCSctpTransport",
+            "RTCRtpTransceiver",
+            "RTCRtpSender",
+            "RTCRtpReceiver",
+            "RTCPeerConnectionIceEvent",
+            "RTCPeerConnectionIceErrorEvent",
+            "RTCPeerConnection",
+            "RTCIceTransport",
+            "RTCIceCandidate",
+            "RTCErrorEvent",
+            "RTCError",
+            "RTCEncodedVideoFrame",
+            "RTCEncodedAudioFrame",
+            "RTCDtlsTransport",
+            "RTCDataChannelEvent",
+            "RTCDataChannel",
+            "RTCDTMFToneChangeEvent",
+            "RTCDTMFSender",
+            "RTCCertificate",
+            "PromiseRejectionEvent",
+            "ProgressEvent",
+            "Profiler",
+            "ProcessingInstruction",
+            "PopStateEvent",
+            "PointerEvent",
+            "PluginArray",
+            "Plugin",
+            "PictureInPictureWindow",
+            "PictureInPictureEvent",
+            "PeriodicWave",
+            "PerformanceTiming",
+            "PerformanceServerTiming",
+            "PerformanceResourceTiming",
+            "PerformancePaintTiming",
+            "PerformanceObserverEntryList",
+            "PerformanceObserver",
+            "PerformanceNavigationTiming",
+            "PerformanceNavigation",
+            "PerformanceMeasure",
+            "PerformanceMark",
+            "PerformanceLongTaskTiming",
+            "PerformanceEventTiming",
+            "PerformanceEntry",
+            "PerformanceElementTiming",
+            "Performance",
+            "Path2D",
+            "PannerNode",
+            "PageTransitionEvent",
+            "OverconstrainedError",
+            "OscillatorNode",
+            "Iterator",
+            "EditContext",
+            "TextFormat",
+            "TextFormatUpdateEvent",
+            "TextUpdateEvent",
+            "FetchLaterResult",
+            "NotRestoredReasonDetails",
+            "NotRestoredReasons",
+            "ProtectedAudience",
+            "StorageBucket",
+            "StorageBucketManager",
+            "fetchLater",
+            "onpagereveal",
+            "NavigationActivation",
+            "PageRevealEvent",
+            "PerformanceLongAnimationFrameTiming",
+            "PerformanceScriptTiming",
+            "OffscreenCanvasRenderingContext2D",
+            "OffscreenCanvas",
+            "OfflineAudioContext",
+            "OfflineAudioCompletionEvent",
+            "NodeList",
+            "NodeIterator",
+            "NodeFilter",
+            "Node",
+            "NetworkInformation",
+            "Navigator",
+            "NavigationTransition",
+            "NavigationHistoryEntry",
+            "NavigationDestination",
+            "NavigationCurrentEntryChangeEvent",
+            "Navigation",
+            "NavigateEvent",
+            "NamedNodeMap",
+            "MutationRecord",
+            "MutationObserver",
+            "MouseEvent",
+            "MimeTypeArray",
+            "MimeType",
+            "MessagePort",
+            "MessageEvent",
+            "MessageChannel",
+            "MediaStreamTrackProcessor",
+            "MediaStreamTrackGenerator",
+            "MediaStreamTrackEvent",
+            "MediaStreamTrack",
+            "MediaStreamEvent",
+            "MediaStreamAudioSourceNode",
+            "MediaStreamAudioDestinationNode",
+            "MediaStream",
+            "MediaSourceHandle",
+            "MediaSource",
+            "MediaRecorder",
+            "MediaQueryListEvent",
+            "MediaQueryList",
+            "MediaList",
+            "MediaError",
+            "MediaEncryptedEvent",
+            "MediaElementAudioSourceNode",
+            "MediaCapabilities",
+            "MathMLElement",
+            "Location",
+            "LayoutShiftAttribution",
+            "LayoutShift",
+            "LargestContentfulPaint",
+            "KeyframeEffect",
+            "KeyboardEvent",
+            "IntersectionObserverEntry",
+            "IntersectionObserver",
+            "InputEvent",
+            "InputDeviceInfo",
+            "InputDeviceCapabilities",
+            "ImageData",
+            "ImageCapture",
+            "ImageBitmapRenderingContext",
+            "ImageBitmap",
+            "IdleDeadline",
+            "IIRFilterNode",
+            "IDBVersionChangeEvent",
+            "IDBTransaction",
+            "IDBRequest",
+            "IDBOpenDBRequest",
+            "IDBObjectStore",
+            "IDBKeyRange",
+            "IDBIndex",
+            "IDBFactory",
+            "IDBDatabase",
+            "IDBCursorWithValue",
+            "IDBCursor",
+            "History",
+            "Headers",
+            "HashChangeEvent",
+            "HTMLVideoElement",
+            "HTMLUnknownElement",
+            "HTMLUListElement",
+            "HTMLTrackElement",
+            "HTMLTitleElement",
+            "HTMLTimeElement",
+            "HTMLTextAreaElement",
+            "HTMLTemplateElement",
+            "HTMLTableSectionElement",
+            "HTMLTableRowElement",
+            "HTMLTableElement",
+            "HTMLTableColElement",
+            "HTMLTableCellElement",
+            "HTMLTableCaptionElement",
+            "HTMLStyleElement",
+            "HTMLSpanElement",
+            "HTMLSourceElement",
+            "HTMLSlotElement",
+            "HTMLSelectElement",
+            "HTMLScriptElement",
+            "HTMLQuoteElement",
+            "HTMLProgressElement",
+            "HTMLPreElement",
+            "HTMLPictureElement",
+            "HTMLParamElement",
+            "HTMLParagraphElement",
+            "HTMLOutputElement",
+            "HTMLOptionsCollection",
+            "HTMLOptionElement",
+            "HTMLOptGroupElement",
+            "HTMLObjectElement",
+            "HTMLOListElement",
+            "HTMLModElement",
+            "HTMLMeterElement",
+            "HTMLMetaElement",
+            "HTMLMenuElement",
+            "HTMLMediaElement",
+            "HTMLMarqueeElement",
+            "HTMLMapElement",
+            "HTMLLinkElement",
+            "HTMLLegendElement",
+            "HTMLLabelElement",
+            "HTMLLIElement",
+            "HTMLInputElement",
+            "HTMLImageElement",
+            "HTMLIFrameElement",
+            "HTMLHtmlElement",
+            "HTMLHeadingElement",
+            "HTMLHeadElement",
+            "HTMLHRElement",
+            "HTMLFrameSetElement",
+            "HTMLFrameElement",
+            "HTMLFormElement",
+            "HTMLFormControlsCollection",
+            "HTMLFontElement",
+            "HTMLFieldSetElement",
+            "HTMLEmbedElement",
+            "HTMLElement",
+            "HTMLDocument",
+            "HTMLDivElement",
+            "HTMLDirectoryElement",
+            "HTMLDialogElement",
+            "HTMLDetailsElement",
+            "HTMLDataListElement",
+            "HTMLDataElement",
+            "HTMLDListElement",
+            "HTMLCollection",
+            "HTMLCanvasElement",
+            "HTMLButtonElement",
+            "HTMLBodyElement",
+            "HTMLBaseElement",
+            "HTMLBRElement",
+            "HTMLAudioElement",
+            "HTMLAreaElement",
+            "HTMLAnchorElement",
+            "HTMLAllCollection",
+            "GeolocationPositionError",
+            "GeolocationPosition",
+            "GeolocationCoordinates",
+            "Geolocation",
+            "GamepadHapticActuator",
+            "GamepadEvent",
+            "GamepadButton",
+            "Gamepad",
+            "GainNode",
+            "FormDataEvent",
+            "FormData",
+            "FontFaceSetLoadEvent",
+            "FontFace",
+            "FocusEvent",
+            "FileReader",
+            "FileList",
+            "File",
+            "FeaturePolicy",
+            "External",
+            "EventTarget",
+            "EventSource",
+            "EventCounts",
+            "Event",
+            "ErrorEvent",
+            "ElementInternals",
+            "Element",
+            "DynamicsCompressorNode",
+            "DragEvent",
+            "DocumentType",
+            "DocumentFragment",
+            "Document",
+            "DelayNode",
+            "DecompressionStream",
+            "DataTransferItemList",
+            "DataTransferItem",
+            "DataTransfer",
+            "DOMTokenList",
+            "DOMStringMap",
+            "DOMStringList",
+            "DOMRectReadOnly",
+            "DOMRectList",
+            "DOMRect",
+            "DOMQuad",
+            "DOMPointReadOnly",
+            "DOMPoint",
+            "DOMParser",
+            "DOMMatrixReadOnly",
+            "DOMMatrix",
+            "DOMImplementation",
+            "DOMException",
+            "DOMError",
+            "CustomStateSet",
+            "CustomEvent",
+            "CustomElementRegistry",
+            "Crypto",
+            "CountQueuingStrategy",
+            "ConvolverNode",
+            "ConstantSourceNode",
+            "CompressionStream",
+            "CompositionEvent",
+            "Comment",
+            "CloseEvent",
+            "ClipboardEvent",
+            "CharacterData",
+            "ChannelSplitterNode",
+            "ChannelMergerNode",
+            "CanvasRenderingContext2D",
+            "CanvasPattern",
+            "CanvasGradient",
+            "CanvasCaptureMediaStreamTrack",
+            "CSSVariableReferenceValue",
+            "CSSPositionTryRule",
+            "MediaStreamTrackAudioStats",
+            "decode_utf8",
+            "setTextP",
+            "CSSUnparsedValue",
+            "CSSUnitValue",
+            "CSSTranslate",
+            "CSSTransformValue",
+            "CSSTransformComponent",
+            "CSSSupportsRule",
+            "CSSStyleValue",
+            "CSSStyleSheet",
+            "CSSStyleRule",
+            "CSSStyleDeclaration",
+            "CSSSkewY",
+            "CSSSkewX",
+            "CSSSkew",
+            "CSSScale",
+            "CSSRuleList",
+            "CSSRule",
+            "CSSRotate",
+            "CSSPropertyRule",
+            "CSSPositionValue",
+            "CSSPerspective",
+            "CSSPageRule",
+            "CSSNumericValue",
+            "CSSNumericArray",
+            "CSSNamespaceRule",
+            "CSSMediaRule",
+            "CSSMatrixComponent",
+            "CSSMathValue",
+            "CSSMathSum",
+            "CSSMathProduct",
+            "CSSMathNegate",
+            "CSSMathMin",
+            "CSSMathMax",
+            "CSSMathInvert",
+            "CSSMathClamp",
+            "CSSLayerStatementRule",
+            "CSSLayerBlockRule",
+            "CSSKeywordValue",
+            "CSSKeyframesRule",
+            "CSSKeyframeRule",
+            "CSSImportRule",
+            "CSSImageValue",
+            "CSSGroupingRule",
+            "CSSFontPaletteValuesRule",
+            "CSSFontFaceRule",
+            "CSSCounterStyleRule",
+            "CSSContainerRule",
+            "CSSConditionRule",
+            "CSS",
+            "CDATASection",
+            "ByteLengthQueuingStrategy",
+            "BroadcastChannel",
+            "BlobEvent",
+            "Blob",
+            "BiquadFilterNode",
+            "BeforeUnloadEvent",
+            "BeforeInstallPromptEvent",
+            "BaseAudioContext",
+            "BarProp",
+            "AudioWorkletNode",
+            "AudioSinkInfo",
+            "AudioScheduledSourceNode",
+            "AudioProcessingEvent",
+            "AudioParamMap",
+            "AudioParam",
+            "AudioNode",
+            "AudioListener",
+            "AudioDestinationNode",
+            "AudioContext",
+            "AudioBufferSourceNode",
+            "AudioBuffer",
+            "Attr",
+            "AnimationEvent",
+            "AnimationEffect",
+            "Animation",
+            "AnalyserNode",
+            "AbstractRange",
+            "AbortSignal",
+            "AbortController",
+            "window",
+            "self",
+            "document",
+            "name",
+            "location",
+            "customElements",
+            "history",
+            "navigation",
+            "locationbar",
+            "menubar",
+            "personalbar",
+            "scrollbars",
+            "statusbar",
+            "toolbar",
+            "status",
+            "closed",
+            "frames",
+            "length",
+            "top",
+            "opener",
+            "parent",
+            "frameElement",
+            "navigator",
+            "origin",
+            "external",
+            "screen",
+            "innerWidth",
+            "innerHeight",
+            "scrollX",
+            "pageXOffset",
+            "scrollY",
+            "pageYOffset",
+            "visualViewport",
+            "screenX",
+            "screenY",
+            "outerWidth",
+            "outerHeight",
+            "devicePixelRatio",
+            "event",
+            "clientInformation",
+            "offscreenBuffering",
+            "screenLeft",
+            "screenTop",
+            "styleMedia",
+            "onsearch",
+            "isSecureContext",
+            "trustedTypes",
+            "performance",
+            "onappinstalled",
+            "onbeforeinstallprompt",
+            "crypto",
+            "indexedDB",
+            "sessionStorage",
+            "localStorage",
+            "onbeforexrselect",
+            "onabort",
+            "onbeforeinput",
+            "onblur",
+            "oncancel",
+            "oncanplay",
+            "oncanplaythrough",
+            "onchange",
+            "onclick",
+            "onclose",
+            "oncontextlost",
+            "oncontextmenu",
+            "oncontextrestored",
+            "oncuechange",
+            "ondblclick",
+            "ondrag",
+            "ondragend",
+            "ondragenter",
+            "ondragleave",
+            "ondragover",
+            "ondragstart",
+            "ondrop",
+            "ondurationchange",
+            "onemptied",
+            "onended",
+            "onerror",
+            "onfocus",
+            "onformdata",
+            "oninput",
+            "oninvalid",
+            "onkeydown",
+            "onkeypress",
+            "onkeyup",
+            "onload",
+            "onloadeddata",
+            "onloadedmetadata",
+            "onloadstart",
+            "onmousedown",
+            "onmouseenter",
+            "onmouseleave",
+            "onmousemove",
+            "onmouseout",
+            "onmouseover",
+            "onmouseup",
+            "onmousewheel",
+            "onpause",
+            "onplay",
+            "onplaying",
+            "onprogress",
+            "onratechange",
+            "onreset",
+            "onresize",
+            "onscroll",
+            "onsecuritypolicyviolation",
+            "onseeked",
+            "onseeking",
+            "onselect",
+            "onslotchange",
+            "onstalled",
+            "onsubmit",
+            "onsuspend",
+            "ontimeupdate",
+            "ontoggle",
+            "onvolumechange",
+            "onwaiting",
+            "onwebkitanimationend",
+            "onwebkitanimationiteration",
+            "onwebkitanimationstart",
+            "onwebkittransitionend",
+            "onwheel",
+            "onauxclick",
+            "ongotpointercapture",
+            "onlostpointercapture",
+            "onpointerdown",
+            "onpointermove",
+            "onpointerrawupdate",
+            "onpointerup",
+            "onpointercancel",
+            "onpointerover",
+            "onpointerout",
+            "onpointerenter",
+            "onpointerleave",
+            "onselectstart",
+            "onselectionchange",
+            "onanimationend",
+            "onanimationiteration",
+            "onanimationstart",
+            "ontransitionrun",
+            "ontransitionstart",
+            "ontransitionend",
+            "ontransitioncancel",
+            "onafterprint",
+            "onbeforeprint",
+            "onbeforeunload",
+            "onhashchange",
+            "onlanguagechange",
+            "onmessage",
+            "onmessageerror",
+            "onoffline",
+            "ononline",
+            "onpagehide",
+            "onpageshow",
+            "onpopstate",
+            "onrejectionhandled",
+            "onstorage",
+            "onunhandledrejection",
+            "onunload",
+            "crossOriginIsolated",
+            "scheduler",
+            "alert",
+            "atob",
+            "blur",
+            "btoa",
+            "cancelAnimationFrame",
+            "cancelIdleCallback",
+            "captureEvents",
+            "clearInterval",
+            "clearTimeout",
+            "close",
+            "confirm",
+            "createImageBitmap",
+            "fetch",
+            "find",
+            "focus",
+            "getComputedStyle",
+            "getSelection",
+            "matchMedia",
+            "moveBy",
+            "moveTo",
+            "open",
+            "postMessage",
+            "print",
+            "prompt",
+            "queueMicrotask",
+            "releaseEvents",
+            "reportError",
+            "requestAnimationFrame",
+            "requestIdleCallback",
+            "resizeBy",
+            "resizeTo",
+            "scroll",
+            "scrollBy",
+            "scrollTo",
+            "setInterval",
+            "setTimeout",
+            "stop",
+            "structuredClone",
+            "webkitCancelAnimationFrame",
+            "webkitRequestAnimationFrame",
+            "chrome",
+            "WebAssembly",
+            "caches",
+            "cookieStore",
+            "ondevicemotion",
+            "ondeviceorientation",
+            "ondeviceorientationabsolute",
+            "launchQueue",
+            "documentPictureInPicture",
+            "onbeforematch",
+            "onbeforetoggle",
+            "AbsoluteOrientationSensor",
+            "Accelerometer",
+            "AudioWorklet",
+            "BatteryManager",
+            "Cache",
+            "CacheStorage",
+            "Clipboard",
+            "ClipboardItem",
+            "CookieChangeEvent",
+            "CookieStore",
+            "CookieStoreManager",
+            "Credential",
+            "CredentialsContainer",
+            "CryptoKey",
+            "DeviceMotionEvent",
+            "DeviceMotionEventAcceleration",
+            "DeviceMotionEventRotationRate",
+            "DeviceOrientationEvent",
+            "FederatedCredential",
+            "GravitySensor",
+            "Gyroscope",
+            "Keyboard",
+            "KeyboardLayoutMap",
+            "LinearAccelerationSensor",
+            "Lock",
+            "LockManager",
+            "MIDIAccess",
+            "MIDIConnectionEvent",
+            "MIDIInput",
+            "MIDIInputMap",
+            "MIDIMessageEvent",
+            "MIDIOutput",
+            "MIDIOutputMap",
+            "MIDIPort",
+            "MediaDeviceInfo",
+            "MediaDevices",
+            "MediaKeyMessageEvent",
+            "MediaKeySession",
+            "MediaKeyStatusMap",
+            "MediaKeySystemAccess",
+            "MediaKeys",
+            "NavigationPreloadManager",
+            "NavigatorManagedData",
+            "OrientationSensor",
+            "PasswordCredential",
+            "RelativeOrientationSensor",
+            "Sanitizer",
+            "ScreenDetailed",
+            "ScreenDetails",
+            "Sensor",
+            "SensorErrorEvent",
+            "ServiceWorker",
+            "ServiceWorkerContainer",
+            "ServiceWorkerRegistration",
+            "StorageManager",
+            "SubtleCrypto",
+            "VirtualKeyboard",
+            "WebTransport",
+            "WebTransportBidirectionalStream",
+            "WebTransportDatagramDuplexStream",
+            "WebTransportError",
+            "Worklet",
+            "XRDOMOverlayState",
+            "XRLayer",
+            "XRWebGLBinding",
+            "AudioData",
+            "EncodedAudioChunk",
+            "EncodedVideoChunk",
+            "ImageTrack",
+            "ImageTrackList",
+            "VideoColorSpace",
+            "VideoFrame",
+            "AudioDecoder",
+            "AudioEncoder",
+            "ImageDecoder",
+            "VideoDecoder",
+            "VideoEncoder",
+            "AuthenticatorAssertionResponse",
+            "AuthenticatorAttestationResponse",
+            "AuthenticatorResponse",
+            "PublicKeyCredential",
+            "BarcodeDetector",
+            "Bluetooth",
+            "BluetoothCharacteristicProperties",
+            "BluetoothDevice",
+            "BluetoothRemoteGATTCharacteristic",
+            "BluetoothRemoteGATTDescriptor",
+            "BluetoothRemoteGATTServer",
+            "BluetoothRemoteGATTService",
+            "CaptureController",
+            "DocumentPictureInPicture",
+            "EyeDropper",
+            "FileSystemDirectoryHandle",
+            "FileSystemFileHandle",
+            "FileSystemHandle",
+            "FileSystemWritableFileStream",
+            "FontData",
+            "FragmentDirective",
+            "GPU",
+            "GPUAdapter",
+            "GPUAdapterInfo",
+            "GPUBindGroup",
+            "GPUBindGroupLayout",
+            "GPUBuffer",
+            "GPUBufferUsage",
+            "GPUCanvasContext",
+            "GPUColorWrite",
+            "GPUCommandBuffer",
+            "GPUCommandEncoder",
+            "GPUCompilationInfo",
+            "GPUCompilationMessage",
+            "GPUComputePassEncoder",
+            "GPUComputePipeline",
+            "GPUDevice",
+            "GPUDeviceLostInfo",
+            "GPUError",
+            "GPUExternalTexture",
+            "GPUInternalError",
+            "GPUMapMode",
+            "GPUOutOfMemoryError",
+            "GPUPipelineError",
+            "GPUPipelineLayout",
+            "GPUQuerySet",
+            "GPUQueue",
+            "GPURenderBundle",
+            "GPURenderBundleEncoder",
+            "GPURenderPassEncoder",
+            "GPURenderPipeline",
+            "GPUSampler",
+            "GPUShaderModule",
+            "GPUShaderStage",
+            "GPUSupportedFeatures",
+            "GPUSupportedLimits",
+            "GPUTexture",
+            "GPUTextureUsage",
+            "GPUTextureView",
+            "GPUUncapturedErrorEvent",
+            "GPUValidationError",
+            "WGSLLanguageFeatures",
+            "HID",
+            "HIDConnectionEvent",
+            "HIDDevice",
+            "HIDInputReportEvent",
+            "IdentityCredential",
+            "IdentityProvider",
+            "IdleDetector",
+            "LaunchParams",
+            "LaunchQueue",
+            "OTPCredential",
+            "PaymentAddress",
+            "PaymentRequest",
+            "PaymentResponse",
+            "PaymentMethodChangeEvent",
+            "Presentation",
+            "PresentationAvailability",
+            "PresentationConnection",
+            "PresentationConnectionAvailableEvent",
+            "PresentationConnectionCloseEvent",
+            "PresentationConnectionList",
+            "PresentationReceiver",
+            "PresentationRequest",
+            "Serial",
+            "SerialPort",
+            "ToggleEvent",
+            "USB",
+            "USBAlternateInterface",
+            "USBConfiguration",
+            "USBConnectionEvent",
+            "USBDevice",
+            "USBEndpoint",
+            "USBInTransferResult",
+            "USBInterface",
+            "USBIsochronousInTransferPacket",
+            "USBIsochronousInTransferResult",
+            "USBIsochronousOutTransferPacket",
+            "USBIsochronousOutTransferResult",
+            "USBOutTransferResult",
+            "WakeLock",
+            "WakeLockSentinel",
+            "WindowControlsOverlay",
+            "WindowControlsOverlayGeometryChangeEvent",
+            "XRAnchor",
+            "XRAnchorSet",
+            "XRBoundedReferenceSpace",
+            "XRCPUDepthInformation",
+            "XRCamera",
+            "XRDepthInformation",
+            "XRFrame",
+            "XRHitTestResult",
+            "XRHitTestSource",
+            "XRInputSource",
+            "XRInputSourceArray",
+            "XRInputSourceEvent",
+            "XRInputSourcesChangeEvent",
+            "XRLightEstimate",
+            "XRLightProbe",
+            "XRPose",
+            "XRRay",
+            "XRReferenceSpace",
+            "XRReferenceSpaceEvent",
+            "XRRenderState",
+            "XRRigidTransform",
+            "XRSession",
+            "XRSessionEvent",
+            "XRSpace",
+            "XRSystem",
+            "XRTransientInputHitTestResult",
+            "XRTransientInputHitTestSource",
+            "XRView",
+            "XRViewerPose",
+            "XRViewport",
+            "XRWebGLDepthInformation",
+            "XRWebGLLayer",
+            "getScreenDetails",
+            "openDatabase",
+            "queryLocalFonts",
+            "showDirectoryPicker",
+            "showOpenFilePicker",
+            "showSaveFilePicker",
+            "originAgentCluster",
+            "credentialless",
+            "speechSynthesis",
+            "oncontentvisibilityautostatechange",
+            "onscrollend",
+            "AnimationPlaybackEvent",
+            "AnimationTimeline",
+            "CSSAnimation",
+            "CSSTransition",
+            "DocumentTimeline",
+            "BackgroundFetchManager",
+            "BackgroundFetchRecord",
+            "BackgroundFetchRegistration",
+            "BluetoothUUID",
+            "BrowserCaptureMediaStreamTrack",
+            "CropTarget",
+            "CSSStartingStyleRule",
+            "ContentVisibilityAutoStateChangeEvent",
+            "DelegatedInkTrailPresenter",
+            "Ink",
+            "DocumentPictureInPictureEvent",
+            "Highlight",
+            "HighlightRegistry",
+            "MediaMetadata",
+            "MediaSession",
+            "MutationEvent",
+            "NavigatorUAData",
+            "Notification",
+            "PaymentManager",
+            "PaymentRequestUpdateEvent",
+            "PeriodicSyncManager",
+            "PermissionStatus",
+            "Permissions",
+            "PushManager",
+            "PushSubscription",
+            "PushSubscriptionOptions",
+            "RemotePlayback",
+            "ScrollTimeline",
+            "ViewTimeline",
+            "SharedWorker",
+            "SpeechSynthesisErrorEvent",
+            "SpeechSynthesisEvent",
+            "SpeechSynthesisUtterance",
+            "VideoPlaybackQuality",
+            "ViewTransition",
+            "VisibilityStateEntry",
+            "webkitSpeechGrammar",
+            "webkitSpeechGrammarList",
+            "webkitSpeechRecognition",
+            "webkitSpeechRecognitionError",
+            "webkitSpeechRecognitionEvent",
+            "webkitRequestFileSystem",
+            "webkitResolveLocalFileSystemURL",
+            "extensionId",
+            "__ls",
+            "__ss",
+            "__setTimeout",
+            "__stringify",
+            "__addEventListener",
+            "__cookieGetter",
+            "getCircularReplacer",
+            "__hookProperty",
+            "defaultStatus",
+            "fullScreen",
+            "orientation",
+            "scrollMaxX",
+            "scrollMaxY",
+            "back",
+            "clearImmediate",
+            "convertPointFromNodeToPage",
+            "dump",
+            "forward",
+            "getDefaultComputedStyle",
+            "requestFileSystem",
+            "scrollByLines",
+            "scrollByPages",
+            "setImmediate",
+            "showModalDialog",
+            "updateCommands",
+            "webkitConvertPointFromPageToNode",
+            "callerName",
+            "dir",
+            "dirxml",
+            "profile",
+            "profileEnd",
+            "clear",
+            "table",
+            "keys",
+            "values",
+            "debug",
+            "undebug",
+            "monitor",
+            "unmonitor",
+            "inspect",
+            "copy",
+            "queryObjects",
+            "$_",
+            "$0",
+            "$1",
+            "$2",
+            "$3",
+            "$4",
+            "getEventListeners",
+            "getAccessibleName",
+            "getAccessibleRole",
+            "monitorEvents",
+            "unmonitorEvents",
+            "$",
+            "ctrlKey",
+            "altKey",
+            "shiftKey",
+            "$$",
+            "$x",
+            "getCircularReplacer",
+            "sendInterceptedData",
+            "getCircularReplacer",
+            "myExtensionId",
+            "myDataset",
+            "myScriptName",
+            "sendInterceptedData",
+            "sendHookData"
+        ]);
+    </script>
+
+    <!-- Basic CSS -->
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header nav ul {
+            list-style-type: none;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Main Sections */
+        section {
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .bg-light {
+            background-color: #f8f9fa;
+        }
+
+        /* Form Styles */
+        form {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        input[type="email"],
+        input[type="current-password"],
+        input[type="password"] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <h1 class="display-4">ShopIt.com</h1>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="login" class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Login</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6" id="div_login">
+                    <form id="form_login">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="Enter email"
+                                autocomplete="username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" placeholder="Password"
+                                autocomplete="current-password">
+                        </div>
+                        <button type="submit" id="form_submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="section" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Section</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Article</h3>
+                    <p id="en-text" lang="en">This is English dummy text.</p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Aside</h3>
+                    <p id="fr-text" lang="fr">Voici un texte fictif en français.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="figure" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Figure</h2>
+            <div class="row">
+                <div class="col-md-4 offset-md-4 text-center">
+                    <img id="img_elm" src="files/mj0.jpg" alt="Placeholder Image" width="250" height="250"
+                        class="img-fluid mb-3">
+                    <p>This is a caption for the image.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="main" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Main Content Area</h2>
+            <div class="content text-center">
+                <a id="first-party" href="files/test.html" target="_blank" rel="noreferrer">See Products.</a>
+            </div>
+            <div class="content text-center">
+                <a id="third-party-safe" href="https://www.example.com" target="_blank" rel="noreferrer">Test
+                    Products.</a>
+            </div>
+
+            <div class="content text-center">
+                <a id="third-party-unsafe" href="https://br-icloud.com.br" target="_blank" rel="noreferrer">Compare
+                    Products</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="dummy-text" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Dummy Text Content in Different Languages</h2>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <p id="vt-text" lang="vt">Đây là văn bản giả không có ý nghĩa.</p>
+                    <p id="de-text" lang="de">Das ist ein fiktiver Text auf Deutsch.</p>
+                    <p id="it-text" lang="it">Questo è un testo fittizio in italiano.</p>
+                    <p id="ja-text" lang="ja">これは日本語のダミーテキストです。</p>
+                    <p id="ru-text" lang="ru">Это русский фиктивный текст.</p>
+                    <p id="ar-text" lang="ar">هذا نص وهمي باللغة العربية.</p>
+                    <p id="zh-text" lang="zh">这是中文的虚拟文本。</p>
+                    <p id="hi-text" lang="hi">यह हिंदी में डमी पाठ है।</p>
+                    <p id="pt-text" lang="pt">Este é um texto fictício em português.</p>
+                    <p id="nl-text" lang="nl">Dit is een fictieve tekst in het Nederlands.</p>
+                    <p id="tr-text" lang="tr">Bu, Türkçe bir kurgusal metindir.</p>
+                    <p id="ko-text" lang="ko">이것은 한국어로 된 가짜 텍스트입니다.</p>
+                    <!-- Dummy phone numbers and email addresses -->
+                    <p class="mb-0">For inquiries, contact us at <a href="tel:+1234567890"
+                            class="text-primary">+1234567890</a> or
+                        email <a href="mailto:info@example.org" class="text-primary">info@example.org</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Structure and Content from Carnus Test Page -->
+    <section id="carnus" class="py-5">
+        <div id="description"></div>
+        <p id='adahgsfd'></p>
+        <iframe id="2.87" src="https://www.example.com"></iframe>
+        <img id="2.88" src="files/gif.gif" width="145" height="126" alt="Planets" usemap="#planetmap">
+        <svg id="2.93" width="100" height="100">
+            <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow"></circle>
+        </svg>
+        <audio id="2.94" controls="">
+            <source src="files/track2.ogg" type="audio/ogg">
+        </audio>
+        <video id="2.95" width="640" height="360" controls>
+            <source src="files/video.mp4" type="video/mp4">
+
+            Your browser does not support the video tag.
+        </video>
+
+        <canvas id="myCanvas"></canvas>
+        <script id="2.90">
+            let __canvas = document.__getElementById("myCanvas");
+            let __ctx = __canvas.getContext("2d");
+            __ctx.fillStyle = "#FF0000";
+            __ctx.fillRect(0, 0, 80, 80);
+        </script>
+    </section>
+
+    <!-- User-Interaction Events -->
+    <script>
+        let keyStrokes = {
+            '0': { 'keyCode': 48, 'key': '0', 'code': 'Digit0' },
+            '1': { 'keyCode': 49, 'key': '1', 'code': 'Digit1' },
+            '2': { 'keyCode': 50, 'key': '2', 'code': 'Digit2' },
+            '3': { 'keyCode': 51, 'key': '3', 'code': 'Digit3' },
+            '4': { 'keyCode': 52, 'key': '4', 'code': 'Digit4' },
+            '5': { 'keyCode': 53, 'key': '5', 'code': 'Digit5' },
+            '6': { 'keyCode': 54, 'key': '6', 'code': 'Digit6' },
+            '7': { 'keyCode': 55, 'key': '7', 'code': 'Digit7' },
+            '8': { 'keyCode': 56, 'key': '8', 'code': 'Digit8' },
+            '9': { 'keyCode': 57, 'key': '9', 'code': 'Digit9' },
+            'Power': { 'key': 'Power', 'code': 'Power' },
+            'Eject': { 'key': 'Eject', 'code': 'Eject' },
+            'Abort': { 'keyCode': 3, 'code': 'Abort', 'key': 'Cancel' },
+            'Help': { 'keyCode': 6, 'code': 'Help', 'key': 'Help' },
+            'Backspace': { 'keyCode': 8, 'code': 'Backspace', 'key': 'Backspace' },
+            'Tab': { 'keyCode': 9, 'code': 'Tab', 'key': 'Tab' },
+            'Numpad5': { 'keyCode': 12, 'shiftKeyCode': 101, 'key': 'Clear', 'code': 'Numpad5', 'shiftKey': '5', 'location': 3 },
+            'NumpadEnter': { 'keyCode': 13, 'code': 'NumpadEnter', 'key': 'Enter', 'text': '\r', 'location': 3 },
+            'Enter': { 'keyCode': 13, 'code': 'Enter', 'key': 'Enter', 'text': '\r' },
+            '\r': { 'keyCode': 13, 'code': 'Enter', 'key': 'Enter', 'text': '\r' },
+            '\n': { 'keyCode': 13, 'code': 'Enter', 'key': 'Enter', 'text': '\r' },
+            'ShiftLeft': { 'keyCode': 16, 'code': 'ShiftLeft', 'key': 'Shift', 'location': 1 },
+            'ShiftRight': { 'keyCode': 16, 'code': 'ShiftRight', 'key': 'Shift', 'location': 2 },
+            'ControlLeft': { 'keyCode': 17, 'code': 'ControlLeft', 'key': 'Control', 'location': 1 },
+            'ControlRight': { 'keyCode': 17, 'code': 'ControlRight', 'key': 'Control', 'location': 2 },
+            'AltLeft': { 'keyCode': 18, 'code': 'AltLeft', 'key': 'Alt', 'location': 1 },
+            'AltRight': { 'keyCode': 18, 'code': 'AltRight', 'key': 'Alt', 'location': 2 },
+            'Pause': { 'keyCode': 19, 'code': 'Pause', 'key': 'Pause' },
+            'CapsLock': { 'keyCode': 20, 'code': 'CapsLock', 'key': 'CapsLock' },
+            'Escape': { 'keyCode': 27, 'code': 'Escape', 'key': 'Escape' },
+            'Convert': { 'keyCode': 28, 'code': 'Convert', 'key': 'Convert' },
+            'NonConvert': { 'keyCode': 29, 'code': 'NonConvert', 'key': 'NonConvert' },
+            'Space': { 'keyCode': 32, 'code': 'Space', 'key': ' ' },
+            'Numpad9': { 'keyCode': 33, 'shiftKeyCode': 105, 'key': 'PageUp', 'code': 'Numpad9', 'shiftKey': '9', 'location': 3 },
+            'PageUp': { 'keyCode': 33, 'code': 'PageUp', 'key': 'PageUp' },
+            'Numpad3': { 'keyCode': 34, 'shiftKeyCode': 99, 'key': 'PageDown', 'code': 'Numpad3', 'shiftKey': '3', 'location': 3 },
+            'PageDown': { 'keyCode': 34, 'code': 'PageDown', 'key': 'PageDown' },
+            'End': { 'keyCode': 35, 'code': 'End', 'key': 'End' },
+            'Numpad1': { 'keyCode': 35, 'shiftKeyCode': 97, 'key': 'End', 'code': 'Numpad1', 'shiftKey': '1', 'location': 3 },
+            'Home': { 'keyCode': 36, 'code': 'Home', 'key': 'Home' },
+            'Numpad7': { 'keyCode': 36, 'shiftKeyCode': 103, 'key': 'Home', 'code': 'Numpad7', 'shiftKey': '7', 'location': 3 },
+            'ArrowLeft': { 'keyCode': 37, 'code': 'ArrowLeft', 'key': 'ArrowLeft' },
+            'Numpad4': { 'keyCode': 37, 'shiftKeyCode': 100, 'key': 'ArrowLeft', 'code': 'Numpad4', 'shiftKey': '4', 'location': 3 },
+            'Numpad8': { 'keyCode': 38, 'shiftKeyCode': 104, 'key': 'ArrowUp', 'code': 'Numpad8', 'shiftKey': '8', 'location': 3 },
+            'ArrowUp': { 'keyCode': 38, 'code': 'ArrowUp', 'key': 'ArrowUp' },
+            'ArrowRight': { 'keyCode': 39, 'code': 'ArrowRight', 'key': 'ArrowRight' },
+            'Numpad6': { 'keyCode': 39, 'shiftKeyCode': 102, 'key': 'ArrowRight', 'code': 'Numpad6', 'shiftKey': '6', 'location': 3 },
+            'Numpad2': { 'keyCode': 40, 'shiftKeyCode': 98, 'key': 'ArrowDown', 'code': 'Numpad2', 'shiftKey': '2', 'location': 3 },
+            'ArrowDown': { 'keyCode': 40, 'code': 'ArrowDown', 'key': 'ArrowDown' },
+            'Select': { 'keyCode': 41, 'code': 'Select', 'key': 'Select' },
+            'Open': { 'keyCode': 43, 'code': 'Open', 'key': 'Execute' },
+            'PrintScreen': { 'keyCode': 44, 'code': 'PrintScreen', 'key': 'PrintScreen' },
+            'Insert': { 'keyCode': 45, 'code': 'Insert', 'key': 'Insert' },
+            'Numpad0': { 'keyCode': 45, 'shiftKeyCode': 96, 'key': 'Insert', 'code': 'Numpad0', 'shiftKey': '0', 'location': 3 },
+            'Delete': { 'keyCode': 46, 'code': 'Delete', 'key': 'Delete' },
+            'NumpadDecimal': { 'keyCode': 46, 'shiftKeyCode': 110, 'code': 'NumpadDecimal', 'key': '\u0000', 'shiftKey': '.', 'location': 3 },
+            'Digit0': { 'keyCode': 48, 'code': 'Digit0', 'shiftKey': ')', 'key': '0' },
+            'Digit1': { 'keyCode': 49, 'code': 'Digit1', 'shiftKey': '!', 'key': '1' },
+            'Digit2': { 'keyCode': 50, 'code': 'Digit2', 'shiftKey': '@', 'key': '2' },
+            'Digit3': { 'keyCode': 51, 'code': 'Digit3', 'shiftKey': '#', 'key': '3' },
+            'Digit4': { 'keyCode': 52, 'code': 'Digit4', 'shiftKey': '$', 'key': '4' },
+            'Digit5': { 'keyCode': 53, 'code': 'Digit5', 'shiftKey': '%', 'key': '5' },
+            'Digit6': { 'keyCode': 54, 'code': 'Digit6', 'shiftKey': '^', 'key': '6' },
+            'Digit7': { 'keyCode': 55, 'code': 'Digit7', 'shiftKey': '&', 'key': '7' },
+            'Digit8': { 'keyCode': 56, 'code': 'Digit8', 'shiftKey': '*', 'key': '8' },
+            'Digit9': { 'keyCode': 57, 'code': 'Digit9', 'shiftKey': '\(', 'key': '9' },
+            'KeyA': { 'keyCode': 65, 'code': 'KeyA', 'shiftKey': 'A', 'key': 'a' },
+            'KeyB': { 'keyCode': 66, 'code': 'KeyB', 'shiftKey': 'B', 'key': 'b' },
+            'KeyC': { 'keyCode': 67, 'code': 'KeyC', 'shiftKey': 'C', 'key': 'c' },
+            'KeyD': { 'keyCode': 68, 'code': 'KeyD', 'shiftKey': 'D', 'key': 'd' },
+            'KeyE': { 'keyCode': 69, 'code': 'KeyE', 'shiftKey': 'E', 'key': 'e' },
+            'KeyF': { 'keyCode': 70, 'code': 'KeyF', 'shiftKey': 'F', 'key': 'f' },
+            'KeyG': { 'keyCode': 71, 'code': 'KeyG', 'shiftKey': 'G', 'key': 'g' },
+            'KeyH': { 'keyCode': 72, 'code': 'KeyH', 'shiftKey': 'H', 'key': 'h' },
+            'KeyI': { 'keyCode': 73, 'code': 'KeyI', 'shiftKey': 'I', 'key': 'i' },
+            'KeyJ': { 'keyCode': 74, 'code': 'KeyJ', 'shiftKey': 'J', 'key': 'j' },
+            'KeyK': { 'keyCode': 75, 'code': 'KeyK', 'shiftKey': 'K', 'key': 'k' },
+            'KeyL': { 'keyCode': 76, 'code': 'KeyL', 'shiftKey': 'L', 'key': 'l' },
+            'KeyM': { 'keyCode': 77, 'code': 'KeyM', 'shiftKey': 'M', 'key': 'm' },
+            'KeyN': { 'keyCode': 78, 'code': 'KeyN', 'shiftKey': 'N', 'key': 'n' },
+            'KeyO': { 'keyCode': 79, 'code': 'KeyO', 'shiftKey': 'O', 'key': 'o' },
+            'KeyP': { 'keyCode': 80, 'code': 'KeyP', 'shiftKey': 'P', 'key': 'p' },
+            'KeyQ': { 'keyCode': 81, 'code': 'KeyQ', 'shiftKey': 'Q', 'key': 'q' },
+            'KeyR': { 'keyCode': 82, 'code': 'KeyR', 'shiftKey': 'R', 'key': 'r' },
+            'KeyS': { 'keyCode': 83, 'code': 'KeyS', 'shiftKey': 'S', 'key': 's' },
+            'KeyT': { 'keyCode': 84, 'code': 'KeyT', 'shiftKey': 'T', 'key': 't' },
+            'KeyU': { 'keyCode': 85, 'code': 'KeyU', 'shiftKey': 'U', 'key': 'u' },
+            'KeyV': { 'keyCode': 86, 'code': 'KeyV', 'shiftKey': 'V', 'key': 'v' },
+            'KeyW': { 'keyCode': 87, 'code': 'KeyW', 'shiftKey': 'W', 'key': 'w' },
+            'KeyX': { 'keyCode': 88, 'code': 'KeyX', 'shiftKey': 'X', 'key': 'x' },
+            'KeyY': { 'keyCode': 89, 'code': 'KeyY', 'shiftKey': 'Y', 'key': 'y' },
+            'KeyZ': { 'keyCode': 90, 'code': 'KeyZ', 'shiftKey': 'Z', 'key': 'z' },
+            'MetaLeft': { 'keyCode': 91, 'code': 'MetaLeft', 'key': 'Meta', 'location': 1 },
+            'MetaRight': { 'keyCode': 92, 'code': 'MetaRight', 'key': 'Meta', 'location': 2 },
+            'ContextMenu': { 'keyCode': 93, 'code': 'ContextMenu', 'key': 'ContextMenu' },
+            'NumpadMultiply': { 'keyCode': 106, 'code': 'NumpadMultiply', 'key': '*', 'location': 3 },
+            'NumpadAdd': { 'keyCode': 107, 'code': 'NumpadAdd', 'key': '+', 'location': 3 },
+            'NumpadSubtract': { 'keyCode': 109, 'code': 'NumpadSubtract', 'key': '-', 'location': 3 },
+            'NumpadDivide': { 'keyCode': 111, 'code': 'NumpadDivide', 'key': '/', 'location': 3 },
+            'F1': { 'keyCode': 112, 'code': 'F1', 'key': 'F1' },
+            'F2': { 'keyCode': 113, 'code': 'F2', 'key': 'F2' },
+            'F3': { 'keyCode': 114, 'code': 'F3', 'key': 'F3' },
+            'F4': { 'keyCode': 115, 'code': 'F4', 'key': 'F4' },
+            'F5': { 'keyCode': 116, 'code': 'F5', 'key': 'F5' },
+            'F6': { 'keyCode': 117, 'code': 'F6', 'key': 'F6' },
+            'F7': { 'keyCode': 118, 'code': 'F7', 'key': 'F7' },
+            'F8': { 'keyCode': 119, 'code': 'F8', 'key': 'F8' },
+            'F9': { 'keyCode': 120, 'code': 'F9', 'key': 'F9' },
+            'F10': { 'keyCode': 121, 'code': 'F10', 'key': 'F10' },
+            'F11': { 'keyCode': 122, 'code': 'F11', 'key': 'F11' },
+            'F12': { 'keyCode': 123, 'code': 'F12', 'key': 'F12' },
+            'F13': { 'keyCode': 124, 'code': 'F13', 'key': 'F13' },
+            'F14': { 'keyCode': 125, 'code': 'F14', 'key': 'F14' },
+            'F15': { 'keyCode': 126, 'code': 'F15', 'key': 'F15' },
+            'F16': { 'keyCode': 127, 'code': 'F16', 'key': 'F16' },
+            'F17': { 'keyCode': 128, 'code': 'F17', 'key': 'F17' },
+            'F18': { 'keyCode': 129, 'code': 'F18', 'key': 'F18' },
+            'F19': { 'keyCode': 130, 'code': 'F19', 'key': 'F19' },
+            'F20': { 'keyCode': 131, 'code': 'F20', 'key': 'F20' },
+            'F21': { 'keyCode': 132, 'code': 'F21', 'key': 'F21' },
+            'F22': { 'keyCode': 133, 'code': 'F22', 'key': 'F22' },
+            'F23': { 'keyCode': 134, 'code': 'F23', 'key': 'F23' },
+            'F24': { 'keyCode': 135, 'code': 'F24', 'key': 'F24' },
+            'NumLock': { 'keyCode': 144, 'code': 'NumLock', 'key': 'NumLock' },
+            'ScrollLock': { 'keyCode': 145, 'code': 'ScrollLock', 'key': 'ScrollLock' },
+            'AudioVolumeMute': { 'keyCode': 173, 'code': 'AudioVolumeMute', 'key': 'AudioVolumeMute' },
+            'AudioVolumeDown': { 'keyCode': 174, 'code': 'AudioVolumeDown', 'key': 'AudioVolumeDown' },
+            'AudioVolumeUp': { 'keyCode': 175, 'code': 'AudioVolumeUp', 'key': 'AudioVolumeUp' },
+            'MediaTrackNext': { 'keyCode': 176, 'code': 'MediaTrackNext', 'key': 'MediaTrackNext' },
+            'MediaTrackPrevious': { 'keyCode': 177, 'code': 'MediaTrackPrevious', 'key': 'MediaTrackPrevious' },
+            'MediaStop': { 'keyCode': 178, 'code': 'MediaStop', 'key': 'MediaStop' },
+            'MediaPlayPause': { 'keyCode': 179, 'code': 'MediaPlayPause', 'key': 'MediaPlayPause' },
+            'Semicolon': { 'keyCode': 186, 'code': 'Semicolon', 'shiftKey': ':', 'key': ';' },
+            'Equal': { 'keyCode': 187, 'code': 'Equal', 'shiftKey': '+', 'key': '=' },
+            'NumpadEqual': { 'keyCode': 187, 'code': 'NumpadEqual', 'key': '=', 'location': 3 },
+            'Comma': { 'keyCode': 188, 'code': 'Comma', 'shiftKey': '\<', 'key': ',' },
+            'Minus': { 'keyCode': 189, 'code': 'Minus', 'shiftKey': '_', 'key': '-' },
+            'Period': { 'keyCode': 190, 'code': 'Period', 'shiftKey': '>', 'key': '.' },
+            'Slash': { 'keyCode': 191, 'code': 'Slash', 'shiftKey': '?', 'key': '/' },
+            'Backquote': { 'keyCode': 192, 'code': 'Backquote', 'shiftKey': '~', 'key': '`' },
+            'BracketLeft': { 'keyCode': 219, 'code': 'BracketLeft', 'shiftKey': '{', 'key': '[' },
+            'Backslash': { 'keyCode': 220, 'code': 'Backslash', 'shiftKey': '|', 'key': '\\' },
+            'BracketRight': { 'keyCode': 221, 'code': 'BracketRight', 'shiftKey': '}', 'key': ']' },
+            'Quote': { 'keyCode': 222, 'code': 'Quote', 'shiftKey': '"', 'key': '\'' },
+            'AltGraph': { 'keyCode': 225, 'code': 'AltGraph', 'key': 'AltGraph' },
+            'Props': { 'keyCode': 247, 'code': 'Props', 'key': 'CrSel' },
+            'Cancel': { 'keyCode': 3, 'key': 'Cancel', 'code': 'Abort' },
+            'Clear': { 'keyCode': 12, 'key': 'Clear', 'code': 'Numpad5', 'location': 3 },
+            'Shift': { 'keyCode': 16, 'key': 'Shift', 'code': 'ShiftLeft', 'location': 1 },
+            'Control': { 'keyCode': 17, 'key': 'Control', 'code': 'ControlLeft', 'location': 1 },
+            'Alt': { 'keyCode': 18, 'key': 'Alt', 'code': 'AltLeft', 'location': 1 },
+            'Accept': { 'keyCode': 30, 'key': 'Accept' },
+            'ModeChange': { 'keyCode': 31, 'key': 'ModeChange' },
+            ' ': { 'keyCode': 32, 'key': ' ', 'code': 'Space' },
+            'Print': { 'keyCode': 42, 'key': 'Print' },
+            'Execute': { 'keyCode': 43, 'key': 'Execute', 'code': 'Open' },
+            '\u0000': { 'keyCode': 46, 'key': '\u0000', 'code': 'NumpadDecimal', 'location': 3 },
+            'a': { 'keyCode': 65, 'key': 'a', 'code': 'KeyA' },
+            'b': { 'keyCode': 66, 'key': 'b', 'code': 'KeyB' },
+            'c': { 'keyCode': 67, 'key': 'c', 'code': 'KeyC' },
+            'd': { 'keyCode': 68, 'key': 'd', 'code': 'KeyD' },
+            'e': { 'keyCode': 69, 'key': 'e', 'code': 'KeyE' },
+            'f': { 'keyCode': 70, 'key': 'f', 'code': 'KeyF' },
+            'g': { 'keyCode': 71, 'key': 'g', 'code': 'KeyG' },
+            'h': { 'keyCode': 72, 'key': 'h', 'code': 'KeyH' },
+            'i': { 'keyCode': 73, 'key': 'i', 'code': 'KeyI' },
+            'j': { 'keyCode': 74, 'key': 'j', 'code': 'KeyJ' },
+            'k': { 'keyCode': 75, 'key': 'k', 'code': 'KeyK' },
+            'l': { 'keyCode': 76, 'key': 'l', 'code': 'KeyL' },
+            'm': { 'keyCode': 77, 'key': 'm', 'code': 'KeyM' },
+            'n': { 'keyCode': 78, 'key': 'n', 'code': 'KeyN' },
+            'o': { 'keyCode': 79, 'key': 'o', 'code': 'KeyO' },
+            'p': { 'keyCode': 80, 'key': 'p', 'code': 'KeyP' },
+            'q': { 'keyCode': 81, 'key': 'q', 'code': 'KeyQ' },
+            'r': { 'keyCode': 82, 'key': 'r', 'code': 'KeyR' },
+            's': { 'keyCode': 83, 'key': 's', 'code': 'KeyS' },
+            't': { 'keyCode': 84, 'key': 't', 'code': 'KeyT' },
+            'u': { 'keyCode': 85, 'key': 'u', 'code': 'KeyU' },
+            'v': { 'keyCode': 86, 'key': 'v', 'code': 'KeyV' },
+            'w': { 'keyCode': 87, 'key': 'w', 'code': 'KeyW' },
+            'x': { 'keyCode': 88, 'key': 'x', 'code': 'KeyX' },
+            'y': { 'keyCode': 89, 'key': 'y', 'code': 'KeyY' },
+            'z': { 'keyCode': 90, 'key': 'z', 'code': 'KeyZ' },
+            'Meta': { 'keyCode': 91, 'key': 'Meta', 'code': 'MetaLeft', 'location': 1 },
+            '*': { 'keyCode': 106, 'key': '*', 'code': 'NumpadMultiply', 'location': 3 },
+            '+': { 'keyCode': 107, 'key': '+', 'code': 'NumpadAdd', 'location': 3 },
+            '-': { 'keyCode': 109, 'key': '-', 'code': 'NumpadSubtract', 'location': 3 },
+            '/': { 'keyCode': 111, 'key': '/', 'code': 'NumpadDivide', 'location': 3 },
+            ';': { 'keyCode': 186, 'key': ';', 'code': 'Semicolon' },
+            '=': { 'keyCode': 187, 'key': '=', 'code': 'Equal' },
+            ',': { 'keyCode': 188, 'key': ',', 'code': 'Comma' },
+            '.': { 'keyCode': 190, 'key': '.', 'code': 'Period' },
+            '`': { 'keyCode': 192, 'key': '`', 'code': 'Backquote' },
+            '[': { 'keyCode': 219, 'key': '[', 'code': 'BracketLeft' },
+            '\\': { 'keyCode': 220, 'key': '\\', 'code': 'Backslash' },
+            ']': { 'keyCode': 221, 'key': ']', 'code': 'BracketRight' },
+            '\'': { 'keyCode': 222, 'key': '\'', 'code': 'Quote' },
+            'Attn': { 'keyCode': 246, 'key': 'Attn' },
+            'CrSel': { 'keyCode': 247, 'key': 'CrSel', 'code': 'Props' },
+            'ExSel': { 'keyCode': 248, 'key': 'ExSel' },
+            'EraseEof': { 'keyCode': 249, 'key': 'EraseEof' },
+            'Play': { 'keyCode': 250, 'key': 'Play' },
+            'ZoomOut': { 'keyCode': 251, 'key': 'ZoomOut' },
+            ')': { 'keyCode': 48, 'key': ')', 'code': 'Digit0' },
+            '!': { 'keyCode': 49, 'key': '!', 'code': 'Digit1' },
+            '@': { 'keyCode': 50, 'key': '@', 'code': 'Digit2' },
+            '#': { 'keyCode': 51, 'key': '#', 'code': 'Digit3' },
+            '$': { 'keyCode': 52, 'key': '$', 'code': 'Digit4' },
+            '%': { 'keyCode': 53, 'key': '%', 'code': 'Digit5' },
+            '^': { 'keyCode': 54, 'key': '^', 'code': 'Digit6' },
+            '&': { 'keyCode': 55, 'key': '&', 'code': 'Digit7' },
+            '(': { 'keyCode': 57, 'key': '\(', 'code': 'Digit9' },
+            'A': { 'keyCode': 65, 'key': 'A', 'code': 'KeyA' },
+            'B': { 'keyCode': 66, 'key': 'B', 'code': 'KeyB' },
+            'C': { 'keyCode': 67, 'key': 'C', 'code': 'KeyC' },
+            'D': { 'keyCode': 68, 'key': 'D', 'code': 'KeyD' },
+            'E': { 'keyCode': 69, 'key': 'E', 'code': 'KeyE' },
+            'F': { 'keyCode': 70, 'key': 'F', 'code': 'KeyF' },
+            'G': { 'keyCode': 71, 'key': 'G', 'code': 'KeyG' },
+            'H': { 'keyCode': 72, 'key': 'H', 'code': 'KeyH' },
+            'I': { 'keyCode': 73, 'key': 'I', 'code': 'KeyI' },
+            'J': { 'keyCode': 74, 'key': 'J', 'code': 'KeyJ' },
+            'K': { 'keyCode': 75, 'key': 'K', 'code': 'KeyK' },
+            'L': { 'keyCode': 76, 'key': 'L', 'code': 'KeyL' },
+            'M': { 'keyCode': 77, 'key': 'M', 'code': 'KeyM' },
+            'N': { 'keyCode': 78, 'key': 'N', 'code': 'KeyN' },
+            'O': { 'keyCode': 79, 'key': 'O', 'code': 'KeyO' },
+            'P': { 'keyCode': 80, 'key': 'P', 'code': 'KeyP' },
+            'Q': { 'keyCode': 81, 'key': 'Q', 'code': 'KeyQ' },
+            'R': { 'keyCode': 82, 'key': 'R', 'code': 'KeyR' },
+            'S': { 'keyCode': 83, 'key': 'S', 'code': 'KeyS' },
+            'T': { 'keyCode': 84, 'key': 'T', 'code': 'KeyT' },
+            'U': { 'keyCode': 85, 'key': 'U', 'code': 'KeyU' },
+            'V': { 'keyCode': 86, 'key': 'V', 'code': 'KeyV' },
+            'W': { 'keyCode': 87, 'key': 'W', 'code': 'KeyW' },
+            'X': { 'keyCode': 88, 'key': 'X', 'code': 'KeyX' },
+            'Y': { 'keyCode': 89, 'key': 'Y', 'code': 'KeyY' },
+            'Z': { 'keyCode': 90, 'key': 'Z', 'code': 'KeyZ' },
+            ':': { 'keyCode': 186, 'key': ':', 'code': 'Semicolon' },
+            '<': { 'keyCode': 188, 'key': '\<', 'code': 'Comma' },
+            '_': { 'keyCode': 189, 'key': '_', 'code': 'Minus' },
+            '>': { 'keyCode': 190, 'key': '>', 'code': 'Period' },
+            '?': { 'keyCode': 191, 'key': '?', 'code': 'Slash' },
+            '~': { 'keyCode': 192, 'key': '~', 'code': 'Backquote' },
+            '{': { 'keyCode': 219, 'key': '{', 'code': 'BracketLeft' },
+            '|': { 'keyCode': 220, 'key': '|', 'code': 'Backslash' },
+            '}': { 'keyCode': 221, 'key': '}', 'code': 'BracketRight' },
+            '"': { 'keyCode': 222, 'key': '"', 'code': 'Quote' },
+            'SoftLeft': { 'key': 'SoftLeft', 'code': 'SoftLeft', 'location': 4 },
+            'SoftRight': { 'key': 'SoftRight', 'code': 'SoftRight', 'location': 4 },
+            'Camera': { 'keyCode': 44, 'key': 'Camera', 'code': 'Camera', 'location': 4 },
+            'Call': { 'key': 'Call', 'code': 'Call', 'location': 4 },
+            'EndCall': { 'keyCode': 95, 'key': 'EndCall', 'code': 'EndCall', 'location': 4 },
+            'VolumeDown': { 'keyCode': 182, 'key': 'VolumeDown', 'code': 'VolumeDown', 'location': 4 },
+            'VolumeUp': { 'keyCode': 183, 'key': 'VolumeUp', 'code': 'VolumeUp', 'location': 4 },
+        };
+        function dispatchKeyboardEvent(ctrlKey = false, altKey = false, shiftKey = false) {
+            let events = ["keydown", 'keyup', 'keypress'];
+            for (let key of Object.keys(keyStrokes)) {
+                let keyStroke = keyStrokes[key];
+                for (let eventName of events) {
+                    let keyboardEvent = new KeyboardEvent(eventName, {
+                        key: keyStroke.key,
+                        code: keyStroke.code,
+                        keyCode: keyStroke.keyCode,
+                        shiftKey: keyStroke.shiftKey,
+                        location: keyStroke.shiftKey,
+                        shiftKeyCode: keyStroke.shiftKeyCode,
+                        bubbles: true,
+                        cancelable: false,
+                        ctrlKey: ctrlKey,
+                        shiftKey: shiftKey,
+                        altKey: altKey
+                    });
+
+                    document.dispatchEvent(keyboardEvent);
+                }
+            }
+        }
+
+        function textSelector(elementId) {
+            try {
+                let selection = window.getSelection();
+                let range = document.createRange();
+                range.selectNodeContents(document.getElementById(elementId));
+                selection.removeAllRanges();
+                selection.addRange(range);
+            } catch (e) { console.log("Error while selecting", elementId) }
+        }
+
+        function mouseEventOnElement(event, elementId, buttonNo = 0, buttonsNo = 1) {
+            try {
+                let element = document.getElementById(elementId);
+                let evt = new MouseEvent(event, {
+                    bubbles: true,
+                    cancelable: false,
+                    view: window,
+                    button: buttonNo,
+                    buttons: buttonsNo,
+                    clientX: element.getBoundingClientRect().x,
+                    clientY: element.getBoundingClientRect().y,
+                    screenX: 0 + element.getBoundingClientRect().left,
+                    screenY: 25 + element.getBoundingClientRect().top
+                });
+                if (event === "copy") {
+                    evt?.clipboardData?.setData('text/plain', 'copied data');
+                }
+                return element.dispatchEvent(evt);
+            } catch (e) { console.log(`Error while performing ${event} on ${elementId} - ${e}.`) }
+        }
+
+        function simulateScrollEvent(whereTo = "bottom") {
+            try {
+                if (whereTo === "top")
+                    scroll({ top: 0, left: 0, behavior: "smooth" })
+                else
+                    scroll({ top: 1500, left: 1500, behavior: "smooth" })
+            } catch (e) { console.log(`Error while performing scroll to ${whereTo} - ${e}.`); }
+        }
+
+        function simulateWheelEvent(elementId, whereTo = 1500) {
+            try {
+                let event = new WheelEvent('wheel', {
+                    deltaX: 10,
+                    deltaY: whereTo,
+                    deltaZ: 0,
+                    deltaMode: 0,
+                    bubbles: true,
+                    cancelable: false
+                });
+                let targetElement = document.getElementById(elementId);
+                targetElement?.dispatchEvent(event);
+            } catch (e) { console.log(`Error while performing wheel event on ${elementId} - ${e}.`) }
+        }
+
+        function singleClick(elementIds, navigationElements) {
+            try {
+                document.body.focus();
+                document.body.click();
+
+                for (let elementId of elementIds) {
+                    try {
+                        document.getElementById(elementId)?.focus();
+                        document.getElementById(elementId)?.click();
+                    } catch (e) {
+                        console.log("Error for single click on " + elementId, e);
+                    }
+                }
+
+                for (let elementId of navigationElements) {
+                    try {
+                        document.getElementById(elementId)?.addEventListener('click', function (event) {
+                            event.preventDefault();
+                        });
+
+                        document.getElementById(elementId)?.focus();
+                        document.getElementById(elementId)?.click();
+                    } catch (e) {
+                        console.log("Error for single click on " + elementId, e);
+                    }
+                }
+
+            } catch (e) {
+                console.log("Error in single click", e);
+            }
+        }
+
+        function doubleClick(elementIds, navigationElements) {
+            try {
+                for (let elementId of elementIds) {
+                    try {
+                        document.getElementById(elementId)?.focus();
+                        mouseEventOnElement('dblclick', elementId, 2, 2);
+                    } catch (e) {
+                        console.log("Error in doubleclick for " + elementId, e);
+                    }
+                }
+
+                for (let elementId of navigationElements) {
+                    try {
+                        document.getElementById(elementId)?.addEventListener('dblclick', function (event) {
+                            event.preventDefault();
+                        });
+
+                        document.getElementById(elementId)?.focus();
+                        mouseEventOnElement('dblclick', elementId, 2, 2);
+                    } catch (e) {
+                        console.log("Error for single click on " + elementId, e);
+                    }
+                }
+
+            } catch (e) {
+                console.log("Error in doubleClick", e);
+            }
+        }
+
+        function elementTextSelector(elementId) {
+            let inputElements = new Set();
+            inputElements.add("email");
+            inputElements.add("password");
+            try {
+                if (inputElements.has(elementId)) {
+                    document.getElementById(elementId)?.select();
+                } else {
+                    textSelector(elementId);
+                }
+                // document.execCommand('copy');
+                // document.execCommand('paste');
+            } catch (e) {
+                console.log("Error in element selector:", e);
+            }
+        }
+
+        function simulateInputEvent() {
+            try {
+                document.getElementById('email').value = 'foo';
+                mouseEventOnElement('input', "email");
+
+                document.getElementById('password').value = 'bar';
+                mouseEventOnElement('input', "password");
+            } catch (e) {
+                console.log("Error in simulating input event:", e);
+            }
+        }
+
+        window.onload = function () {
+            let elementIds = [
+                "login",
+                "form_login",
+                "email",
+                "password",
+                "form_submit",
+                "section",
+                "en-text",
+                "fr-text",
+                "figure",
+                "img_elm",
+                "main",
+                "dummy-text",
+                "vt-text",
+                "de-text",
+                "it-text",
+                "ja-text",
+                "ru-text",
+                "ar-text",
+                "zh-text",
+                "hi-text",
+                "pt-text",
+                "nl-text",
+                "tr-text",
+                "ko-text",
+            ];
+
+            let navigationElements = [
+                "first-party",
+                "third-party-safe",
+                "third-party-unsafe"
+            ];
+
+            let start = performance.now();
+            dispatchKeyboardEvent(ctrlKey = false, altKey = false, shiftKey = false);
+            dispatchKeyboardEvent(ctrlKey = true, altKey = false, shiftKey = false);
+            dispatchKeyboardEvent(ctrlKey = false, altKey = true, shiftKey = false);
+            dispatchKeyboardEvent(ctrlKey = false, altKey = false, shiftKey = true);
+            dispatchKeyboardEvent(ctrlKey = true, altKey = true, shiftKey = false);
+            dispatchKeyboardEvent(ctrlKey = false, altKey = true, shiftKey = true);
+            dispatchKeyboardEvent(ctrlKey = true, altKey = false, shiftKey = true);
+            dispatchKeyboardEvent(ctrlKey = true, altKey = true, shiftKey = true);
+            console.log("Time Taken for Simulating Keyboard Events:", performance.now() - start, "ms");
+
+            start = performance.now();
+            simulateInputEvent();
+            singleClick(elementIds, navigationElements);
+            doubleClick(elementIds, navigationElements);
+            simulateScrollEvent("bottom");
+            simulateScrollEvent("top");
+
+            let wheelCounter = 0;
+            for (let elementId of elementIds) {
+                mouseEventOnElement("mousedown", elementId, 0, 1);
+                mouseEventOnElement("mouseup", elementId, 0, 1);
+                mouseEventOnElement("mouseenter", elementId, 0, 1);
+                mouseEventOnElement("mouseout", elementId, 0, 1);
+                mouseEventOnElement("mousemove", elementId, 0, 1);
+                mouseEventOnElement("mouseover", elementId, 0, 1);
+                mouseEventOnElement("mouseleave", elementId, 0, 1);
+                mouseEventOnElement("contextmenu", elementId, 2, 1);
+                simulateWheelEvent(elementId, wheelCounter + 10);
+                elementTextSelector(elementId);
+                wheelCounter += 100;
+            }
+            console.log("Time Taken for Simulating Mouse Events:", performance.now() - start, "ms");
+        }
+    </script>
+</body>
+
+</html>
