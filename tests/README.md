@@ -56,3 +56,34 @@ We demonstrate this with a minimal set of extensions (with MV2 & MV3 standards) 
 - The test page displays whether the scripts injected by the test extension through all possible means and contexts, as discussed above, was able to obtain the clean reference to the _hooked_ API. We overwrite the definition of ``Array.prototype.forEach`` in our test page for example purposes.
 - The console logs provide with script execution order for both injected scripts as well as scripts emebdded in the page.
 - Repeat the above steps for ``MV3-test-extension``.
+
+### Proposed Solution: Content Scripts in the "MAIN" World
+
+The MV3 extension standards allow developers to specify the namespace in which the content scripts should execute. This is possible by supplying the `world` attribute with either `MAIN` or `ISOLATED` as their value for individual content scripts. The corresponding script executes in the same namespace when supplied with `MAIN`, otherwise it executes in an `ISOLATED` namespace.
+
+``` json
+"content_scripts": [
+        {
+            "matches": [
+                "<all_urls>",
+            ],
+            "js": [
+                "contentScript.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true,
+            "world": "MAIN" // or "ISOLATED"
+        }
+    ]
+```
+
+An extension with a content script marked to be injected into the `MAIN` world, executes before any page JavaScript, similar to the inline scripts in the MV2 standards above. Thus, it is possible for extension developers to inject at least one content script in the `MAIN` world to freeze the native definition of global JavaScript APIs, before any page JavaScript executes. This way, the attacker will not be able to hook into the JavaScript APIs anymore.
+
+``` javascript
+Object.freeze(Array.prototype);
+Object.freeze(String.prototype);
+...
+```
+
+Note: The `world` attribute is optional in the manifest and the default value is `ISOLATED`.
