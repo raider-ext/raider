@@ -63,22 +63,22 @@ The MV3 extension standards allow developers to specify the namespace in which t
 
 ``` json
 "content_scripts": [
-        {
-            "matches": [
-                "<all_urls>",
-            ],
-            "js": [
-                "contentScript.js"
-            ],
-            "run_at": "document_start",
-            "all_frames": true,
-            "match_about_blank": true,
-            "world": "MAIN" // or "ISOLATED"
-        }
-    ]
+    {
+        "matches": [
+            "<all_urls>",
+        ],
+        "js": [
+            "contentScript.js"
+        ],
+        "run_at": "document_start",
+        "all_frames": true,
+        "match_about_blank": true,
+        "world": "MAIN" // or "ISOLATED"
+    }
+]
 ```
 
-An extension with a content script marked to be injected into the `MAIN` world, executes before any page JavaScript, similar to the inline scripts in the MV2 standards above. Thus, it is possible for extension developers to inject at least one content script in the `MAIN` world to freeze the native definition of global JavaScript APIs, before any page JavaScript executes. This way, the attacker will not be able to hook into the JavaScript APIs anymore.
+An extension with a content script marked to be injected into the `MAIN` world, executes before any page JavaScript, similar to the inline scripts in the MV2 standards above. Thus, it is possible for extension developers to inject at least one content script in the `MAIN` world to freeze the native definition of global JavaScript APIs, before any page JavaScript executes. This way, the attacker is no more able to hook into the JavaScript APIs.
 
 ``` javascript
 Object.freeze(Array.prototype);
